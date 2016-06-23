@@ -1,6 +1,9 @@
 # coding=utf-8
 #
-# 本文档是一个python的logging 的demo
+# Serious 项目的日志模块
+# 主要用来调试程序,进行系统状态的追踪
+# 编写人: Jason Sheng
+# 最新更新日期: 2016.6.21
 #
 
 import logging
