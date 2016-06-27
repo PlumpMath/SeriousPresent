@@ -59,7 +59,7 @@ class MainMenu(ShowBase):
     def new_game(self):
         self.destroy()
         #调用视频
-        # mm=MediaPlayer('../../resources/media/XHR.mp4',self.render2d)
+        # mm=MediaPlayer('../../resources/media/PandaSneezes.ogv',self.render2d)
         # mm.playMedia()
         #调用对话
         # lp=LoadPlot()
