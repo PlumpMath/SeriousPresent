@@ -27,23 +27,23 @@ class MainMenu(ShowBase):
         ShowBase.__init__(self)
 
         #load background image
-        self.__image = OnscreenImage(image='/d/YCJ/test/main_menu.jpg', pos=(0, 0, 0), scale=1)
+        self.__image = OnscreenImage(image='../../resources/images/main_menu.jpg', pos=(0, 0, 0), scale=1)
         self.__image.setSx(self.getAspectRatio())
         self.__image.setTransparency(TransparencyAttrib.MAlpha)
 
         #Three main opertaions
         self.__newGameButton = DirectButton(pos=(-0.9, 0, 0.5,), text=("新的游戏"), scale=0.1,
                                             command=self.new_game,frameColor=(0,0,0,0),
-                                            image=("/d/YCJ/test/main_menu.jpg","/d/YCJ/test/main_menu.jpg",
-                                                   "/d/YCJ/test/main_menu.jpg"))
+                                            image=("../../resources/images/main_menu.jpg","../../resources/images/main_menu.jpg",
+                                                   "../../resources/images/main_menu.jpg"))
         self.__selectArchiveButton = DirectButton(pos=(-0.9, 0, 0.3,), text="选择存档", scale=0.1,text_fg=(1,1,1,1),
                                             command=self.select_archives, frameColor=(0, 0, 0, 0),
-                                            image=("/d/YCJ/test/main_menu.jpg", "/d/YCJ/test/main_menu.jpg",
-                                                   "/d/YCJ/test/main_menu.jpg"))
+                                            image=("../../resources/images/main_menu.jpg", "../../resources/images/main_menu.jpg",
+                                                   "../../resources/images/main_menu.jpg"))
         self.__exitGameButton = DirectButton(pos=(-0.9, 0, 0.1,), text="退出游戏", scale=0.1,text_fg=(1,1,1,1),
                                             command=self.exit_game, frameColor=(0, 0, 0, 0),
-                                            image=("/d/YCJ/test/main_menu.jpg", "/d/YCJ/test/main_menu.jpg",
-                                                   "/d/YCJ/test/main_menu.jpg"))
+                                            image=("../../resources/images/main_menu.jpg", "../../resources/images/main_menu.jpg",
+                                                   "../../resources/images/main_menu.jpg"))
 
         #add task to update background-image scale
         self.taskMgr.add(self.example_task, 'exampleTask')
@@ -59,7 +59,7 @@ class MainMenu(ShowBase):
     def new_game(self):
         self.destroy()
         #调用视频
-        # mm=MediaPlayer('/d/YCJ/test/XHR.mp4',self.render2d)
+        # mm=MediaPlayer('../../resources/media/XHR.mp4',self.render2d)
         # mm.playMedia()
         #调用对话
         # lp=LoadPlot()

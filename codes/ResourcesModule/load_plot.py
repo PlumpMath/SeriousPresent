@@ -29,7 +29,7 @@ class LoadPlot(DirectObject):
         self.__dialogue = OnscreenText("", pos=(0, -0.9), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
                                        mayChange=True)
         # 人物头像
-        self.__image = OnscreenImage(image='/e/YCJ/1.jpg', pos=(0, 0, 0), scale=0.5)
+        self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(0, 0, 0), scale=0.5)
         self.__image.setTransparency(TransparencyAttrib.MAlpha)
 
     #移除控件
@@ -58,12 +58,56 @@ class LoadPlot(DirectObject):
 
         #判断角色
         if role=="猎人":
-            self.__image.setImage("/d/YCJ/test/1.jpg")
+            self.__image.setImage("../../resources/images/1.jpg")
         elif role=="修女":
-            self.__image.setImage("/d/YCJ/test/2.jpg")
+            self.__image.setImage("../../resources/images/2.jpg")
         else:
-            self.__image.setImage("/d/YCJ/test/3.jpg")
+            self.__image.setImage("../../resources/images/3.jpg")
 
         self.__dialogue.setText(dia.decode('utf-8'))
+
+class Node(object):
+    def __init__(self,data):
+        self.__data=data
+        self.__children=[]
+
+    def get_data(self):
+        return self.__data
+
+    def get_children(self):
+        return self.__children
+
+    def add(self,node):
+        if len(self.__children)==4:
+            return False
+        else:
+            self.__children.append(node)
+
+    def go(self,data):
+        for child in self.__children:
+            if child.getdata()==data:
+                return child
+        return None
+
+class Tree:
+    def __init__(self):
+        self.__head=Node('header')
+
+    def link_to_head(self,node):
+        self.__head.add(node)
+
+    def insert(self,path,data):
+        cur=self.__head
+        for step in path:
+            if cur.go(step)==None:
+                return False
+            else:
+                cur=cur.go(step)
+        cur.add(Node(data))
+        return True
+
+    def search(self,path):
+        pass
+
 
 

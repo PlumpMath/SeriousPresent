@@ -21,13 +21,13 @@ class MySound(DirectObject):
     def __init__(self):
 
         self.__music=dict()
-        self.__music["background"]=loader.loadMusic("/d/YCJ/test/test.mp3")#背景音乐
-        self.__music["battle"] = loader.loadSfx('/d/YCJ/test/openclose.ogg')#战斗音效
-        self.__music["peace"] = loader.loadSfx('/d/YCJ/test/openclose.ogg')#平时音效
-        self.__music["dialogue"] = loader.loadSfx('/d/YCJ/test/openclose.ogg')#对话音效
-        self.__music["shot"] = loader.loadSfx('/d/YCJ/test/openclose.ogg')#枪击音效
-        self.__music["load"] = loader.loadSfx('/d/YCJ/test/openclose.ogg')#载入游戏音效
-        self.__music["exit"] = loader.loadSfx('/d/YCJ/test/openclose.ogg')#退出游戏音效
+        self.__music["background"]=loader.loadMusic("../../resources/music/test.mp3")#背景音乐
+        self.__music["battle"] = loader.loadSfx('../../resources/music/openclose.ogg')#战斗音效
+        self.__music["peace"] = loader.loadSfx('../../resources/music/openclose.ogg')#平时音效
+        self.__music["dialogue"] = loader.loadSfx('../../resources/music/openclose.ogg')#对话音效
+        self.__music["shot"] = loader.loadSfx('../../resources/music/openclose.ogg')#枪击音效
+        self.__music["load"] = loader.loadSfx('../../resources/music/openclose.ogg')#载入游戏音效
+        self.__music["exit"] = loader.loadSfx('../../resources/music/openclose.ogg')#退出游戏音效
 
         self.__music["background"].setVolume(0.5)
         self.__music["background"].setLoop(True)
