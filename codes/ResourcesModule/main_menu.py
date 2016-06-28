@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 
 # Author: Yang chenjing
-# Last Updated: 2016-06-26
+# Last Updated: 2016-06-28
 #
 # This tutorial shows mainMemu interface,
 # include begin new game and select archives operations.
@@ -14,9 +14,7 @@ from direct.gui.DirectButton import DirectButton
 from pandac.PandaModules import TransparencyAttrib
 from panda3d.core import loadPrcFileData
 from direct.task import Task
-from load_plot import LoadPlot
-from sound import MySound
-from media_player import MediaPlayer
+from resources_manager import ResourcesManager
 
 # loadPrcFileData('', 'fullscreen 1')
 loadPrcFileData('','win-size 1000 750')#设置窗口大小
@@ -50,7 +48,7 @@ class MainMenu(ShowBase):
         #add task to update background-image scale
         self.taskMgr.add(self.example_task, 'exampleTask')
 
-        ms = MySound()
+        self.__rm=ResourcesManager()
 
     # 移除界面上的按钮与图片
     def destroy(self):
@@ -62,10 +60,11 @@ class MainMenu(ShowBase):
 
     def new_game(self):
         self.destroy()
-
+        self.__rm.show_volume_sliderbar()
+        self.__rm.show_dialog(1)
         #调用对话
-        lp=LoadPlot()
-        lp.init_interface()
+        # lp=LoadPlot()
+        # lp.init_interface()
         #调用声音
         # ms=MySound()
         # ms.volume_slider()

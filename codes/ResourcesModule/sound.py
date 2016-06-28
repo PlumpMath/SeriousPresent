@@ -36,7 +36,7 @@ class MySound(DirectObject):
 
         self.__musicTime = 0#背景音乐所处时间
 
-        self.__musicOpen = False
+        self.__musicOpen = True
 
         self.__music["background"].play()
 
@@ -45,7 +45,7 @@ class MySound(DirectObject):
     def volume_slider(self):
         self.__sliderText = OnscreenText("Volume", pos=(0, 0.87), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1))
         self.__slider = DirectSlider(pos=(-0.1, 0, 0.75), scale=0.8, value=0.5, command=self.setMusicBoxVolume)
-        self.__musicButton = DirectButton(pos=(0.9, 0, 0.75), text="Open", scale=0.1, pad=(0.2, 0.2), rolloverSound=None,
+        self.__musicButton = DirectButton(pos=(0.9, 0, 0.75), text="Close", scale=0.1, pad=(0.2, 0.2), rolloverSound=None,
                                      clickSound=None, command=self.toggleMusicBox)
 
         self.__slider['value']=self.__volume

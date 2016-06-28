@@ -84,12 +84,15 @@ class ResourcesManager(object):
     #加载对话框，选择对话id
     #part:剧情对话id
     def show_dialog(self,part):
-        self.__dialogueFile.init_interface()
-        self.__dialogueFile.selectPart(part)
+        self.__dialogueFile.init_interface(part)
 
     #读取下一句对话
     def dialog_next(self):
-        self.__dialogueFile.dialogue_next()
+        #判断能否继续读下一句话，不能则返回False，结束对话
+        if self.__dialogueFile.dialogue_next():
+            return True
+        else:
+            return False
 
     #移除对话框等控件
     def destroy_dialog(self):
