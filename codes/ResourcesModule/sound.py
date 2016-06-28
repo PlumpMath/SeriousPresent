@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 
 # Author: Yang chenjing
-# Last Updated: 2016-06-25
+# Last Updated: 2016-06-26
 #
 # This tutorial play music and adjust volume
 
@@ -37,6 +37,8 @@ class MySound(DirectObject):
         self.__musicTime = 0#背景音乐所处时间
 
         self.__musicOpen = False
+
+        self.__music["background"].play()
 
 
     #初始化声音滑动条，开关声音按钮
