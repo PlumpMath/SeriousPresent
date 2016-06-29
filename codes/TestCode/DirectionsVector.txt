@@ -1,0 +1,20 @@
+----- DirectionsVector -----
+odvX : 0.207231223583
+odvY : 0.978291988373
+dVector1 : LVector3f(0.207231, 0.978292, 0)
+dVector2 : LVector3f(0.838292, 0.545222, 0)
+dVector3 : LVector3f(0.978292, -0.207231, 0)
+dVector4 : LVector3f(0.545222, -0.838292, 0)
+dVector5 : LVector3f(-0.207231, -0.978292, 0)
+dVector6 : LVector3f(-0.838292, -0.545222, 0)
+dVector7 : LVector3f(-0.978292, 0.207231, 0)
+dVector8 : LVector3f(-0.545222, 0.838292, 0)
+N : LVector3f(0.207231, 0.978292, 0)
+NE : LVector3f(0.838292, 0.545222, 0)
+E : LVector3f(0.978292, -0.207231, 0)
+ES : LVector3f(0.545222, -0.838292, 0)
+S : LVector3f(-0.207231, -0.978292, 0)
+SW : LVector3f(-0.838292, -0.545222, 0)
+W : LVector3f(-0.978292, 0.207231, 0)
+WN : LVector3f(-0.545222, 0.838292, 0)
+--------------------
