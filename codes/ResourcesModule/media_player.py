@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 
 # Author: Yang chenjing
-# Last Updated: 2016-06-25
+# Last Updated: 2016-06-26
 #
 # This tutorial shows play meida interface
 
@@ -16,14 +16,19 @@ class MediaPlayer():
     #载入视频文件
     #fileName：视频文件路径
     #render:ShowBase属性，render2d
-    def __init__(self,fileName,render):
+    def __init__(self):
 
         # Load the texture. We could use loader.loadTexture for this,
         # but we want to make sure we get a MovieTexture, since it
         # implements synchronizeTo.
+        self.__mediaFileName=""
         self.__tex = MovieTexture("name")
-        success = self.__tex.read(fileName)
 
+    # 播放视频文件
+    def playMedia(self,render,fileName):
+
+        self.__mediaFileName = fileName
+        success = self.__tex.read(self.__mediaFileName)
         # Set up a fullscreen card to set the video texture on.
         cm = CardMaker("My Fullscreen Card")
         cm.setFrameFullscreenQuad()
@@ -33,13 +38,15 @@ class MediaPlayer():
         cm.setUvRange(self.__tex)
 
         # Now place the card in the scene graph and apply the texture to it.
-        card=NodePath(cm.generate())
+        card = NodePath(cm.generate())
         card.reparentTo(render)
         card.setTexture(self.__tex)
 
-        self.__sound=loader.loadSfx(fileName)
+        self.__sound = loader.loadSfx(self.__mediaFileName)
         # Synchronize the video to the sound.
         self.__tex.synchronizeTo(self.__sound)
+
+        self.__sound.play()
 
     #移除视频
     def destroy(self):
@@ -47,6 +54,4 @@ class MediaPlayer():
         # self.__sound.
         pass
 
-    #播放视频文件
-    def playMedia(self):
-            self.__sound.play()
+
