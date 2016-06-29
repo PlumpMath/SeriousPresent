@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from PlayerRole import PlayerRole
-from EnemyRole import EnemyRole
-from NPCRole import NPCRole
-from AttachmentRole import AttachmentRole
+from player_role import PlayerRole
+from enemy_role import EnemyRole
+from npc_role import NPCRole
+from attachment_role import AttachmentRole
 
 # 常量，表示角色类型
 PLAYER_ROLE     = "PlayerRole"
@@ -43,11 +43,7 @@ class RoleManager(object):
         if roleType is self.__roleType[0]:
 
             playerRole = PlayerRole(name = name,
-                                    modelId = modelId,
-                                    actions = actions,
-                                    attachments = attachments,
-                                    hp = hp,
-                                    pos = pos)
+                                    modelId = modelId)
 
             role.append(playerRole)
 
@@ -61,10 +57,7 @@ class RoleManager(object):
 
                 enemyRole = EnemyRole(name = names[i],
                                       modelId = modelId,
-                                      actions = actions,
-                                      hp = hp,
-                                      attachments = attachments,
-                                      pos = pos)
+                                      hp = hp)
 
                 role.append(enemyRole)
 
@@ -73,9 +66,7 @@ class RoleManager(object):
         elif roleType is self.__roleType[2]:
 
             npcRole = NPCRole(name=name,
-                              modelId=modelId,
-                              actions=actions,
-                              pos=pos)
+                              modelId=modelId)
 
             role.append(npcRole)
 
@@ -88,8 +79,12 @@ class RoleManager(object):
             for i in range(num):
 
                 attachRole = AttachmentRole(name=names[i],
-                                                modelId=modelId,
-                                                pos=pos)
+                                            modelId=modelId,
+                                            )
+
+                role.append(attachRole)
+
+                self.__roleNameMap[names[i]] = attachRole
 
                 role.append(attachRole)
 
@@ -105,7 +100,8 @@ class RoleManager(object):
 
             return role
 
-    #####################
+    def add_toggle_to_action(self, actorOrId, actionName):
+        pass
 
     # 批量生成角色名称，如"Zombie1"、"Zombie2"、"Zombie3"等
     def __gen_name_batch(self, namePrefix, num):
@@ -123,7 +119,7 @@ class RoleManager(object):
     """""""""""""""""""""
 
     # 导入角色属性，用于读档
-    def import_role_attr(self):
+    def import_role_attr(self, roleAttrPackage):
         pass
 
     #####################
@@ -131,6 +127,25 @@ class RoleManager(object):
     # 导出角色属性，用于存档
     def export_role_attr(self):
         pass
+
+
+    """""""""""""""
+    角色属性管理函数
+    """""""""""""""
+
+    def append_role_attr(self, name, key, value):
+
+        if self.__roleNameMap[name] is not None:
+
+            self.__roleNameMap[name].append_role_value(key, value)
+
+    #####################
+
+    def set_role_attr_value(self, name, key, value):
+
+        if self.__roleNameMap[name] is not None:
+
+            self.__roleNameMap[name].set_attr_value(key, value)
 
     """""""""""""""""""""
     成员变量的set和get函数
@@ -143,18 +158,6 @@ class RoleManager(object):
     def get_role(self, name):
 
         return self.__roleNameMap[name]
-
-    def set_role_attr_value(self, name, key, value):
-
-        if self.__roleNameMap[name] is not None:
-
-            self.__roleNameMap[name].set_attr_value(key, value)
-
-    def append_role_attr(self, name, key, value):
-
-        if self.__roleNameMap[name] is not None:
-
-            self.__roleNameMap[name].append_role_value(key, value)
 
     def get_roleModelMap(self):
 

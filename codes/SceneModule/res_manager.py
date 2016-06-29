@@ -1,18 +1,21 @@
 # -*- coding:utf-8 -*-
 
 import SeriousTools.SeriousTools as SeriousTools
+from ArchiveModule.archive_package import ArchivePackage
 
 class ResManager(object):
 
     _resType = ""
     _resCount = 0
     _resMap = dict()
+    _resPath = dict()
 
     def __init__(self, resType):
 
         self._resType = resType
         self._resCount = 0
         self._resMap = dict()
+        self._resPath = dict()
 
     """""""""""""""""
     加载资源,子类必须重写
@@ -27,10 +30,11 @@ class ResManager(object):
         resId = self._gen_resId()
 
         self._resMap[resId] = res
+        self._resPath[resId] = [resPath, extraResPath]
 
         return res
 
-
+    #####################
 
     # 生成资源ID
     def _gen_resId(self):
@@ -66,4 +70,6 @@ class ResManager(object):
 
         return self._resMap
 
-    #####################
+    def get_resPath(self):
+
+        return self._resPath
