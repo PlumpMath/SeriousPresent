@@ -42,36 +42,51 @@ class LoadPlot(DirectObject):
         #初始化剧情树
         self.init_tree()
 
+        #能否移除控件
+        self.__destroy=False
+
     #初始化对话与人物头像
     def init_interface(self,part):
-        self.init_dialogue(part)
-        self.init_head_portrait()
+        if self.__destroy == False :
+            self.init_dialogue(part)
+            self.init_head_portrait()
+            self.__destroy=True
 
     # 初始化对话框
     def init_dialogue(self,part):
         # 显示对话内容
-        self.__dialogue = OnscreenText("", pos=(0, -0.9), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
-                                       mayChange=True)
-        self.selectPart(part)
+        if self.__destroy == False:
+            self.__dialogue = OnscreenText("", pos=(0, -0.9), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
+                                           mayChange=True)
+            self.selectPart(part)
+            self.__destroy = True
 
     # 初始化人物头像
     def init_head_portrait(self):
         # 人物头像
-        self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(0, 0, 0), scale=0.5)
-        self.__image.setTransparency(TransparencyAttrib.MAlpha)
+        if self.__destroy == False:
+            self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(0, 0, 0), scale=0.5)
+            self.__image.setTransparency(TransparencyAttrib.MAlpha)
+            self.__destroy = True
 
     #移除控件
     def destroy(self):
-        self.destroy_dialogue()
-        self.destroy_image()
+        if self.__destroy == True:
+            self.destroy_dialogue()
+            self.destroy_image()
+            self.__destroy = False
 
     # 移除对话框
     def destroy_dialogue(self):
-        self.__dialogue.destroy()
+        if self.__destroy == True:
+            self.__dialogue.destroy()
+            self.__destroy = False
 
     #移除头像
     def destroy_image(self):
-        self.__image.destroy()
+        if self.__destroy == True:
+            self.__image.destroy()
+            self.__destroy = False
 
     #读取对话文件，存成数组，按part形成结构如下的数组
     # [{id:,dialogue:[]},{},{}]
