@@ -42,22 +42,35 @@ class LoadPlot(DirectObject):
         #初始化剧情树
         self.init_tree()
 
-
     #初始化对话与人物头像
     def init_interface(self,part):
+        self.init_dialogue(part)
+        self.init_head_portrait()
+
+    # 初始化对话框
+    def init_dialogue(self,part):
         # 显示对话内容
         self.__dialogue = OnscreenText("", pos=(0, -0.9), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
                                        mayChange=True)
+        self.selectPart(part)
+
+    # 初始化人物头像
+    def init_head_portrait(self):
         # 人物头像
         self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(0, 0, 0), scale=0.5)
         self.__image.setTransparency(TransparencyAttrib.MAlpha)
 
-        #设置对话part
-        self.selectPart(part)
-
     #移除控件
     def destroy(self):
+        self.destroy_dialogue()
+        self.destroy_image()
+
+    # 移除对话框
+    def destroy_dialogue(self):
         self.__dialogue.destroy()
+
+    #移除头像
+    def destroy_image(self):
         self.__image.destroy()
 
     #读取对话文件，存成数组，按part形成结构如下的数组
@@ -111,19 +124,34 @@ class LoadPlot(DirectObject):
             role = line[:char - 1]
             dia = line[char:]
 
-            # 判断角色
-            if role.decode('gb2312').encode('utf-8') == "猎人":
-                self.__image.setImage("../../resources/images/1.jpg")
-            elif role.decode('gb2312').encode('utf-8') == "修女":
-                self.__image.setImage("../../resources/images/2.jpg")
-            else:
-                self.__image.setImage("../../resources/images/3.jpg")
+            # # 判断角色
+            # if role.decode('gb2312').encode('utf-8') == "猎人":
+            #     self.__image.setImage("../../resources/images/1.jpg")
+            # elif role.decode('gb2312').encode('utf-8') == "修女":
+            #     self.__image.setImage("../../resources/images/2.jpg")
+            # else:
+            #     self.__image.setImage("../../resources/images/3.jpg")
+
+            #显示人物头像
+            # self.showRole(role)
 
             self.__dialogue.setText(dia.decode('gb2312'))
 
             self.__index = self.__index+1
 
             return True
+
+    #根据人物对象显示头像
+    def showRole(self,role):
+
+        # 判断角色
+        if role.decode('gb2312').encode('utf-8') == "猎人":
+            self.__image.setImage("../../resources/images/1.jpg")
+        elif role.decode('gb2312').encode('utf-8') == "修女":
+            self.__image.setImage("../../resources/images/2.jpg")
+        else:
+            self.__image.setImage("../../resources/images/3.jpg")
+
 
     #初始化剧情树
     def init_tree(self):
