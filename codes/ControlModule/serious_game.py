@@ -7,10 +7,11 @@ from direct.showbase.DirectObject import DirectObject
 from keyboard_mouse_handler import GameControlMouseHandler
 from keyboard_mouse_handler import GamePlayerMouseHandler
 from test_application import testApplication
+from main_menu import MainMenu
 
-class SeriousGame(ShowBase):
+class SeriousGame():
 	def __init__(self):
-		self.app = testApplication()
+		self.app = MainMenu()
 		self.app.run()
 
 game = SeriousGame()
