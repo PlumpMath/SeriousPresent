@@ -113,6 +113,7 @@ class MenuInputHandler(DirectObject):
         self.__load_game = False
         self.__description = False
         self.__exit = False
+        self.__select = False
 
         taskMgr.add(self.updateInput,"update input")
 
@@ -140,6 +141,12 @@ class MenuInputHandler(DirectObject):
     def endExit(self):
         self.__exit = False
 
+    def beginSelect(self):
+        self.__select = True
+
+    def endSelect(self):
+        self.__select = False
+
     def dispatchMessages(self):
         if self.__new_game:
             messenger.send("NewGame")
@@ -154,6 +161,10 @@ class MenuInputHandler(DirectObject):
         elif self.__exit:
             messenger.send("Exit")
             self.endExit()
+        if  self.__select:
+            messenger.send("ChangeMenu")
+            self.endSelect()
+
     def updateInput(self, task):
         return task.cont
 
