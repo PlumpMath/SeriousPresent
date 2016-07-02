@@ -132,12 +132,13 @@ class LoadPlot(DirectObject):
             char=0
 
             #分离角色名与对话内容
-            for f in line:
-                char = char + 1
-                if (f == ":"):
-                    break
-            role = line[:char - 1]
-            dia = line[char:]
+            char = line.find(":")
+            # for f in line:
+            #     char = char + 1
+            #     if (f == ":"):
+            #         break
+            role = line[:char]
+            dia = line[char+1:]
 
             # # 判断角色
             # if role.decode('gb2312').encode('utf-8') == "猎人":
@@ -199,6 +200,10 @@ class LoadPlot(DirectObject):
         # print 'Node', self.__dialogueTree.search("123").get_data()
         # print 'Node', self.__dialogueTree.search("1234").get_data()
         # print 'Node', self.__dialogueTree.search("19").get_data()
+
+    #返回剧情树路径
+    def get_path(self):
+        return self.__path
 
 #节点类
 class Node(object):
