@@ -74,6 +74,7 @@ class GamePlayerMouseHandler(InputHandler):
 
             return task.cont
 
+"""菜单场景的监听"""
 class MenuPlayerInputHandler(MenuInputHandler):
     def __init__(self):
         MenuInputHandler.__init__(self)
@@ -95,9 +96,11 @@ class MenuPlayerInputHandler(MenuInputHandler):
 
     def __countDecress(self):
         self.__count = self.__count - 1
+        self.beginSelect()
 
     def __countIncress(self):
         self.__count = self.__count + 1
+        self.beginSelect()
 
     def __decide(self):
         tmp = 4
@@ -109,6 +112,10 @@ class MenuPlayerInputHandler(MenuInputHandler):
         			   3:self.beginExit}
         switchInput[tmp]()
 
+    def get_count(self):
+        tmp = 4
+        tmp = self.__count % tmp
+        return tmp
 
     def updateInput(self,task):
         self.dispatchMessages()
