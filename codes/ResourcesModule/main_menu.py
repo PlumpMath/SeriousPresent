@@ -27,7 +27,7 @@ class MainMenu(ShowBase):
         ShowBase.__init__(self)
 
         #load background image
-        self.__bg_image = OnscreenImage(image='../../resources/images/home_bg.png', pos=(0, 0, 0), scale=1)
+        self.__image = OnscreenImage(image='../../resources/images/main_menu.jpg', pos=(0, 0, 0), scale=1)
         self.__image.setSx(self.getAspectRatio())
         self.__image.setTransparency(TransparencyAttrib.MAlpha)
 
