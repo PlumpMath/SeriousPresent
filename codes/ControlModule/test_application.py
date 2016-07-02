@@ -1,4 +1,5 @@
 # coding=utf-8
+from direct.showbase.MessengerGlobal import messenger
 from direct.showbase.ShowBase import ShowBase
 from direct.actor.Actor import Actor
 from panda3d.core import *
@@ -6,6 +7,7 @@ from FollowCam import FollowCam
 from direct.showbase.DirectObject import DirectObject
 from keyboard_mouse_handler import GameControlMouseHandler
 from keyboard_mouse_handler import GamePlayerMouseHandler
+from input_recoder import InputRecorder
 
 class testApplication(ShowBase):
     def __init__(self):
@@ -51,3 +53,15 @@ class testApplication(ShowBase):
 
     def turn(self,rate):
         self.panda.setH(self.panda,rate)
+
+    def startReplay(self):
+        self.acceptOnce("replay-done",self.replayDone)
+        messenger.send("walk-stop")
+        messenger.send("reverse-stop")
+        self.panda.clearTransform()
+        self.rec.replay()
+
+    def replayDone(self):
+        self.panda.clearTransform()
+        messenger.send("walk-stop")
+        messenger.send("reverse-stop")
