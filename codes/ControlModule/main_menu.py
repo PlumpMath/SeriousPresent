@@ -51,7 +51,6 @@ class MainMenu(ShowBase):
         # self.__del__()
         # exit()
 
-
     def __setFullscreen(self, width, height, posX, posY, full):
         winProps = WindowProperties()
         winProps.setOrigin(posX, posY)
@@ -70,7 +69,7 @@ class MainMenu(ShowBase):
         self.setFullScreen(0)
 
         #load background image
-        self.__image = OnscreenImage(image='../../resources/images/home.png',
+        self.__image = OnscreenImage(image='../../resources/images/menu/home1.png',
                                      scale=1)
         self.__image.setSx(self.getAspectRatio())
         self.__image.setTransparency(TransparencyAttrib.MAlpha)
