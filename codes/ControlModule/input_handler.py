@@ -103,3 +103,73 @@ class InputHandler(DirectObject):
 
     def updateInput(self, task):
             return task.cont
+
+class MenuInputHandler(DirectObject):
+    def __init__(self):
+        DirectObject.__init__(self)
+
+        # 所有的状态类别
+        self.__new_game = False
+        self.__load_game = False
+        self.__description = False
+        self.__exit = False
+        self.__select = False
+
+        taskMgr.add(self.updateInput,"update input")
+
+    def beginNewGame(self):
+        self.__new_game = True
+
+    def endNewGame(self):
+        self.__new_game = False
+
+    def beginLoadGame(self):
+        self.__load_game = True
+
+    def endLoadGame(self):
+        self.__load_game = False
+
+    def beginDescription(self):
+        self.__description = True
+
+    def endDescription(self):
+        self.__description = False
+
+    def beginExit(self):
+        self.__exit = True
+
+    def endExit(self):
+        self.__exit = False
+
+    def beginSelect(self):
+        self.__select = True
+
+    def endSelect(self):
+        self.__select = False
+
+    def dispatchMessages(self):
+        if self.__new_game:
+            messenger.send("NewGame")
+            print '已经发送 new game'
+            self.endNewGame()
+        elif self.__load_game:
+            messenger.send("LoadGame")
+            self.endLoadGame()
+        if self.__description:
+            messenger.send("Description")
+            self.endDescription()
+        elif self.__exit:
+            messenger.send("Exit")
+            self.endExit()
+        if  self.__select:
+            messenger.send("ChangeMenu")
+            self.endSelect()
+
+    def updateInput(self, task):
+        return task.cont
+
+    def destroy(self):
+        self.ignoreAll()
+
+    def __exit(self):
+        exit()
