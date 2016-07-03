@@ -4,15 +4,10 @@ from role_base import Role
 
 class EnemyRole(Role):
 
-    def __init__(self,
-                 name,
-                 modelId,
-                 hp
-                 ):
+    def __init__(self, modelId, hp):
 
 
         Role.__init__(self,
-                      name=name,
                       roleId="EnemyRole",
                       modelId=modelId,
                       ableToTalk=False,

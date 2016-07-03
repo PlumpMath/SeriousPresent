@@ -3,17 +3,20 @@
 from actor_manager import ActorManager
 from model_manager import ModelManager
 from terrain_manager import TerrainManager
+from camera_controller import CameraController
+from light_controller import LightController
 import SeriousTools.SeriousTools as SeriousTools
 
 class SceneManager(object):
 
-    def __init__(self, render):
+    def __init__(self):
 
         self.__actorMgr = ActorManager()
         self.__modelMgr = ModelManager()
         self.__terraMgr = TerrainManager()
 
-        self.__render = render
+        self.__render = None
+        self.__showbase = None
 
         self.__camCtrlr = None
         self.__lightCtrlr = None
@@ -21,6 +24,12 @@ class SceneManager(object):
     """""""""""""""""""""""""""""""""""""""
     场景管理函数，包括创建、更新、剔除、隐藏等
     """""""""""""""""""""""""""""""""""""""
+
+    def build_on(self, showbase):
+
+        self.__showbase = showbase
+
+        self.__render = self.__showbase.render
 
     # 添加动态模型场景
     def add_actor_scene(self,
@@ -69,9 +78,9 @@ class SceneManager(object):
         # 更新地形
         self.__terraMgr.update_terrain(task)
 
-        self.__camCtrlr.update_camera(task)
-
         self.__actorMgr.update_actors(task)
+
+        self.__camCtrlr.update_camera(task)
 
         return task.cont
 
@@ -115,7 +124,7 @@ class SceneManager(object):
 
         return res
 
-    def set_camCtrlr(self, camCtrlr):
+    def bind_CameraController(self, camCtrlr):
 
         self.__camCtrlr = camCtrlr
 
@@ -123,9 +132,11 @@ class SceneManager(object):
 
         return self.__camCtrlr
 
-    def set_lightCtrlr(self, lightCtrlr):
+    def bind_LightController(self, lightCtrlr):
 
         self.__lightCtrlr = lightCtrlr
+
+        self.__lightCtrlr.bind_SceneManager(self)
 
     def get_lightCtrlr(self):
 
@@ -135,24 +146,103 @@ class SceneManager(object):
     读档存档的场景数据接口
     """""""""""""""""""""
 
+    # Pos   : LPoint3f
+    # Hpr   : LVecBase3f
+    # Scale : LVecBase3f
+    # Color : LVecBase4f
+    # LVecBase4f, LVecBase3f((0, 0, 0))和LPoint3f((0, 0, 0))这样的初始化是可以的
+
     # 导入场景数据，用于读档
     def import_sceneArcPkg(self, sceneArcPkg):
 
         # Actor数据读档
         actorArcPkg = sceneArcPkg[0]
 
-        
+        actorMgr = ActorManager()
+
+        actorMgr.set_toggleEffert(actorArcPkg.get_metaData("toggleEffert"))
+        actorMgr.set_eventActionRecord(actorArcPkg.get_metaData("eventActionRecord"))
+        actorMgr.set_eventEffertRecord(actorArcPkg.get_metaData("eventEffertRecord"))
+
+        for actorItem in actorArcPkg.get_itemsData():
+
+            actor = actorMgr.load_res(_resId = actorItem[0],
+                                      resPath = actorItem[1],
+                                      extraResPath = actorItem[2])
+
+            actor.setPos(actorItem[3])
+            actor.setHpr(actorItem[4])
+            actor.setScale(actorItem[5])
+
+            parentNode = self.get_res(actorItem[6])
+            actor.reparentTo(parentNode)
 
 
         # Model数据读档
+        modelArcPkg = sceneArcPkg[1]
+
+        modelMgr = ModelManager()
+
+        for modelItem in modelArcPkg.get_itemsData():
+
+            model = modelMgr.load_res(_resId = modelItem[0],
+                                      resPath = modelItem[1])
+
+            model.setPos(modelItem[2])
+            model.setHpr(modelItem[3])
+            model.setScale(modelItem[4])
+
+            parentNode = self.get_res(resId = modelItem[5])
+            model.reparentTo(parentNode)
 
         # Terrain数据读档
+        terraArcPkg = sceneArcPkg[2]
+
+        terraMgr = TerrainManager()
+
+        for terraItem in terraArcPkg.get_itemsData():
+
+            terrain = terraMgr.load_res(_resId = terraItem[0],
+                                        resPath = terraItem[1],
+                                        extraResPath = terraItem[2])
+
+            terrain.getRoot().setPos(terraItem[3])
+            terrain.getRoot().setHpr(terraItem[4])
+            terrain.getRoot().setScale(terraItem[5])
+
+            parentNode = self.get_res(resId = terraItem[6])
+            terrain.reparentTo(parentNode)
+
+        terraMgr.set_currTerrain(terraArcPkg.get_metaData("currTerraId"))
 
         # Camera数据读档
+        cameraArcPkg = sceneArcPkg[3]
+
+        camCtrlr = CameraController()
+        camCtrlr.bind_camera(self.__showbase.cam)
+        camCtrlr.get_camToCtrl().setPos(cameraArcPkg[0])
+        camCtrlr.get_camToCtrl().setHpr(cameraArcPkg[1])
+        camCtrlr.set_moveSpeed(cameraArcPkg[2])
+        camCtrlr.set_rotateSpeed(cameraArcPkg[3])
+        camCtrlr.set_optsSwitch(cameraArcPkg[4])
+        camCtrlr.set_toggleEventToOpts(cameraArcPkg[5])
 
         # Light数据读档
+        lightArcPkg = sceneArcPkg[4]
 
-        pass
+        lightCtrlr = LightController()
+
+        for lightItem in lightArcPkg.get_itemsData():
+
+            light = lightCtrlr.create_light(_lightId = lightItem[0],
+                                            lightType = SeriousTools.extract_name_from_Id(lightItem[0]),
+                                            lightColor = lightItem[1],
+                                            lightPos = lightItem[2],
+                                            lightHpr = lightItem[3],
+                                            targetId = lightItem[4],
+                                            parentId = lightItem[6])
+
+            lightCtrlr.set_light_to(lightItem[0], setorId = lightItem[5])
 
     #####################
 
@@ -168,6 +258,10 @@ class SceneManager(object):
         actorEventActionRecord = self.__actorMgr.get_eventActionRecord()
         actorEventEffertRecord = self.__actorMgr.get_eventEffertRecord()
 
+        actorArcPkg.set_metaData("toggleEffert", self.__actorMgr.get_toggleEffert())
+        actorArcPkg.set_metaData("eventActionRecord", self.__actorMgr.get_eventActionRecord())
+        actorArcPkg.set_metaData("eventEffertRecord", self.__actorMgr.get_eventEffertRecord())
+
         for actorId, actor in self.__actorMgr.get_resMap().iteritems():
 
             actorItem = []
@@ -178,8 +272,6 @@ class SceneManager(object):
             actorItem.append(actor.getPos())
             actorItem.append(actor.getHpr())
             actorItem.append(actor.getScale())
-            actorItem.append(actorEventActionRecord[actorId])
-            actorItem.append(actorEventEffertRecord[actorId])
 
             parentNode = actor.getParent()
 
@@ -298,6 +390,7 @@ class SceneManager(object):
         camItem.append(self.__camCtrlr.get_rotateRadius())
         camItem.append(self.__camCtrlr.get_optsSwitch())
         camItem.append(self.__camCtrlr.get_toggleEventToOpts())
+        #camItem.append(None)
 
         camArcPkg.add_item(camItem)
 

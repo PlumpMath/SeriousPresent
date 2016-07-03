@@ -6,13 +6,9 @@ from direct.showbase.DirectObject import DirectObject
 
 class Role(DirectObject):
 
-    _roleAttr = dict()
-    _eventHandleMap = dict()
-
     _currState = None
 
     def __init__(self,
-                 name,
                  roleId,
                  modelId,
                  ableToTalk,
@@ -22,7 +18,9 @@ class Role(DirectObject):
 
         DirectObject.__init__(self)
 
-        self._roleAttr["name"] = name
+        self._roleAttr = dict()
+        self._eventHandleMap = dict()
+
         self._roleAttr["roleId"] = roleId
         self._roleAttr["modelId"] = modelId         # 角色模型ID
         self._roleAttr["ableToTalk"] = ableToTalk   # 角色能否交流
@@ -88,6 +86,11 @@ class Role(DirectObject):
 
         return self._roleAttr
 
+    # 判断角色是否含有某个属性
+    def has_attr(self, attr):
+
+        return self._roleAttr.has_key(attr)
+
     """""""""""""""""""""""
     信息打印函数，主要用于调试
     """""""""""""""""""""""
@@ -95,7 +98,7 @@ class Role(DirectObject):
     # 打印出所有属性以及其对应值
     def print_all_attr(self):
 
-        print "-- Attribute of Role '%s' --" % self._roleAttr["name"]
+        print "-- Attribute of Role '%s' --" % self._roleAttr["roleId"]
 
         for key in sorted(self._roleAttr.keys()):
 

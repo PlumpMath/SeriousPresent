@@ -4,6 +4,7 @@ from res_manager import ResManager
 from RoleModule.role_manager import RoleManager
 from ArchiveModule.archive_package import ArchivePackage
 import SeriousTools.SeriousTools as SeriousTools
+from SeriousTools.effert_msg_dispatcher import EffertMsgDispatcher
 
 from direct.actor.Actor import Actor
 from direct.interval.ActorInterval import ActorInterval
@@ -11,19 +12,30 @@ from direct.showbase.MessengerGlobal import messenger
 
 import math
 
+# 角色行为常量
 ACTOR_MOVE_FORWARD  = "actor_move_forward"
 ACTOR_MOVE_BACKWARD = "actor_move_backward"
 ACTOR_MOVE_LEFT     = "actor_move_left"
 ACTOR_MOVE_RIGHT    = "actor_move_right"
+ACTOR_ROTATE_CW     = "actor_rotate_cw"
+ACTOR_ROTATE_CCW    = "actor_rotate_ccw"
 ACTOR_ATTACK        = "actor_attack"
 ACTOR_BE_ATTACKED   = "actor_be_attacked"
 ACTOR_TALK          = "actor_talk"
+
+# 角色事件常量
+FIND_ENEMY      = "find_enemy"
+FIND_NPC        = "find_npc"
+FIND_ATTACHMENT = "find_attachment"
+FIND_NOTHING    = "find_nothing"
 
 ACTOR_EFFERT = [
     ACTOR_MOVE_FORWARD,
     ACTOR_MOVE_BACKWARD,
     ACTOR_MOVE_LEFT,
     ACTOR_MOVE_RIGHT,
+    ACTOR_ROTATE_CW,
+    ACTOR_ROTATE_CCW,
     ACTOR_ATTACK,
     ACTOR_BE_ATTACKED,
     ACTOR_TALK,
@@ -37,19 +49,24 @@ class ActorManager(ResManager):
 
         self.__itvlMap = dict()
 
-        self.__actorMoveSpeed = 4
+        self.__actorMoveSpeed = 10
+        self.__actorRotateSpeed = 10
 
         self.__roleMgr = None
 
-        self.__camCtrlr = None
-
         self.__clock = None
+
+        self.__playerMovingState = dict()
+
+        self.__attackLock = False
 
         self.__effectSwitch = {
             ACTOR_MOVE_FORWARD  : False,
             ACTOR_MOVE_BACKWARD : False,
             ACTOR_MOVE_LEFT     : False,
             ACTOR_MOVE_RIGHT    : False,
+            ACTOR_ROTATE_CW     : False,
+            ACTOR_ROTATE_CCW    : False,
             ACTOR_ATTACK        : False,
             ACTOR_BE_ATTACKED   : False,
             ACTOR_TALK          : False,
@@ -60,6 +77,8 @@ class ActorManager(ResManager):
             ACTOR_MOVE_BACKWARD : [self.__actor_move_backward, []],
             ACTOR_MOVE_LEFT     : [self.__actor_move_left, []],
             ACTOR_MOVE_RIGHT    : [self.__actor_move_right, []],
+            ACTOR_ROTATE_CW     : [self.__actor_rotate_cw, []],
+            ACTOR_ROTATE_CCW    : [self.__actor_rotate_ccw, []],
             ACTOR_ATTACK        : [self.__actor_attack, []],
             ACTOR_BE_ATTACKED   : [self.__actor_be_attacked, []],
             ACTOR_TALK          : [self.__actor_talk, []],
@@ -80,6 +99,8 @@ class ActorManager(ResManager):
         self.__WN = 315
         self.__directionsVector = None
 
+        self.__effertMsgDiptcr = EffertMsgDispatcher()
+
         self.__arcPkg = ArchivePackage(arcPkgName = "actor",
                                        itemsName = [
                                            "actorId",
@@ -88,10 +109,11 @@ class ActorManager(ResManager):
                                            "pos",
                                            "hpr",
                                            "scale",
-                                           "eventActionRecord",
-                                           "eventEffertRecord",
                                            "parentId"
                                        ])
+        self.__arcPkg.append_metaData(key = "toggleEvent")
+        self.__arcPkg.append_metaData(key = "eventActionRecord")
+        self.__arcPkg.append_metaData(key = "eventEffertRecord")
 
     """""""""""""""
     动态模型管理函数
@@ -100,7 +122,8 @@ class ActorManager(ResManager):
     # 加载动态模型
     def load_res(self,
                  resPath,
-                 extraResPath):
+                 extraResPath,
+                 _resId = None):
 
         res = Actor(resPath, extraResPath)
 
@@ -140,15 +163,15 @@ class ActorManager(ResManager):
                     itvl = self.__get_actor_interval(actorId, actionName)
 
                     actor.accept(event=toggleEvent,
-                                 method=self.__interval_loop,
+                                 method=self.__move_interval_loop,
                                  extraArgs=[toggleEvent, itvl])
 
-                    actor.accept(event=toggleEvent + "-repeat",
-                                method=self.__interval_loop,
-                                extraArgs=[toggleEvent, itvl])
+                    # actor.accept(event=toggleEvent + "-repeat",
+                    #             method=self.__interval_loop,
+                    #             extraArgs=[toggleEvent, itvl])
 
                     actor.accept(event=toggleEvent + "-up",
-                                method=self.__interval_stop,
+                                method=self.__move_interval_stop,
                                 extraArgs=[toggleEvent, itvl, actor.getNumFrames(actionName)])
 
                     if self.__eventActionRecord.has_key(actorId) is False:
@@ -170,15 +193,15 @@ class ActorManager(ResManager):
                     itvl = self.__get_actor_interval(actorId, actionName)
 
                     actor.accept(event=toggleEvent,
-                                 method=self.__interval_loop,
+                                 method=self.__move_interval_loop,
                                  extraArgs=[toggleEvent, itvl])
 
-                    actor.accept(event=toggleEvent + "-repeat",
-                                  method=self.__interval_loop,
-                                  extraArgs=[toggleEvent, itvl])
+                    # actor.accept(event=toggleEvent + "-repeat",
+                    #               method=self.__interval_loop,
+                    #               extraArgs=[toggleEvent, itvl])
 
                     actor.accept(event=toggleEvent + "-up",
-                                 method=self.__interval_stop,
+                                 method=self.__move_interval_stop,
                                  extraArgs=[toggleEvent, itvl, actor.getNumFrames(actionName)])
 
                     if self.__eventActionRecord.has_key(actorId) is False:
@@ -189,34 +212,61 @@ class ActorManager(ResManager):
 
     #########################################
 
-    # 循环Interval
-    def __interval_loop(self, toggleEvennt, itvl):
+    isPlayerMoving = dict()
 
+    # 循环Interval
+    def __move_interval_loop(self, toggleEvent, itvl):
+
+        self.__playerMovingState[toggleEvent] = True
+
+        #print toggleEvent, " : ", self.__playerMovingState
+        #print self.__directionsVector
         if not itvl.isPlaying():
 
             itvl.loop()
 
-        else:
+        # else:
+        #
+        #     print itvl, " Is Playing"
 
-            print itvl, " Is Playing"
+        #print toggleEvent + " happen"
 
-        messenger.send(toggleEvennt + "_effect")
+        #messenger.send(toggleEvent + "_effect")
 
     #########################################
 
     # 停止Interval
-    def __interval_stop(self, toggleEvent, itvl, endFrame):
+    def __move_interval_stop(self, toggleEvent, itvl, endFrame):
 
+        self.__playerMovingState[toggleEvent] = False
 
         currFrame = itvl.getCurrentFrame()
 
-        if currFrame is not None and endFrame is not None:
+        #print toggleEvent, "-up : ", self.__playerMovingState
+        # print "currFrame", currFrame
+        # print "endFrame", endFrame
 
-            itvl.start(startT = currFrame / endFrame)
+        if True not in self.__playerMovingState.values():
 
-        messenger.send(toggleEvent + "_effect_end")
+            if currFrame is not None:
+
+                itvl.start(startT = currFrame / endFrame)
+
+        #print toggleEvent + "-up happen"
+
+        #messenger.send(toggleEvent + "_effect_end")
 
         #itvl.finish()
+
+    #########################################
+
+    #def __player_attack
+
+    #########################################
+
+    def __enemy_die_interval_play(self):
+
+        pass
 
     #########################################
 
@@ -257,12 +307,19 @@ class ActorManager(ResManager):
 
         actor = self.get_actor(actorId)
 
+        print "In Method add_effect_to_actor : ", actor
+
         if actor is not None and effect in ACTOR_EFFERT:
 
-            actor.accept(toggleEvent + "_effect", self.__turn_effect_switch, [effect, True])
-            actor.accept(toggleEvent + "_effect_end", self.__turn_effect_switch, [effect, False])
+            self.__effertMsgDiptcr.accept_msg(toggleEvent)
+            #self.__effertMsgDiptcr.accept_msg(toggleEvent+"up")
+
+            actor.accept(toggleEvent + "_effert", self.__turn_effect_switch, [effect, True])
+            actor.accept(toggleEvent + "_effert_end", self.__turn_effect_switch, [effect, False])
 
             self.__toggleEffert[effect][1].append(actorId)
+
+            #print self.__toggleEffert[effect]
 
             if self.__eventEffertRecord.has_key(actorId) is False:
 
@@ -273,6 +330,8 @@ class ActorManager(ResManager):
     #########################################
 
     def __turn_effect_switch(self, effect, onOrOff):
+
+        print "turn '", effect, "' ", onOrOff
 
         self.__effectSwitch[effect] = onOrOff
 
@@ -290,6 +349,11 @@ class ActorManager(ResManager):
         self.__directionsVector = self.__camCtrlr.get_directionsVector()
         self.__update_actor_direction()
 
+        player = self.__roleMgr.get_role("PlayerRole")
+
+        self.__actorMoveSpeed = player.get_attr_value("runSpeed")
+        self.__actorRotateSpeed = player.get_attr_value("rotateSpeed")
+
         for effect, switch in self.__effectSwitch.iteritems():
 
             if switch:
@@ -300,9 +364,11 @@ class ActorManager(ResManager):
 
                     execTask = self.__toggleEffert[effect][0]
 
-                    arg = self.get_res(arg)
+                    arg = self.get_actor(arg)
 
                     execTask(arg, task)
+
+        self.__check_player_touch_area(task)
 
         return task.cont
 
@@ -311,9 +377,9 @@ class ActorManager(ResManager):
         x = self.__directionsVector["N"].getX()
         y = self.__directionsVector["N"].getY()
 
-        f = open("ActorDirections.txt", "w")
-
-        f.write(str(self.__directionsVector["N"]) + "\n")
+        # f = open("ActorDirections.txt", "w")
+        #
+        # f.write(str(self.__directionsVector["N"]) + "\n")
 
         self.__N  = self.__camCtrlr.get_camToCtrl().getH()
         self.__NE = self.__N + 45
@@ -324,8 +390,8 @@ class ActorManager(ResManager):
         self.__W  = self.__N + 270
         self.__WN = self.__N + 315
 
-        f.write(str(self.__N))
-        f.close()
+        # f.write(str(self.__N))
+        # f.close()
 
     #########################################
 
@@ -349,104 +415,152 @@ class ActorManager(ResManager):
 
     def __actor_move_forward(self, actor, task):
 
-        dt = self.__clock.getDt()
-        dVector = None
+        #messenger.send("update_camera")
 
-        actorH = None
+        # if self.check_effectSwitch(ACTOR_MOVE_LEFT) is True:
+        #
+        #     dVector = self.__directionsVector["ES"]
+        #
+        #     actorH = self.__SW
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # elif self.check_effectSwitch(ACTOR_MOVE_RIGHT) is True:
+        #
+        #     dVector = self.__directionsVector["SW"]
+        #
+        #     actorH = self.__ES
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # else:
+        #
+        #     dVector = self.__directionsVector["S"]
+        #
+        #     actorH = self.__S
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
 
-        if self.check_effectSwitch(ACTOR_MOVE_LEFT) is True:
+        if self.__effectSwitch["actor_move_forward"] is True:
 
-            dVector = self.__directionsVector["ES"]
+            dt = self.__clock.getDt()
 
-            actorH = self.__SW
+            c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
+            s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
 
+            actor.setX(actor.getX() + c * dt * self.__actorMoveSpeed)
+            actor.setY(actor.getY() + s * dt * self.__actorMoveSpeed)
 
-        elif self.check_effectSwitch(ACTOR_MOVE_RIGHT) is True:
+        #actor.setH(actorH)
 
-            dVector = self.__directionsVector["SW"]
+        #actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
 
-            actorH = self.__ES
-
-        else:
-
-            dVector = self.__directionsVector["S"]
-
-            actorH = self.__S
-
-        actor.setH(actorH)
-
-        actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
-
-        print actor, "currY : ", actor.getY()
+        #print actor, "currY : ", actor.getY()
 
         return task.cont
+
+        #########################################
+
+    def __actor_move_left(self, actor, task):
+
+        #messenger.send("update_camera")
+
+        # dt = self.__clock.getDt()
+        # dVector = None
+        # actorH = None
+        #
+        # if self.check_effectSwitch(ACTOR_MOVE_FORWARD) is True:
+        #
+        #     dVector = self.__directionsVector["ES"] #NE
+        #
+        #     actorH = self.__SW
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # elif self.check_effectSwitch(ACTOR_MOVE_BACKWARD) is True:
+        #
+        #     dVector = self.__directionsVector["NE"]#ES
+        #
+        #     actorH = self.__WN
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # else:
+        #
+        #     dVector = self.__directionsVector["E"]
+        #
+        #     actorH = self.__W
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
+        #
+        # actor.setH(actorH)
+
+           # actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
+
+        # print actor, "currX : ", actor.getX()
+
+        # if self.__effectSwitch["actor_move_backward"] is True:
+        #
+        #     dt = self.__clock.getDt()
+        #
+        #     c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
+        #     s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
+        #
+        #     actor.setX(actor.getX() - c * dt * self.__actorMoveSpeed)
+        #     actor.setY(actor.getY() - s * dt * self.__actorMoveSpeed)
+
+        return task.cont
+
 
     #########################################
 
     def __actor_move_backward(self, actor, task):
 
-        dt = self.__clock.getDt()
+        #messenger.send("update_camera")
 
-        actorH = None
-        #actor.setY(actor.getY() + dt * self.__actorMoveSpeed)
+        # dt = self.__clock.getDt()
+        #
+        # actorH = None
+        # #actor.setY(actor.getY() + dt * self.__actorMoveSpeed)
+        #
+        # if self.check_effectSwitch(ACTOR_MOVE_LEFT) is True:
+        #
+        #     dVector = self.__directionsVector["NE"]
+        #
+        #     actorH = self.__WN
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # elif self.check_effectSwitch(ACTOR_MOVE_RIGHT) is True:
+        #
+        #     dVector = self.__directionsVector["WN"]
+        #
+        #     actorH = self.__NE
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # else:
+        #
+        #     dVector = self.__directionsVector["N"]
+        #
+        #     actorH = self.__N
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
+        #
+        # actor.setH(actorH)
+        #
+        # #actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
 
-        if self.check_effectSwitch(ACTOR_MOVE_LEFT) is True:
+        #print actor, "currY : ", actor.getY()
 
-            dVector = self.__directionsVector["NE"]
+        if self.__effectSwitch["actor_move_backward"] is True:
+            dt = self.__clock.getDt()
 
-            actorH = self.__WN
+            c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
+            s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
 
-        elif self.check_effectSwitch(ACTOR_MOVE_RIGHT) is True:
-
-            dVector = self.__directionsVector["WN"]
-
-            actorH = self.__NE
-
-        else:
-
-            dVector = self.__directionsVector["N"]
-
-            actorH = self.__N
-
-        actor.setH(actorH)
-
-        actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
-
-        print actor, "currY : ", actor.getY()
-
-        return task.cont
-
-    #########################################
-
-    def __actor_move_left(self, actor, task):
-
-        dt = self.__clock.getDt()
-        dVector = None
-        actorH = None
-
-        if self.check_effectSwitch(ACTOR_MOVE_FORWARD) is True:
-
-            dVector = self.__directionsVector["NE"]
-
-            actorH = self.__SW
-
-        elif self.check_effectSwitch(ACTOR_MOVE_BACKWARD) is True:
-
-            dVector = self.__directionsVector["ES"]
-
-            actorH = self.__WN
-
-        else:
-
-            dVector = self.__directionsVector["E"]
-
-            actorH = self.__W
-
-        actor.setH(actorH)
-
-        actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
-
-        print actor, "currX : ", actor.getX()
+            actor.setX(actor.getX() - c * dt * self.__actorMoveSpeed)
+            actor.setY(actor.getY() - s * dt * self.__actorMoveSpeed)
 
         return task.cont
 
@@ -454,35 +568,65 @@ class ActorManager(ResManager):
 
     def __actor_move_right(self, actor, task):
 
-        dt = self.__clock.getDt()
+        #messenger.send("update_camera")
 
-        actorH = None
+        # dt = self.__clock.getDt()
+        #
+        # actorH = None
+        #
+        # if self.check_effectSwitch(ACTOR_MOVE_FORWARD) is True:
+        #
+        #     dVector = self.__directionsVector["SW"] #
+        #
+        #     actorH = self.__ES
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # elif self.check_effectSwitch(ACTOR_MOVE_BACKWARD) is True:
+        #
+        #     dVector = self.__directionsVector["WN"] #SW
+        #
+        #     actorH = self.__NE
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
+        #
+        # else:
+        #
+        #     dVector = self.__directionsVector["W"]
+        #
+        #     actorH = self.__E
+        #
+        #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
+        #
+        # actor.setH(actorH)
 
-        if self.check_effectSwitch(ACTOR_MOVE_FORWARD) is True:
+        #actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
 
-            dVector = self.__directionsVector["WN"]
-
-            actorH = self.__ES
-
-        elif self.check_effectSwitch(ACTOR_MOVE_BACKWARD) is True:
-
-            dVector = self.__directionsVector["SW"]
-
-            actorH = self.__NE
-
-        else:
-
-            dVector = self.__directionsVector["W"]
-
-            actorH = self.__E
-
-        actor.setH(actorH)
-
-        actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
-
-        print actor, "currX : ", actor.getX()
+        #print actor, "currX : ", actor.getX()
 
         return task.cont
+
+    #########################################
+
+    # 角色顺时针旋转
+    def __actor_rotate_cw(self, actor, task):
+
+        dt = self.__clock.getDt()
+
+        actor.setH(actor.getH() + self.__actorRotateSpeed * dt)
+        print "the actor rotate cw : ", actor.getH()
+        return task.cont
+
+    # 角色逆时针旋转
+    def __actor_rotate_ccw(self, actor, task):
+
+        dt = self.__clock.getDt()
+
+        actor.setH(actor.getH() - self.__actorRotateSpeed * dt)
+        print "the actor rotate ccw : ", actor.getH()
+        return task.cont
+
+    #########################################
 
     #########################################
 
@@ -497,6 +641,86 @@ class ActorManager(ResManager):
         return task.cont
 
     def __actor_talk(self, args, task):
+
+        return task.cont
+
+    #def __actor
+
+    # 监测玩家角色可触碰区域内的其他角色, 监测到的不同事件具有不同优先级
+    # 优先级1：发现Enemy
+    # 优先级2：发现NPC
+    # 优先级3：发现Attachment
+    def __check_player_touch_area(self, task):
+
+        playerRole = self.__roleMgr.get_role("PlayerRole")
+
+        touchRadius = playerRole.get_attr_value("touchRadius")
+
+        player = self.get_actor(playerRole.get_attr_value("modelId"))
+
+        playerPos = player.getPos()
+
+        # 首先监测Enemy
+        enemies = self.__roleMgr.get_one_kind_of_roles("EnemyRole")
+
+        for enemyRole in enemies:
+
+            enemy = self.get_actor(enemyRole.get_attr_value("modelId"))
+
+            enemyPos = enemy.getPos()
+
+            dVector = playerPos - enemyPos
+            dVector.setZ(0)
+
+            #print "playerPos:", playerPos, " enemyPos:", enemyPos, " dVector length:", dVector.length()
+
+            if dVector.length() <= touchRadius:
+
+                messenger.send(FIND_ENEMY)
+
+                return task.cont
+
+        # 然后监测NPC
+        NPCs = self.__roleMgr.get_one_kind_of_roles("NPCRole")
+
+        for NPCRole in NPCs:
+
+            NPC = self.get_actor(NPCRole.get_attr_value("modelId"))
+
+            NPCPos = NPC.getPos()
+
+            dVector = playerPos - NPCPos
+            dVector.setZ(0)
+
+            #print "playerPos:", playerPos, " enemyPos:", NPCPos, " dVector length:", dVector.length()
+
+            if dVector.length() <= touchRadius:
+
+                messenger.send(FIND_NPC)
+
+                return task.cont
+
+        # 最后监测Attachment
+        attachments = self.__roleMgr.get_one_kind_of_roles("AttachmentRole")
+
+        for attachmentRole in attachments:
+
+            attachment = self.get_actor(attachmentRole.get_attr_value("modelId"))
+
+            attachmentPos = attachment.getPos()
+
+            dVector = playerPos - attachmentPos
+            dVector.setZ(0)
+
+            #print "playerPos:", playerPos, " enemyPos:", attachmentPos, " dVector length:", dVector.length()
+
+            if dVector.length() <= touchRadius:
+
+                messenger.send(FIND_ATTACHMENT)
+
+                return task.cont
+
+        messenger.send(FIND_NOTHING)
 
         return task.cont
 
@@ -534,9 +758,25 @@ class ActorManager(ResManager):
 
         return self.__arcPkg
 
+    def set_toggleEffert(self, toggleEffert):
+
+        self.__toggleEffert = toggleEffert
+
+    def get_toggleEffert(self):
+
+        return self.__toggleEffert
+
+    def set_eventActionRecord(self, eventActionRecord):
+
+        self.__eventActionRecord = eventActionRecord
+
     def get_eventActionRecord(self):
 
         return self.__eventActionRecord
+
+    def set_eventEffertRecord(self, eventEffertRecord):
+
+        self.__eventEffertRecord = eventEffertRecord
 
     def get_eventEffertRecord(self):
 

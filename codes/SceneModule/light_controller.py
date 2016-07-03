@@ -43,8 +43,8 @@ class LightController(object):
                                        itemsName = [
                                            "lightId",
                                            "color",
-                                           "pos",
-                                           "hpr",
+                                           "Pos",
+                                           "Hpr",
                                            "targetId",
                                            "setorId",
                                            "parentId"
@@ -59,6 +59,7 @@ class LightController(object):
                      lightType,
                      lightColor,
                      parentId,
+                     _lightId = None,
                      lightPos = None,
                      lightHpr = None,
                      shadow = True,
@@ -72,7 +73,14 @@ class LightController(object):
         if lightType is self.__lightType[0]:
 
             self.__ambientCount += 1
-            lightId += (lightType + str(self.__ambientCount))
+
+            if _lightId == None:
+
+                lightId += (lightType + str(self.__ambientCount))
+
+            else:
+
+                lightId = _lightId
 
             lightNP = self.__create_ambient_light(lightId, lightColor)
 
@@ -80,7 +88,14 @@ class LightController(object):
         elif lightType is self.__lightType[1]:
 
             self.__directionalCount += 1
-            lightId += (lightType + str(self.__directionalCount))
+
+            if _lightId == None:
+
+                lightId += (lightType + str(self.__directionalCount))
+
+            else:
+
+                lightId = _lightId
 
             lightNP = self.__create_directional_light(lightId, lightColor, lightHpr, shadow)
 
@@ -88,7 +103,14 @@ class LightController(object):
         elif lightType is self.__lightType[2]:
 
             self.__pointCount += 1
-            lightId += (lightType + str(self.__pointCount))
+
+            if _lightId == None:
+
+                lightId += (lightType + str(self.__pointCount))
+
+            else:
+
+                lightId = _lightId
 
             lightNP = self.__create_point_light(lightId, lightColor, lightPos, shadow)
 
@@ -96,7 +118,14 @@ class LightController(object):
         elif lightType is self.__lightType[3]:
 
             self.__spotCount += 1
-            lightId += (lightType + str(self.__spotCount))
+
+            if _lightId == None:
+
+                lightId += (lightType + str(self.__spotCount))
+
+            else:
+
+                lightId = _lightId
 
             lightNP = self.__create_spot_light(lightId, lightColor, lightPos, targetId, shadow)
 
@@ -104,7 +133,7 @@ class LightController(object):
 
             return None
 
-        print self.__sceneMgr.get_res(parentId)
+        #print self.__sceneMgr.get_res(parentId)
 
         lightNP.reparentTo(self.__sceneMgr.get_res(parentId))
 
@@ -116,7 +145,9 @@ class LightController(object):
     #########################################
 
     # 创建Ambient Light节点
-    def __create_ambient_light(self, lightId, lightColor):
+    def __create_ambient_light(self,
+                               lightId,
+                               lightColor):
 
         ambientLight = AmbientLight(lightId)
         ambientLight.setColor(lightColor)
@@ -128,7 +159,11 @@ class LightController(object):
     #########################################
 
     # 创建Directional Light节点
-    def __create_directional_light(self, lightId, lightColor, lightHpr, shadow = True):
+    def __create_directional_light(self,
+                                   lightId,
+                                   lightColor,
+                                   lightHpr,
+                                   shadow = True):
 
         directionalLight = DirectionalLight(lightId)
         directionalLight.setColor(lightColor)
@@ -143,7 +178,11 @@ class LightController(object):
     #########################################
 
     # 创建Point Light节点
-    def __create_point_light(self, lightId, lightColor, lightPos, shadow = True):
+    def __create_point_light(self,
+                             lightId,
+                             lightColor,
+                             lightPos,
+                             shadow = True):
 
         pointLight = PointLight(lightId)
         pointLight.setColor(lightColor)
@@ -158,7 +197,12 @@ class LightController(object):
     #########################################
 
     # 创建Spot Light节点
-    def __create_spot_light(self, lightId, lightColor, lightPos, targetId, shadow = True):
+    def __create_spot_light(self,
+                            lightId,
+                            lightColor,
+                            lightPos,
+                            targetId,
+                            shadow = True):
 
         spotLight = Spotlight(lightId)
         spotLight.setColor(lightColor)
@@ -199,13 +243,13 @@ class LightController(object):
 
         self.__setorMap[lightId].append(setorId)
 
+    def bind_SceneManager(self, sceneMgr):
+
+        self.__sceneMgr = sceneMgr
+
     """""""""""
     光源查询函数
     """""""""""
-
-    def set_sceneMgr(self, sceneMgr):
-
-        self.__sceneMgr = sceneMgr
 
     def get_sceneMgr(self):
 

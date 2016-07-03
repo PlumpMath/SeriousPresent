@@ -9,6 +9,7 @@
 import SeriousTools.SeriousTools as SeriousTools
 from ArchiveModule.archive_package import ArchivePackage
 
+from direct.showbase.MessengerGlobal import messenger
 from panda3d.core import *
 import math
 
@@ -32,9 +33,9 @@ CAM_ROTATE_AROUND_CCW  = "rotate_around_ccw"
 
 class CameraController(object):
 
-    def __init__(self, camera):
+    def __init__(self):
 
-        self.__camToCtrl = camera  # 所要进行控制的相机
+        self.__camToCtrl = None    # 所要进行控制的相机
         self.__clock = None        # 全局时钟，偏移量的计算依赖于时钟
         self.__moveSpeed = 10      # 相机移动速度
         self.__rotateSpeed = 5    # 相机旋转速度
@@ -57,17 +58,17 @@ class CameraController(object):
         self.__correctionFactorH = 5
 
         self.__camToggleHost = None
-        self.__parentNode = camera.getParent()
+        self.__parentNode = None
 
         self.__directionsVector = {
-            "N"  : Vec3(0, 1, 0),
-            "NE" : Vec3(1, 1, 0),
-            "E"  : Vec3(1, 0, 0),
-            "ES" : Vec3(1, -1, 0),
-            "S"  : Vec3(0, -1, 0),
-            "SW" : Vec3(-1, -1, 0),
-            "W"  : Vec3(-1, 0, 0),
-            "WN" : Vec3(-1, 1, 0)
+            "N"  : LVector3f(0, 1, 0),
+            "NE" : LVector3f(1, 1, 0),
+            "E"  : LVector3f(1, 0, 0),
+            "ES" : LVector3f(1, -1, 0),
+            "S"  : LVector3f(0, -1, 0),
+            "SW" : LVector3f(-1, -1, 0),
+            "W"  : LVector3f(-1, 0, 0),
+            "WN" : LVector3f(-1, 1, 0)
         }
 
         # 每个控制选项所对应的函数
@@ -122,16 +123,24 @@ class CameraController(object):
                                            "radius",
                                            "optsSwitch",
                                            "toggleEventToOpts",
-                                           "parentId"
+                                           #"parentId"
                                        ])
+
+    def bind_camera(self, camera):
+
+        self.__camToCtrl = camera
+
+        self.__parentNode = camera.getParent()
 
     """""""""""""""""""""
     相机控制事件处理函数
     """""""""""""""""""""
 
-    def set_camToggleHost(self, host):
+    def bind_ToggleHost(self, host):
 
         self.__camToggleHost = host
+
+        #self.__camToggleHost.accept("update_camera", self.__correct_camera_to_object)
 
     def set_clock(self, clock):
 
@@ -159,7 +168,7 @@ class CameraController(object):
 
         self.__optsSwitch[key][0] = value
 
-        print key, " : ", value
+        #print key, " : ", value
 
     #########################################
 
@@ -177,7 +186,7 @@ class CameraController(object):
 
             self.__move_forward()
 
-            print self.__optsSwitch[CAM_MOVE_FORWARD]
+            #print self.__optsSwitch[CAM_MOVE_FORWARD]
 
         if self.__optsSwitch[CAM_MOVE_BACKWARD][0] and \
                 self.__optsSwitch[CAM_MOVE_BACKWARD][1]:
@@ -300,6 +309,8 @@ class CameraController(object):
         self.__camToCtrl.setPos(cameraPos)
         self.__camToCtrl.lookAt(target)
 
+        self.__update_directionsVector()
+
         self.turn_off_ctrl_options(
             options = [CAM_MOVE_FORWARD,
                        CAM_MOVE_BACKWARD,
@@ -313,6 +324,8 @@ class CameraController(object):
                        CAM_ROTATE_P_CCW,
                        CAM_ROTATE_R_CW,
                        CAM_ROTATE_R_CCW])
+
+        messenger.send("update_camera")
 
     """""""""""""""""
     相机控制选项开关函数
@@ -600,6 +613,44 @@ class CameraController(object):
     """""""""""""""
     相机状态更新函数
     """""""""""""""
+    # def __correct_camera_to_object(self):
+    #
+    #     if self.__objectToFocus is not None:
+    #
+    #         if self.__optsSwitch[CAM_ROTATE_AROUND_UP][0] and \
+    #                 self.__optsSwitch[CAM_ROTATE_AROUND_UP][1]:
+    #
+    #             self.__rotate_around_up()
+    #
+    #             self.__update_cam_pos()
+    #
+    #         if self.__optsSwitch[CAM_ROTATE_AROUND_DOWN][0] and \
+    #             self.__optsSwitch[CAM_ROTATE_AROUND_DOWN][1]:
+    #             self.__rotate_around_down()
+    #
+    #             self.__update_cam_pos()
+    #
+    #         if self.__optsSwitch[CAM_ROTATE_AROUND_CW][0] and \
+    #                 self.__optsSwitch[CAM_ROTATE_AROUND_CW][1]:
+    #             self.__rotate_around_cw()
+    #
+    #             self.__update_cam_pos()
+    #
+    #             self.__update_directionsVector()
+    #
+    #         if self.__optsSwitch[CAM_ROTATE_AROUND_CCW][0] and \
+    #                 self.__optsSwitch[CAM_ROTATE_AROUND_CCW][1]:
+    #             self.__rotate_around_ccw()
+    #
+    #             self.__update_cam_pos()
+    #
+    #             self.__update_directionsVector()
+    #
+    #         objCurrPos = self.__objectToFocus.getPos()
+    #
+    #         self.__camToCtrl.setPos(self.__camToCtrl.getPos() + objCurrPos - self.__objectPrevPos)
+    #
+    #         self.focus_on(self.__objectToFocus, self.__radius)
 
     # 只有执行更新函数后相机的状态才会发生改变
     def __update_camera(self):
@@ -619,7 +670,7 @@ class CameraController(object):
         # 并且镜头始终朝向该物体，并且如果由玩家控制相机镜头的话，只能够将相机
         # 进行上下左右旋转，因此镜头的变化速度取决于self.__camRotateSpeed
         else:
-
+            pass
             if self.__optsSwitch[CAM_ROTATE_AROUND_UP][0] and \
                     self.__optsSwitch[CAM_ROTATE_AROUND_UP][1]:
 
@@ -676,8 +727,8 @@ class CameraController(object):
 
     def __update_directionsVector(self):
 
-        f = open("DirectionsVector.txt", "w")
-        f.write("----- DirectionsVector -----\n")
+        # f = open("DirectionsVector.txt", "w")
+        # f.write("----- DirectionsVector -----\n")
 
         dVector = self.__camToCtrl.getPos() - self.__objectToFocus.getPos()
 
@@ -687,82 +738,103 @@ class CameraController(object):
         odvX = dVector.getX()
         odvY = dVector.getY()
 
-        f.write("odvX : " + str(odvX) + "\n")
-        f.write("odvY : " + str(odvY) + "\n")
-        #f.write("dVector : " + str(dVector) + "\n")
+        # f.write("odvX : " + str(odvX) + "\n")
+        # f.write("odvY : " + str(odvY) + "\n")
+        # f.write("dVector : " + str(dVector) + "\n")
 
         deltaAngle = 0
-        self.__directionsVector["N"] = Vec3(odvX, odvY, 0)
-        f.write("dVector1 : " + str(dVector) + "\n")
+        self.__directionsVector["N"] = LPoint3f(odvX, odvY, 0)
+        #f.write("dVector1 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["NE"] = Vec3(dvX, dvY, 0)
-        f.write("dVector2 : " + str(dVector) + "\n")
+        self.__directionsVector["NE"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector2 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["E"] = Vec3(dvX, dvY, 0)
-        f.write("dVector3 : " + str(dVector) + "\n")
+        self.__directionsVector["E"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector3 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["ES"] = Vec3(dvX, dvY, 0)
-        f.write("dVector4 : " + str(dVector) + "\n")
+        self.__directionsVector["ES"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector4 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["S"] = Vec3(dvX, dvY, 0)
-        f.write("dVector5 : " + str(dVector) + "\n")
+        self.__directionsVector["S"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector5 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["SW"] = Vec3(dvX, dvY, 0)
-        f.write("dVector6 : " + str(dVector) + "\n")
+        self.__directionsVector["SW"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector6 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["W"] = Vec3(dvX, dvY, 0)
-        f.write("dVector7 : " + str(dVector) + "\n")
+        self.__directionsVector["W"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector7 : " + str(dVector) + "\n")
 
         deltaAngle += math.pi / 4
         dvX = odvX * math.cos(deltaAngle) + odvY * math.sin(deltaAngle)
         dvY = odvY * math.cos(deltaAngle) - odvX * math.sin(deltaAngle)
         dVector.setX(dvX)
         dVector.setY(dvY)
-        self.__directionsVector["WN"] = Vec3(dvX, dvY, 0)
-        f.write("dVector8 : " + str(dVector) + "\n")
+        self.__directionsVector["WN"] = LPoint3f(dvX, dvY, 0)
+        #f.write("dVector8 : " + str(dVector) + "\n")
 
-        f.write("%s : %s\n" % ("N", self.__directionsVector["N"]))
-        f.write("%s : %s\n" % ("NE", self.__directionsVector["NE"]))
-        f.write("%s : %s\n" % ("E", self.__directionsVector["E"]))
-        f.write("%s : %s\n" % ("ES", self.__directionsVector["ES"]))
-        f.write("%s : %s\n" % ("S", self.__directionsVector["S"]))
-        f.write("%s : %s\n" % ("SW", self.__directionsVector["SW"]))
-        f.write("%s : %s\n" % ("W", self.__directionsVector["W"]))
-        f.write("%s : %s\n" % ("WN", self.__directionsVector["WN"]))
-        f.write("--------------------")
-        f.close()
+        # f.write("%s : %s\n" % ("N", self.__directionsVector["N"]))
+        # f.write("%s : %s\n" % ("NE", self.__directionsVector["NE"]))
+        # f.write("%s : %s\n" % ("E", self.__directionsVector["E"]))
+        # f.write("%s : %s\n" % ("ES", self.__directionsVector["ES"]))
+        # f.write("%s : %s\n" % ("S", self.__directionsVector["S"]))
+        # f.write("%s : %s\n" % ("SW", self.__directionsVector["SW"]))
+        # f.write("%s : %s\n" % ("W", self.__directionsVector["W"]))
+        # f.write("%s : %s\n" % ("WN", self.__directionsVector["WN"]))
+        # f.write("--------------------")
+        # f.close()
 
-        print self.__directionsVector
+        # x0 = self.__camCurrX
+        # y0 = self.__camCurrY
+        # x1 = self.__objectToFocus.getX()
+        # y1 = self.__objectToFocus.getY()
+        # x2 = 0
+        # y2 = 0
+        #
+        # dVector = self.__objectToFocus
+        # pVector = self.__camToCtrl
+        # dVector.setZ(0)
+        # pVector.setZ(0)
+        #
+        # deltaAngle = 0
+        # x2 = (x1 - x0) * math.cos(deltaAngle) + (y1 - y0) * math.sin(deltaAngle) + x0
+        # y2 = (y1 - y0) * math.cos(deltaAngle) - (x1 - x0) * math.sin(deltaAngle) + y0
+        # dVector.setX(x2)
+        # dVector.setY(y2)
+        # rVector = dVector - pVector
+        # rVector.normalize()
+        # self.__directionsVector["N"] = Vec3(odvX, odvY, 0)
+
+        #print self.__directionsVector
 
     """""""""""""""""""""
     成员变量的get和set函数
@@ -806,9 +878,9 @@ class CameraController(object):
 
         return self.__camToggleHost
 
-    def get_optsSwitch(self):
+    def set_toggleEventToOpts(self, toggleEventToOpts):
 
-        return self.__optsSwitch
+        self.__toggleEventToOpts = toggleEventToOpts
 
     def get_toggleEventToOpts(self):
 
@@ -831,6 +903,14 @@ class CameraController(object):
     def get_directionsVector(self):
 
         return self.__directionsVector
+
+    def set_optsSwitch(self, optsSwitch):
+
+        self.__optsSwitch = optsSwitch
+
+    def get_optsSwitch(self):
+
+        return self.__optsSwitch
 
     """""""""""""""""""""""""""""
     一些数据的打印函数，主要用于调试

@@ -4,12 +4,51 @@ from player_role import PlayerRole
 from enemy_role import EnemyRole
 from npc_role import NPCRole
 from attachment_role import AttachmentRole
+from ArchiveModule.archive_package import ArchivePackage
+import SeriousTools.SeriousTools as SeriousTools
 
 # 常量，表示角色类型
 PLAYER_ROLE     = "PlayerRole"
 ENEMY_ROLE      = "EnemyRole"
 NPC_ROLE        = "NPCRole"
 ATTACHMENT_ROLE = "AttachmentRole"
+
+DIE            = "die"
+ATTACK         = "attack"
+BE_ATTACKED    = "be_attacked"
+USE_OUT        = "use_out"
+FULL_HP        = "full_hp"
+SELL_OUT       = "sell_out"
+LACK_OF_MONEY  = "lack_of_money"
+BUY_MEDICINE   = "buy_medicine"
+BUY_WEAPON2    = "buy_weapon2"
+BUY_WEAPON3    = "buy_weapon3"
+RECOVER_HP     = "recover_hp"
+OBTAIN_MONEY   = "obtain_money"
+CHANGE_WEAPON1 = "change_weapon1"
+CHANGE_WEAPON2 = "change_weapon2"
+CHANGE_WEAPON3 = "change_weapon3"
+
+PLAYER_MAX_HP = 100
+
+ROLE_ATTR_LIST = [
+    "roleId",
+    "modelId",
+    "ableToTalk",
+    "ableToCtrl",
+    "ableToAtck",
+    "states",
+    "hp",
+    "money",
+    "attackForce",
+    "walkSpeed",
+    "runSpeed",
+    "rotateSpeed",
+    "touchRadius",
+    "actions",
+    "currWeapon",
+    "attachments"
+]
 
 class RoleManager(object):
 
@@ -21,7 +60,17 @@ class RoleManager(object):
                             ATTACHMENT_ROLE ]
 
         self.__roleModelMap = dict()
-        self.__roleNameMap = dict()
+        self.__roleMap = dict()
+
+        self.__sceneMgr = None
+
+        self.__playerRoleCount = 1
+        self.__enemyRoleCount = 0
+        self.__npcRoleCount = 0
+        self.__attachmentRoleCount = 0
+
+        self.__arcPkg = ArchivePackage(arcPkgName = "role",
+                                       itemsName = ROLE_ATTR_LIST)
 
     """""""""""
     角色创建函数
@@ -30,67 +79,88 @@ class RoleManager(object):
     # 创建角色
     def create_role(self,
                     roleType,
-                    name,
                     modelId,
-                    actions,
+                    actions = None,
                     attachments = None,
-                    pos = (0, 0, 0),
+                    attachmentType = None,
                     hp=-1,
-                    num = 1,):
+                    num = 1):
 
         role = []
 
         if roleType is self.__roleType[0]:
 
-            playerRole = PlayerRole(name = name,
-                                    modelId = modelId)
+            playerRole = PlayerRole(modelId = modelId)
+
+            self.__playerRoleCount += 1
 
             role.append(playerRole)
 
-            self.__roleNameMap[name] = playerRole
+            roleId = playerRole.get_attr_value("roleId")
+            playerRole.set_attr_value("roleId", roleId)
+
+            self.__roleMap[roleId] = playerRole
+            self.__roleModelMap[roleId] = modelId
 
         elif roleType is self.__roleType[1]:
 
-            names = self.__gen_name_batch(name, num)
-
             for i in range(num):
 
-                enemyRole = EnemyRole(name = names[i],
-                                      modelId = modelId,
-                                      hp = hp)
+                enemyRole = EnemyRole(modelId = modelId, hp = hp)
+
+                self.__enemyRoleCount += 1
 
                 role.append(enemyRole)
 
-                self.__roleNameMap[names[i]] = enemyRole
+                roleId = enemyRole.get_attr_value("roleId") + str(self.__enemyRoleCount)
+                enemyRole.set_attr_value("roleId", roleId)
+
+                self.__roleMap[roleId] = enemyRole
+                self.__roleModelMap[roleId] = modelId
 
         elif roleType is self.__roleType[2]:
 
-            npcRole = NPCRole(name=name,
-                              modelId=modelId)
+            npcRole = NPCRole(modelId=modelId)
+
+            self.__npcRoleCount += 1
 
             role.append(npcRole)
 
-            self.__roleNameMap[name] = npcRole
+            roleId = npcRole.get_attr_value("roleId") + str(self.__npcRoleCount)
+            npcRole.set_attr_value("roleId", roleId)
+
+            self.__roleMap[roleId] = npcRole
+            self.__roleModelMap[roleId] = modelId
 
         elif roleType is self.__roleType[3]:
 
-            names = self.__gen_name_batch(name, num)
+            attachmentRole = AttachmentRole(attachmentType, modelId=modelId, num = num)
 
-            for i in range(num):
+            self.__attachmentRoleCount += 1
 
-                attachRole = AttachmentRole(name=names[i],
-                                            modelId=modelId,
-                                            )
+            role.append(attachmentRole)
 
-                role.append(attachRole)
+            roleId = attachmentRole.get_attr_value("roleId") + str(self.__attachmentRoleCount)
+            attachmentRole.set_attr_value("roleId", roleId)
 
-                self.__roleNameMap[names[i]] = attachRole
+            self.__roleMap[roleId] = attachmentRole
+            self.__roleModelMap[roleId] = modelId
 
-                role.append(attachRole)
+            if attachmentType == "medicine":
 
-                self.__roleNameMap[names[i]] = attachRole
+                attachmentRole.add_effert("recoverHP", 35)
 
-        self.__roleModelMap[modelId] = role
+            elif attachmentType == "weapon1":
+
+                attachmentRole.add_effert("attackForce", 10)
+
+            elif attachmentType == "weapon2":
+
+                attachmentRole.add_effert("attackForce", 20)
+
+            elif attachmentType == "weapon3":
+
+                attachmentRole.add_effert("attackForce", 30)
 
         if len(role) == 1:
 
@@ -103,49 +173,228 @@ class RoleManager(object):
     def add_toggle_to_action(self, actorOrId, actionName):
         pass
 
-    # 批量生成角色名称，如"Zombie1"、"Zombie2"、"Zombie3"等
-    def __gen_name_batch(self, namePrefix, num):
+    def bind_SceneManager(self, sceneMgr):
 
-        names = []
-
-        for i in range(num):
-
-            names.append(namePrefix + str(i))
-
-        return names
+        self.__sceneMgr = sceneMgr
 
     """""""""""""""""""""
     读档存档的角色数据接口
     """""""""""""""""""""
 
     # 导入角色属性，用于读档
-    def import_role_attr(self, roleAttrPackage):
-        pass
+    def import_arcPkg(self, roleArcPkg):
+
+        for roleItem in roleArcPkg.get_itemsData():
+
+            roleType = SeriousTools.extract_name_from_Id(roleItem[0])
+
+            if roleType == "PlayerRole":
+
+                player = self.create_role(roleType = "PlayerRole",)
 
     #####################
 
     # 导出角色属性，用于存档
-    def export_role_attr(self):
-        pass
+    def export_arcPkg(self):
 
+        for roleId, role in self.__roleMap.iteritems():
+
+            roleItem = []
+
+            for attrName in ROLE_ATTR_LIST:
+
+                if role.has_attr(attrName):
+
+                    roleItem.append(role.get_attr_value(attrName))
+
+                else:
+
+                    roleItem.append(None)
+
+            self.__arcPkg.add_item(roleItem)
+
+        return self.__arcPkg
 
     """""""""""""""
     角色属性管理函数
     """""""""""""""
 
-    def append_role_attr(self, name, key, value):
+    def append_role_attr(self, roleId, key, value):
 
-        if self.__roleNameMap[name] is not None:
+        if self.__roleMap.has_key(roleId) is True:
 
-            self.__roleNameMap[name].append_role_value(key, value)
+            self.__roleMap[roleId].append_role_value(key, value)
 
     #####################
 
-    def set_role_attr_value(self, name, key, value):
+    def set_attr_value(self, roleId, key, value):
 
-        if self.__roleNameMap[name] is not None:
+        if self.__roleMap.has_key(roleId) is True:
 
-            self.__roleNameMap[name].set_attr_value(key, value)
+            self.__roleMap[roleId].set_attr_value(key, value)
+
+    """""""""""""""""""""""""""""
+    角色的行为所导致的属性变化计算函数
+    """""""""""""""""""""""""""""
+
+    # 攻击计算
+    def calc_attack(self, attackerId, victimId):
+
+        attacker = self.get_role(attackerId)
+        victim = self.get_role(victimId)
+
+        attackForce = attacker.get_attr_value("attackForce")
+        hp = victim.get_attr_value("hp")
+
+        hp = max(hp - attackForce, 0)
+
+        victim.set_attr_value("hp", hp)
+
+        if hp == 0:
+
+            if attackerId == "PlayerRole":
+
+                return [ATTACK, DIE]
+
+            else:
+
+                return [DIE, ATTACK]
+        else:
+
+            if attackerId == "PlayerRole":
+
+                return [ATTACK, BE_ATTACKED]
+
+            else:
+
+                return [BE_ATTACKED, ATTACK]
+
+    # 玩家角色使用药物
+    def take_medicine(self):
+
+        player = self.get_role("PlayerRole")
+
+        medicineId = player.get_attachments("medicine")
+
+        medicine = self.get_role(medicineId)
+
+        medicineNum = medicine.get_role_attr("num")
+        recoverHP = medicine.get_effert("recoverHP")
+
+        hp = player.get_role_attr("hp")
+
+        if medicineNum == 0:
+
+            return [USE_OUT, hp]
+
+        else:
+
+            if hp < PLAYER_MAX_HP:
+
+                medicineNum -= 1
+
+                player.set_attr_value("num", medicineNum)
+
+            return [RECOVER_HP, min(PLAYER_MAX_HP, hp + recoverHP)]
+
+
+    # 玩家角色购买物品
+    def buy_attachment(self, attachmentId):
+
+        player = self.get_role("PlayerRole")
+
+        attachment = self.get_role(attachmentId)
+
+        attachmentType = attachment.get_role_attr("attachmentType")
+
+        money = player.get_role_attr("money")
+        price = attachment.get_role_attr("price")
+
+        if money < price:
+
+            return LACK_OF_MONEY
+
+        else:
+
+            money -= price
+
+            player.set_attr_value("money", money)
+
+        playerAttachment = player.get_role_attr("attachments")
+
+        if attachmentType == "medicine":
+
+            if playerAttachment["medicine"] is None:
+
+                playerAttachment["medicine"] = attachmentId
+
+            else:
+
+                playerMedicine = self.get_role(playerAttachment["medicine"])
+
+                num = playerMedicine.get_role_attr("num") + 1
+
+                playerMedicine.set_attr_value("num", num)
+
+            return BUY_MEDICINE
+
+        elif attachmentType == "weapon2":
+
+            if playerAttachment["weapon2"] is None:
+
+                playerAttachment["weapon2"] = attachmentId
+
+            attachment.set_attr_value("sold", True)
+
+            return BUY_WEAPON2
+
+        elif attachmentType == "weapon3":
+
+            if playerAttachment["weapon3"] is None:
+
+                playerAttachment["weapon3"] = attachmentId
+
+            attachment.set_attr_value("sold", True)
+
+            return BUY_WEAPON3
+
+    # 玩家角色获得金钱
+    def obtain_money(self, increase):
+
+        player = self.get_role("PlayerRole")
+
+        money = player.get_role_attr("money")
+
+        money += increase
+
+        player.set_attr_value("money", money)
+
+        return [OBTAIN_MONEY, money]
+
+    # 玩家更换武器
+    def change_weapon(self, weaponId):
+
+        player = self.get_role("PlayerRole")
+
+        prevWeapon = self.get_role(player.get_role_attr("currWeapon"))
+
+        currWeapon = self.get_role(weaponId)
+        currType = currWeapon.get_role_attr("attachmentType")
+
+        player.set_attr_value("currWeapon", weaponId)
+        player.set_attr_value("attackForce", player.get_role_attr("attackForce") - prevWeapon.get_role_attr("attackForce") + currWeapon.get_role_attr("attackForce"))
+
+        if currType == "weapon1":
+
+            return CHANGE_WEAPON1
+
+        elif currType == "weapon2":
+
+            return CHANGE_WEAPON2
+
+        elif currType == "weapon3":
+
+            return CHANGE_WEAPON3
 
     """""""""""""""""""""
     成员变量的set和get函数
@@ -155,17 +404,39 @@ class RoleManager(object):
 
         return sceneMgr.get_res(modelId)
 
-    def get_role(self, name):
+    def get_role(self, roleId):
 
-        return self.__roleNameMap[name]
+        return self.__roleMap[roleId]
+
+    def get_roleId(self, role):
+
+        for roleId, _role in self.__roleMap.iteritems():
+
+            if _role == role:
+
+                return roleId
+
+        return None
 
     def get_roleModelMap(self):
 
         return self.__roleModelMap
 
-    def get_roleNameMap(self):
+    def get_roleMap(self):
 
-        return self.__roleNameMap
+        return self.__roleMap
+
+    def get_one_kind_of_roles(self, roleName):
+
+        roles = []
+
+        for roleId, role in self.__roleMap.iteritems():
+
+            if SeriousTools.extract_name_from_Id(roleId) == roleName:
+
+                roles.append(role)
+
+        return roles
 
     """""""""""
     角色信息打印
@@ -181,13 +452,13 @@ class RoleManager(object):
 
         print "--------------------"
 
-    def print_roleNameMap(self):
+    def print_roleMap(self):
 
         print "--Role Name Map--"
 
-        for name in self.__roleNameMap.keys():
+        for name in self.__roleMap.keys():
 
-            print name, " : ", self.__roleNameMap[name]
+            print name, " : ", self.__roleMap[name]
 
         print "--------------------"
 

@@ -1,36 +1,3 @@
-# <<<<<<< .mine
-# # -*- coding:utf-8 -*-
-#
-# import ResManager
-#
-# from panda3d.core import GeoMipTerrain
-#
-# class TerrainManager(ResManager):
-#
-#     def __init__(self, resType = "terrain"):
-#
-#         super.__init__(self, resType)
-#
-#     #########################################
-#
-#     def load_res(self, resPath, extraResPath):
-#
-#         self.__resCount += 1
-#         resId = self._gen_resId()
-#
-#         res = GeoMipTerrain(resId)
-#
-#         res.setHeightfield(resPath)
-#         res.setColorMap(extraResPath)
-#
-#         self.__resMap[resId] = res
-#
-#         return res
-#
-#     #########################################
-#
-# ||||||| .r0
-# =======
 # -*- coding:utf-8 -*-
 
 from res_manager import ResManager
@@ -65,10 +32,20 @@ class TerrainManager(ResManager):
     # 加载地形资源
     def load_res(self,
                  resPath,
-                 extraResPath):
+                 extraResPath,
+                 _resId = None):
 
         self._resCount += 1
-        resId = self._gen_resId()
+
+        resId = None
+
+        if _resId == None:
+
+            resId = self._gen_resId()
+
+        else:
+
+            resId = _resId
 
         self.__currTerraId = resId
 

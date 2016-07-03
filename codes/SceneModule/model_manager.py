@@ -59,12 +59,21 @@ class ModelManager(ResManager):
     # 加载静态模型
     def load_res(self,
                  resPath,
-                 extraResPath = None):
+                 extraResPath = None,
+                 _resId = None):
 
         res = self.__loader.loadModel(resPath)
+        resId = None
 
         self._resCount += 1
-        resId = self._gen_resId()
+
+        if _resId == None:
+
+            resId = self._gen_resId()
+
+        else:
+
+            resId = _resId
 
         self._resMap[resId] = res
         self._resPath[resId] = resPath

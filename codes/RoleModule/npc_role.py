@@ -4,14 +4,9 @@ from role_base import Role
 
 class NPCRole(Role):
 
-    def __init__(self,
-                 name,
-                 modelId,
-                 ):
-
+    def __init__(self, modelId):
 
         Role.__init__(self,
-                      name=name,
                       roleId="NPCRole",
                       modelId=modelId,
                       ableToTalk=True,

@@ -72,3 +72,25 @@ def cos(p1, p2):
 
 #####################
 
+def extract_name_from_Id(Id):
+
+    if isinstance(Id, str):
+
+        name = ""
+
+        for c in Id:
+
+            if c.isalpha():
+
+                name += c
+
+            else:
+
+                return name
+
+        return name
+
+    else:
+
+        return None
+

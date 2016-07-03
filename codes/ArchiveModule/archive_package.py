@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import SeriousTools.SeriousTools as SeriousTools
+
 class ArchivePackage(object):
 
     def __init__(self, arcPkgName, itemsName):
@@ -35,7 +37,11 @@ class ArchivePackage(object):
 
     #####################
 
-    def get_metaData(self):
+    def get_metaData(self, key):
+
+        return SeriousTools.find_value_in_dict(key, self.__metaData)
+
+    def get_all_metaData(self):
 
         return self.__metaData
 

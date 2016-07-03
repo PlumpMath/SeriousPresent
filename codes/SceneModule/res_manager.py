@@ -5,11 +5,6 @@ from ArchiveModule.archive_package import ArchivePackage
 
 class ResManager(object):
 
-    _resType = ""
-    _resCount = 0
-    _resMap = dict()
-    _resPath = dict()
-
     def __init__(self, resType):
 
         self._resType = resType
@@ -21,13 +16,21 @@ class ResManager(object):
     加载资源,子类必须重写
     """""""""""""""""
 
-    def load_res(self, resPath, extraResPath):
+    def load_res(self, resPath, extraResPath, _resId = None):
 
         # load the resource here
         res = None
+        resId = None
 
         self._resCount += 1
-        resId = self._gen_resId()
+
+        if _resId == None:
+
+            resId = self._gen_resId()
+
+        else:
+
+            resId = _resId
 
         self._resMap[resId] = res
         self._resPath[resId] = [resPath, extraResPath]
