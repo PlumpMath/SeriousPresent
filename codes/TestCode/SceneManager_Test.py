@@ -20,18 +20,18 @@ loadPrcFileData("", "fullscreen #f")
 loadPrcFileData("", "interpolate-frames 1")
 loadPrcFileData("", config)
 
-modelPath = "/e/Material/finalHunter.egg"
+modelPath = "/e/Material/HunterEgg/finalHunter.egg"
 buildingPath = "/e/Material/building1.egg"
 
 treeModel = "/e/Material/building1.egg"
 
-actorPath = "/e/Material/hunter_WithGun.egg"
+actorPath = "/e/Material/HunterEgg/finalHunter.egg"
 actionsPath = {
-    "run" : "/e/Material/hunter_RunWithGun.egg",
-    "run_back" : "/e/Material/hunter_RunBack.egg",
-    "rda" : "/e/Material/rightDefenceActionUpdate.egg",
-    "lda" : "/e/Material/leftDefenceActionUpdate.egg",
-    "bda" : "/e/Material/backDefenceActionUpdate1.egg",
+    "run" : "/e/Material/HunterEgg/hunter_WALK123.egg",
+    "run_back" : "/e/Material/HunterEgg/hunter_WALK666.egg",
+    "rda" : "/e/Material/HunterEgg/rightDefenceActionUpdate.egg",
+    "lda" : "/e/Material/HunterEgg/leftDefenceActionUpdate.egg",
+    "bda" : "/e/Material/HunterEgg/backDefenceActionUpdate1.egg",
 }
 
 actorPath2 = "/e/Material/outter_child.egg"
@@ -87,12 +87,13 @@ class GameWorld_Test(ShowBase):
 
         self.cam.setPos(100, 0, 100)
 
-        camCtrlr = CameraController(self.cam)
-        camCtrlr.set_camToggleHost(self)
+        camCtrlr = CameraController()
+        camCtrlr.bind_camera(self.cam)
+        camCtrlr.bind_ToggleHost(self)
         camCtrlr.set_clock(globalClock)
         camCtrlr.focus_on(actor, 100)
 
-        sceneMgr.set_camCtrlr(camCtrlr)
+        sceneMgr.bind_CameraController(camCtrlr)
         sceneMgr.get_ActorMgr().bind_CameraController(camCtrlr)
 
         self.accept("space", sys.exit)
@@ -100,7 +101,7 @@ class GameWorld_Test(ShowBase):
         print self.render.getName()
 
         lightCtrlr = LightController()
-        lightCtrlr.set_sceneMgr(sceneMgr)
+        lightCtrlr.bind_SceneManager(sceneMgr)
 
         # light1 = lightCtrlr.create_light(lightType = "AmbientLight",
         #                                  lightColor = (0.2, 0.1, 0.2, 1),
@@ -133,7 +134,7 @@ class GameWorld_Test(ShowBase):
 
         self.render.setShaderAuto()
 
-        sceneMgr.set_lightCtrlr(lightCtrlr)
+        sceneMgr.bind_LightController(lightCtrlr)
 
         print sceneMgr.get_ActorMgr().get_eventActionRecord()
         print sceneMgr.get_ActorMgr().get_eventEffertRecord()

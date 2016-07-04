@@ -1,9 +1,9 @@
 ---------- Archive Package ----------
 ===========
 actor
-itemsName : actorId, actorPath, actionsPath, pos, hpr, scale, eventActionRecord, eventEffertRecord, parentId, 
+itemsName : actorId, actorPath, actionsPath, pos, hpr, scale, parentId, 
 ===========
-['actor1', '/e/Material/hunter_WithGun.egg', {'rda': '/e/Material/rightDefenceActionUpdate.egg', 'lda': '/e/Material/leftDefenceActionUpdate.egg', 'bda': '/e/Material/backDefenceActionUpdate1.egg', 'run': '/e/Material/hunter_RunWithGun.egg', 'run_back': '/e/Material/hunter_RunBack.egg'}, LPoint3f(5, 0, 0), LVecBase3f(0, 0, 0), LVecBase3f(1.2, 1.2, 1.2), [['w', 'run'], ['s', 'run_back'], ['z', 'rda'], ['x', 'lda'], ['c', 'bda']], [['a', 'actor_rotate_cw'], ['d', 'actor_rotate_ccw']], 'render']
+['actor1', '/e/Material/HunterEgg/finalHunter.egg', {'rda': '/e/Material/HunterEgg/rightDefenceActionUpdate.egg', 'lda': '/e/Material/HunterEgg/leftDefenceActionUpdate.egg', 'bda': '/e/Material/HunterEgg/backDefenceActionUpdate1.egg', 'run': '/e/Material/HunterEgg/hunter_WALK123.egg', 'run_back': '/e/Material/HunterEgg/hunter_WALK666.egg'}, LPoint3f(5, 0, 0), LVecBase3f(0, 0, 0), LVecBase3f(1.2, 1.2, 1.2), 'render']
 ==========
 ===========
 model
@@ -11,7 +11,7 @@ itemsName : modelId, modelPath, pos, hpr, scale, parentId,
 ===========
 ['model3', '/e/Material/building1.egg', LPoint3f(0, 0, 0), LVecBase3f(0, 0, 0), LVecBase3f(5, 5, 5), 'render']
 ['model2', '/e/Material/building1.egg', LPoint3f(-10, -30, 0), LVecBase3f(0, 0, 0), LVecBase3f(15, 15, 15), 'render']
-['model1', '/e/Material/finalHunter.egg', LPoint3f(0, 0, 0), LVecBase3f(0, 0, 0), LVecBase3f(0.22, 0.22, 0.22), 'render']
+['model1', '/e/Material/HunterEgg/finalHunter.egg', LPoint3f(0, 0, 0), LVecBase3f(0, 0, 0), LVecBase3f(0.22, 0.22, 0.22), 'render']
 ==========
 ===========
 terrain
@@ -35,9 +35,9 @@ itemsName : lightId, color, Pos, Hpr, targetId, setorId, parentId,
 ==========
 ===========
 role
-itemsName : roleId, modelId, ableToTalk, ableToCtrl, ableToAtck, states, hp, money, attackForce, walkSpeed, runSpeed, rotateSpeed, touchRadius, actions, currWeapon, attachments, 
+itemsName : roleId, modelId, ableToTalk, ableToCtrl, ableToAtck, states, hp, money, attackForce, walkSpeed, runSpeed, rotateSpeed, touchRadius, actions, currWeapon, attachments, attachmentType, num, price, soild, effert, 
 ===========
-['PlayerRole', 'actor1', True, True, True, [], 100, 0, 10, 5, 10, 100, 3, {}, None, {'medicine': None, 'weapon2': None, 'weapon1': None, 'weapon3': None}]
-['NPCRole1', 'actor2', True, False, False, [], None, None, None, None, None, None, None, {}, None, None]
+['PlayerRole', 'actor1', True, True, True, [], 100, 0, 10, 5, 10, 100, 3, {}, None, {'medicine': None, 'weapon2': None, 'weapon1': None, 'weapon3': None}, None, None, None, None, None]
+['NPCRole1', 'actor2', True, False, False, [], None, None, None, None, None, None, None, {}, None, None, None, None, None, None, None]
 ==========
 ------------------------------

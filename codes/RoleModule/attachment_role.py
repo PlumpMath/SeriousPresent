@@ -27,7 +27,6 @@ class AttachmentRole(Role):
         self.append_role_attr(key = "num", value = num)
         self.append_role_attr(key = "price", value = 0)
         self.append_role_attr(key = "sold", value = False)
-        self.append_role_attr(key = "holderId", value = [])
         self.append_role_attr(key = "effert", value = dict())
 
     def add_holderId(self, holderId):
