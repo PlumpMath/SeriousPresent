@@ -40,12 +40,12 @@ class CameraController(object):
         self.__moveSpeed = 10      # 相机移动速度
         self.__rotateSpeed = 5    # 相机旋转速度
 
-        self.__camCurrX = self.__camToCtrl.getX()
-        self.__camCurrY = self.__camToCtrl.getY()
-        self.__camCurrZ = self.__camToCtrl.getZ()
-        self.__camCurrH = self.__camToCtrl.getH()
-        self.__camCurrP = self.__camToCtrl.getP()
-        self.__camCurrR = self.__camToCtrl.getR()
+        self.__camCurrX = None
+        self.__camCurrY = None
+        self.__camCurrZ = None
+        self.__camCurrH = None
+        self.__camCurrP = None
+        self.__camCurrR = None
 
         self.__camMoveOffset = 0   # 相机单位时间的偏移量
         self.__camRotateOffset = 0 # 相机单位事件的旋转量
@@ -131,6 +131,13 @@ class CameraController(object):
         self.__camToCtrl = camera
 
         self.__parentNode = camera.getParent()
+
+        self.__camCurrX = self.__camToCtrl.getX()
+        self.__camCurrY = self.__camToCtrl.getY()
+        self.__camCurrZ = self.__camToCtrl.getZ()
+        self.__camCurrH = self.__camToCtrl.getH()
+        self.__camCurrP = self.__camToCtrl.getP()
+        self.__camCurrR = self.__camToCtrl.getR()
 
     """""""""""""""""""""
     相机控制事件处理函数

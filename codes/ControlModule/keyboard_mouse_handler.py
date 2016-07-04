@@ -2,78 +2,6 @@
 from input_handler import *
 from panda3d.core import *
 
-"""游戏流程的监听"""
-class GameControlMouseHandler(InputHandler):
-    def __init__(self):
-        InputHandler.__init__(self)
-
-        base.disableMouse()
-        props = WindowProperties()
-        props.setCursorHidden(True)
-        base.win.requestProperties(props)
-
-        self.accept("escape",exit)
-        self.accept("w",self.beginWalk)
-        self.accept("w-up",self.endWalk)
-        self.accept("s",self.beginReverse)
-        self.accept("s-up",self.endReverse)
-        self.accept("a",self.beginTurnLeft)
-        self.accept("a-up",self.endTurnLeft)
-        self.accept("d",self.beginTurnRight)
-        self.accept("d-up",self.endTurnRight)
-
-        taskMgr.add(self.updateInput,"update input")
-
-    def resetMouse(self):
-        cx = base.win.getProperties().getXSize()/2
-        cy = base.win.getProperties().getYSize()/2
-        base.win.movePointer(0,cx,cy)
-
-    def updateInput(self,task):
-        if base.mouseWatcherNode.hasMouse():
-            messenger.send("turn",[-base.mouseWatcherNode.getMouseX()*10])
-
-            self.resetMouse()
-            self.dispatchMessages()
-
-            return task.cont
-
-"""玩家场景的监听"""
-class GamePlayerMouseHandler(InputHandler):
-    def __init__(self):
-        InputHandler.__init__(self)
-
-        base.disableMouse()
-        props = WindowProperties()
-        props.setCursorHidden(True)
-        base.win.requestProperties(props)
-
-        self.accept("escape",exit)
-        self.accept("w",self.beginWalk)
-        self.accept("w-up",self.endWalk)
-        self.accept("s",self.beginReverse)
-        self.accept("s-up",self.endReverse)
-        self.accept("a",self.beginTurnLeft)
-        self.accept("a-up",self.endTurnLeft)
-        self.accept("d",self.beginTurnRight)
-        self.accept("d-up",self.endTurnRight)
-
-        taskMgr.add(self.updateInput,"update input")
-
-    def resetMouse(self):
-        cx = base.win.getProperties().getXSize()/2
-        cy = base.win.getProperties().getYSize()/2
-        base.win.movePointer(0,cx,cy)
-
-    def updateInput(self,task):
-        if base.mouseWatcherNode.hasMouse():
-            messenger.send("turn",[-base.mouseWatcherNode.getMouseX()*10])
-
-            self.resetMouse()
-            self.dispatchMessages()
-
-            return task.cont
-
 """菜单场景的监听"""
 class MenuPlayerInputHandler(MenuInputHandler):
     def __init__(self):
@@ -120,3 +48,31 @@ class MenuPlayerInputHandler(MenuInputHandler):
     def updateInput(self,task):
         self.dispatchMessages()
         return task.cont
+
+"""游戏场景的监听"""
+class GamePlayerMouseHandler(GameInputHandler):
+    def __init__(self):
+        GameInputHandler.__init__(self)
+
+        base.disableMouse()
+        props = WindowProperties()
+        props.setCursorHidden(True)
+        base.win.requestProperties(props)
+
+        self.accept("escape",self.beginSetting)
+        self.accept("w",self.beginForward)
+        self.accept("w-up",self.endForward)
+        self.accept("s",self.beginBack)
+        self.accept("s-up",self.endBack)
+        self.accept("a",self.beginLeft)
+        self.accept("a-up",self.endLeft)
+        self.accept("d",self.beginRight)
+        self.accept("d-up",self.endRight)
+        self.accept("mouse1",self.beginAttack)
+        self.accept("mouse1-up",self.endAttack)
+
+        taskMgr.add(self.updateInput,"update input")
+
+    def updateInput(self,task):
+        self.dispatchMessages()
+		return task.cont

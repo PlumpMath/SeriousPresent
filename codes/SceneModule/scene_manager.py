@@ -177,6 +177,7 @@ class SceneManager(object):
             parentNode = self.get_res(actorItem[6])
             actor.reparentTo(parentNode)
 
+        self.__actorMgr = actorMgr
 
         # Model数据读档
         modelArcPkg = sceneArcPkg[1]
@@ -194,6 +195,8 @@ class SceneManager(object):
 
             parentNode = self.get_res(resId = modelItem[5])
             model.reparentTo(parentNode)
+
+        self.__modelMgr = modelMgr
 
         # Terrain数据读档
         terraArcPkg = sceneArcPkg[2]
@@ -215,17 +218,26 @@ class SceneManager(object):
 
         terraMgr.set_currTerrain(terraArcPkg.get_metaData("currTerraId"))
 
+        self.__terraMgr = terraMgr
+
         # Camera数据读档
         cameraArcPkg = sceneArcPkg[3]
 
         camCtrlr = CameraController()
         camCtrlr.bind_camera(self.__showbase.cam)
+
         camCtrlr.get_camToCtrl().setPos(cameraArcPkg[0])
         camCtrlr.get_camToCtrl().setHpr(cameraArcPkg[1])
         camCtrlr.set_moveSpeed(cameraArcPkg[2])
         camCtrlr.set_rotateSpeed(cameraArcPkg[3])
-        camCtrlr.set_optsSwitch(cameraArcPkg[4])
-        camCtrlr.set_toggleEventToOpts(cameraArcPkg[5])
+
+        objToFocus = self.get_res(cameraArcPkg[4])
+        camCtrlr.focus_on(objToFocus, cameraArcPkg[5])
+
+        camCtrlr.set_optsSwitch(cameraArcPkg[6])
+        camCtrlr.set_toggleEventToOpts(cameraArcPkg[7])
+
+        self.__camCtrlr = camCtrlr
 
         # Light数据读档
         lightArcPkg = sceneArcPkg[4]
@@ -244,6 +256,8 @@ class SceneManager(object):
 
             lightCtrlr.set_light_to(lightItem[0], setorId = lightItem[5])
 
+        self.__lightCtrlr = lightCtrlr
+
     #####################
 
     # 导出场景数据，用于存档
@@ -254,9 +268,6 @@ class SceneManager(object):
         actorArcPkg = self.__actorMgr.get_arcPkg()
 
         actorResPath = self.__actorMgr.get_resPath()
-
-        actorEventActionRecord = self.__actorMgr.get_eventActionRecord()
-        actorEventEffertRecord = self.__actorMgr.get_eventEffertRecord()
 
         actorArcPkg.set_metaData("toggleEffert", self.__actorMgr.get_toggleEffert())
         actorArcPkg.set_metaData("eventActionRecord", self.__actorMgr.get_eventActionRecord())
