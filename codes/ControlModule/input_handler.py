@@ -8,13 +8,6 @@ class InputHandler(DirectObject):
     def __init__(self):
         DirectObject.__init__(self)
 
-        # 所有的状态类别
-        self.menu = False
-        self.load = False
-        self.game = False
-        self.save = False
-        self.exitMenu = False
-
         # 人物动作
         self.walk = False
         self.reverse = False
@@ -22,46 +15,6 @@ class InputHandler(DirectObject):
         self.right = False
 
         taskMgr.add(self.updateInput,"update input")
-
-    def beginMenu():
-        messenger.send("Menu-start")
-        self.menu = True
-
-    def endMenu():
-        messenger.send("Menu-stop")
-        self.menu = False
-
-    def beginload():
-        messenger.send("load-start")
-        self.load = True
-
-    def endload():
-        messenger.send("load-stop")
-        self.load = False
-
-    def begingame():
-        messenger.send("game-start")
-        self.game = True
-
-    def endgame():
-        messenger.send("game-stop")
-        self.game = False
-
-    def beginsave():
-        messenger.send("save-start")
-        self.save = True
-
-    def endsave():
-        messenger.send("save-stop")
-        self.save = False
-
-    def beginexitMenu():
-        messenger.send("exitMenu-start")
-        self.exitMenu = True
-
-    def endexitMenu():
-        messenger.send("exitMenu-stop")
-        self.exitMenu = False
 
     def beginWalk(self):
         messenger.send("walk-start")
@@ -173,3 +126,82 @@ class MenuInputHandler(DirectObject):
 
     def __exit(self):
         exit()
+
+class GameInputHandler(DirectObject):
+    def __init__(self):
+        DirectObject(self)
+        #所有状态
+        self.__forward = False
+        self.__back = False
+        self.__left = False
+        self.__right = False
+        self.__setting = False  
+        self.__attack = False
+        taskMgr.add(self.updateInput,"update input")
+
+    def beginForward(self):
+        self.__forward = True
+
+    def endForward(self):
+        self.__forward = False
+
+    def beginBack(self):
+        self.__back = True
+
+    def endBack(self):
+        self.__back = False
+
+    def beginLeft(self):
+        self.__left = True
+
+    def endLeft(self):
+        self.__left = False
+
+    def beginRight(self):
+        self.__right = True
+
+    def endRight(self):
+        self.__right = False   
+
+    def beginAttack(self):
+        self.__attack = True
+
+    def endAttack(self):
+         self.__attack = False
+    
+    def beginSetting(self):
+        self.__setting = True
+
+    def endSetting(self):
+        self.__setting = False
+
+    def dispatchMessages(self):
+        if self.__forward:
+            messenger.send("Forward")
+            print '已经发送向前走'
+
+        elif self.__back:
+            messenger.send("Back")
+            print '已经发送后退消息'
+
+        if self.__left:
+            messenger.send("Left")
+            print '已经发送向左'
+
+        elif self.__right:
+            messenger.send("Right")
+            print '已经发送向右'
+
+        if self.__setting:
+            messenger.send("Setting")
+            print '发送设置'
+
+        elif self.__attack:
+            messenger.send("Attack")
+            print '攻击'
+
+    def updateInput(self):
+        return task.cont
+
+    def destroy(self):
+        self.ignoreAll()
