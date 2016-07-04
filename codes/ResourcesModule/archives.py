@@ -15,6 +15,9 @@ from ArchiveModule.archive_package import ArchivePackage
 
 import json
 import time
+from panda3d.core import LPoint3f
+from panda3d.core import LVecBase3f
+from panda3d.core import LVecBase4f
 
 class Archives(object):
     def __init__(self):
@@ -105,7 +108,7 @@ class Archives(object):
 
         # self.select_archive(1)
 
-        print self.__archive["content"]["scene"]["camera"]
+        # print self.__archive["content"]["scene"]["camera"]
 
     #选择存档
     def select_archive(self,id):
@@ -125,14 +128,31 @@ class Archives(object):
             arc.__metaData=self.__loadSceneArchive[name]["metaData"]
             for index in range(len(self.__loadSceneArchive[name]["items"])):
                 addItem=list()
-                for item in self.__loadSceneArchive[name]["items"][index].values():
+                for key ,item in self.__loadSceneArchive[name]["items"][index].items():
+                    if key == "pos":
+                        item= LPoint3f(self.__loadSceneArchive[name]["items"][index][key][0],
+                                       self.__loadSceneArchive[name]["items"][index][key][1],
+                                       self.__loadSceneArchive[name]["items"][index][key][2])
+                    elif key == "hpr":
+                        item = LVecBase3f(self.__loadSceneArchive[name]["items"][index][key][0],
+                                          self.__loadSceneArchive[name]["items"][index][key][1],
+                                          self.__loadSceneArchive[name]["items"][index][key][2])
+                    elif key == "scale":
+                        item = LVecBase3f(self.__loadSceneArchive[name]["items"][index][key][0],
+                                          self.__loadSceneArchive[name]["items"][index][key][1],
+                                          self.__loadSceneArchive[name]["items"][index][key][2])
+                    elif key == "color":
+                        item = LVecBase4f(self.__loadSceneArchive[name]["items"][index][key][0],
+                                          self.__loadSceneArchive[name]["items"][index][key][1],
+                                          self.__loadSceneArchive[name]["items"][index][key][2],
+                                          self.__loadSceneArchive[name]["items"][index][key][3])
                     addItem.append(item)
                     arc.add_item(addItem)
             self.__selectedSceneArchive.append(arc)
 
-        print self.__selectedSceneArchive[2].get_metaData()
-        print self.__selectedSceneArchive[2].get_itemsName()
-        print self.__selectedSceneArchive[2].get_itemsData()
+        # print self.__selectedSceneArchive[2].get_metaData()
+        # print self.__selectedSceneArchive[2].get_itemsName()
+        # print self.__selectedSceneArchive[2].get_itemsData()
 
     #将存档记录写入文件
     def write_to_file(self):
@@ -146,9 +166,6 @@ class Archives(object):
     def read_from_file(self):
         with open(self.__archiveFilePath , 'r') as f:
             self.__archives=json.loads(f.read())
-
-    def delete_archive(self):
-        pass
 
     def get_id(self):
         pass
