@@ -22,6 +22,7 @@ from panda3d.core import LVecBase4f
 class Archives(object):
     def __init__(self):
         self.__archiveFilePath="../../resources/files/archives.txt"#存档文件路径
+        self.__initArchiveFilePath="../../resources/files/initArchive.txt"
 
         self.__archives=list()#存档内容。数组多条
 
@@ -31,7 +32,11 @@ class Archives(object):
         self.__loadRoleArchive=dict()#需要加载的角色存档
         # self.__scene=SceneManager()
         # self.save_archive(self.__scene.export_sceneArcPkg())
+        self.read_from_file()
 
+    def init_archive(self):
+        with open(self.__initArchiveFilePath, 'r') as f:
+            self.__initArchives = json.loads(f.read())
 
     #存档界面展示存档
     def show_archives(self):
@@ -95,20 +100,24 @@ class Archives(object):
             archived[name]["items"]= list()
 
             for i in range(len(lists.get_itemsData())):
-                archived[name]["items"].append(dict())
+                # archived[name]["items"].append(dict())
+                archived[name]["items"].append(list())
                 for j in range(len(lists.get_itemsName())):
                     #去掉LPoint3f(0, 50, 5)前缀
                     indexChar = str((lists.get_itemsData())[i][j]).find("(")
                     #判断是否有前缀
                     if indexChar == -1:
-                        itemData = (lists.get_itemsData())[i][j]
+                        itemDataDict = (lists.get_itemsData())[i][j]
                     else:
                         data = str((lists.get_itemsData())[i][j])[indexChar+1 : -1]
-                        itemData=list()
+                        itemDataDict=list()
                         for item in data.split(','):
-                            itemData.append(float(item))
+                            itemDataDict.append(float(item))
 
-                    archived[name]["items"][i][(lists.get_itemsName())[j]] = itemData
+                    itemData=dict()
+                    itemData[(lists.get_itemsName())[j]]=itemDataDict
+                    archived[name]["items"][i].append(itemData)
+                    # archived[name]["items"][i][(lists.get_itemsName())[j]] = itemDataDict
 
             index = index+1
 
@@ -132,46 +141,52 @@ class Archives(object):
         self.read(self.__loadSceneArchive,self.__selectedSceneArchive)
         self.read(self.__loadRoleArchive, self.__selectedRoleArchive)
 
-        # print self.__selectedRoleArchive[0].get_all_metaData()
-        # print self.__selectedRoleArchive[0].get_itemsName()
-        # print self.__selectedRoleArchive[0].get_itemsData()[0]
+        # print self.__selectedSceneArchive[1].get_all_metaData()
+        # print self.__selectedSceneArchive[1].get_itemsName()
+        # print self.__selectedSceneArchive[1].get_itemsData()[0]
 
     #读取场景类与角色类
     def read(self,loadArchive,selectedArchive):
         for name in loadArchive:
-            arc=ArchivePackage(name,loadArchive[name]["items"][0].keys())
+            keys=list()
+            for l in range(len(loadArchive[name]["items"][0])):
+                keys.append(''.join(loadArchive[name]["items"][0][l].keys()))
+            arc=ArchivePackage(name,keys)
             for key in loadArchive[name]["metaData"]:
                 arc.append_metaData(key,loadArchive[name]["metaData"][key])
             arc.__metaData=loadArchive[name]["metaData"]
             for index in range(len(loadArchive[name]["items"])):
                 addItem=list()
-                for key ,item in loadArchive[name]["items"][index].items():
-                    if key == "pos":
-                        item= LPoint3f(loadArchive[name]["items"][index][key][0],
-                                       loadArchive[name]["items"][index][key][1],
-                                       loadArchive[name]["items"][index][key][2])
-                    elif key == "hpr":
-                        item = LVecBase3f(loadArchive[name]["items"][index][key][0],
-                                          loadArchive[name]["items"][index][key][1],
-                                          loadArchive[name]["items"][index][key][2])
-                    elif key == "scale":
-                        item = LVecBase3f(loadArchive[name]["items"][index][key][0],
-                                          loadArchive[name]["items"][index][key][1],
-                                          loadArchive[name]["items"][index][key][2])
-                    elif key == "color":
-                        item = LVecBase4f(loadArchive[name]["items"][index][key][0],
-                                          loadArchive[name]["items"][index][key][1],
-                                          loadArchive[name]["items"][index][key][2],
-                                          loadArchive[name]["items"][index][key][3])
-                    addItem.append(item)
-                    arc.add_item(addItem)
+                for l in range(len(loadArchive[name]["items"][index])):
+
+                    for key ,item in loadArchive[name]["items"][index][l].items():
+                        if key == "pos":
+                            item= LPoint3f(loadArchive[name]["items"][index][l][key][0],
+                                           loadArchive[name]["items"][index][l][key][1],
+                                           loadArchive[name]["items"][index][l][key][2])
+                        elif key == "hpr":
+                            item = LVecBase3f(loadArchive[name]["items"][index][l][key][0],
+                                              loadArchive[name]["items"][index][l][key][1],
+                                              loadArchive[name]["items"][index][l][key][2])
+                        elif key == "scale":
+                            item = LVecBase3f(loadArchive[name]["items"][index][l][key][0],
+                                              loadArchive[name]["items"][index][l][key][1],
+                                              loadArchive[name]["items"][index][l][key][2])
+                        elif key == "color":
+                            item = LVecBase4f(loadArchive[name]["items"][index][l][key][0],
+                                              loadArchive[name]["items"][index][l][key][1],
+                                              loadArchive[name]["items"][index][l][key][2],
+                                              loadArchive[name]["items"][index][l][key][3])
+                        addItem.append(item)
+                        arc.add_item(addItem)
+
             selectedArchive.append(arc)
 
     #将存档记录写入文件
     def write_to_file(self):
         encodedjson = json.dumps(self.__archives, indent=4)
 
-        f = open("../../Resources/files/archives.txt", "w")
+        f = open("../../resources/files/archives.txt", "w")
         f.write(encodedjson)
         f.close()
 
