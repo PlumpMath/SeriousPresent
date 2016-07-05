@@ -136,7 +136,6 @@ class Archives(object):
                     self.__loadRoleArchive = self.__archives[i]["content"]["role"]
 
         self.read_archive()
-
         return [self.__selectedSceneArchive,self.__selectedRoleArchive]
 
     #读取档案，加载游戏
@@ -149,9 +148,9 @@ class Archives(object):
         self.read(self.__loadSceneArchive,self.__selectedSceneArchive)
         self.read(self.__loadRoleArchive, self.__selectedRoleArchive)
 
-        print self.__selectedSceneArchive[2].get_all_metaData()
-        print self.__selectedSceneArchive[2].get_itemsName()
-        print self.__selectedSceneArchive[2].get_itemsData()[0]
+        # print self.__selectedSceneArchive[0].get_all_metaData()
+        # print self.__selectedSceneArchive[0].get_itemsName()
+        # print len(self.__selectedSceneArchive[0].get_itemsData())
 
     def byteify(self,input):
         if isinstance(input, dict):
@@ -206,7 +205,8 @@ class Archives(object):
                                               loadArchive[name]["items"][index][l][key][3])
 
                         addItem.append(item)
-                        arc.add_item(addItem)
+
+                arc.add_item(addItem)
 
             selectedArchive.append(arc)
 
