@@ -4,6 +4,7 @@ from SceneModule.camera_controller import CameraController
 from SceneModule.light_controller import LightController
 from RoleModule.role_manager import RoleManager
 from ResourcesModule.load_plot import LoadPlot
+from ResourcesModule.archives import Archives
 
 from pandac.PandaModules import AntialiasAttrib
 from panda3d.core import *
@@ -14,11 +15,21 @@ import sys
 config = """
 framebuffer-multisample 1
 multisamples 2
+fullscreen #f
+interpolate-frames 1
+window-title Reborn : The Soul Of Devil
+preload-textures 0
+preload-simple-textures 1
+texture-compression 1
+allow-incomplete-render 1
+allow-async-bind 1
+restore-initial-pose 0
+want-pstats 1
 """
 
-loadPrcFileData("", "fullscreen #f")
-loadPrcFileData("", "interpolate-frames 1")
 loadPrcFileData("", config)
+
+model3 = "/e/Material/v10.egg"
 
 modelPath = "/e/Material/HunterEgg/finalHunter.egg"
 buildingPath = "/e/Material/building1.egg"
@@ -32,6 +43,16 @@ actionsPath = {
     "rda" : "/e/Material/HunterEgg/rightDefenceActionUpdate.egg",
     "lda" : "/e/Material/HunterEgg/leftDefenceActionUpdate.egg",
     "bda" : "/e/Material/HunterEgg/backDefenceActionUpdate1.egg",
+}
+
+actorZombie = "/e/Material/HookZombie_Pose2.egg"
+actionsZombiePath = {
+    "walk" : "/e/Material/HookZombie_Walk_v4.egg"
+}
+
+zombieWife = "/e/Material/WifeZombieEgg/WifeZombie_Stand.egg"
+zombieAction = {
+    "walk" : "/e/Material/WifeZombieEgg/WifeZombie_Walk.egg"
 }
 
 actorPath2 = "/e/Material/outter_child.egg"
@@ -48,7 +69,14 @@ class GameWorld_Test(ShowBase):
 
     def __init__(self):
 
+        PStatClient.connect()
+
         ShowBase.__init__(self)
+        #self.oobeCull()
+        self.setFrameRateMeter(True)
+        #self.setSceneGraphAnalyzerMeter(True)
+        self.render.flattenStrong()
+        self.render.setAttrib(LightRampAttrib.makeDefault())
 
         self.render.setAntialias(AntialiasAttrib.MAuto)
 
@@ -57,20 +85,43 @@ class GameWorld_Test(ShowBase):
         sceneMgr = SceneManager()
         sceneMgr.build_on(self)
 
+        model6 = sceneMgr.add_model_scene(model3,
+                                          self.render)
+        model6.setPos(0, 0, 0)
+        model6.setScale(5)
+        model6.setTwoSided(True)
+        model6.clearLight()
+        model6.setAttrib(CullFaceAttrib.make(CullFaceAttrib.MCullClockwise))
+
+        # lod = LODNode("lod")
+        # lodnp = NodePath(lod)
+        # lodnp.reparentTo(self.render)
+        # lod.addSwitch(50.0, 0.0)
+        # model6.reparentTo(lodnp)
+        # self.render.removeNode(NodePath(model6))
+
         actor = sceneMgr.add_actor_scene(actorPath,
                                          actionsPath,
                                          self.render)
-        actor.setPos(5, 0, 0)
+        actor.setPos(50, 50, 0)
         actor.setScale(1.2)
-        actor.setAntialias(AntialiasAttrib.MAuto)
+        #actor.setAntialias(AntialiasAttrib.MAuto)
         actor.setTwoSided(True)
-
+        # self.render.removeNode(actor.node())
         color = (0.5, 0.5, 0.8, 1.0)
         fog = Fog("fog")
         fog.setColor(color)
         fog.setExpDensity(0.005)
         actor.setFog(fog)
         #base.setBackgroundColor(color)
+
+        zombie = sceneMgr.add_actor_scene(actorZombie,
+                                          actionsZombiePath,
+                                          self.render)
+        zombie.setPos(10, 10, 0)
+        zombieId = sceneMgr.get_resId(zombie)
+        sceneMgr.get_ActorMgr().add_toggle_to_actor("o", zombieId, "walk")
+        sceneMgr.get_ActorMgr().add_effert_to_actor("o", zombieId, "actor_move_forward")
 
         sceneMgr.get_ActorMgr().set_clock(globalClock)
         actorId = sceneMgr.get_ActorMgr().get_resId(actor)
@@ -80,18 +131,25 @@ class GameWorld_Test(ShowBase):
         sceneMgr.get_ActorMgr().add_toggle_to_actor("x", actorId, "lda")
         sceneMgr.get_ActorMgr().add_toggle_to_actor("c", actorId, "bda")
         print "actorId : ", actorId
-        #sceneMgr.get_ActorMgr().add_effect_to_actor("w", actorId, "actor_move_forward")
-        #sceneMgr.get_ActorMgr().add_effect_to_actor("s", actorId, "actor_move_backward")
-        sceneMgr.get_ActorMgr().add_effect_to_actor("a", actorId, "actor_rotate_cw")
-        sceneMgr.get_ActorMgr().add_effect_to_actor("d", actorId, "actor_rotate_ccw")
+        sceneMgr.get_ActorMgr().add_effert_to_actor("w", actorId, "actor_move_forward")
+        sceneMgr.get_ActorMgr().add_effert_to_actor("s", actorId, "actor_move_backward")
+        sceneMgr.get_ActorMgr().add_effert_to_actor("a", actorId, "actor_rotate_cw")
+        sceneMgr.get_ActorMgr().add_effert_to_actor("d", actorId, "actor_rotate_ccw")
 
-        self.cam.setPos(100, 0, 100)
+        _zombieWife = sceneMgr.add_actor_scene(zombieWife,
+                                              zombieAction,
+                                               self.render)
+        _zombieWife.setPos(20, 20, 0)
+        zId = sceneMgr.get_resId(_zombieWife)
+        # sceneMgr.get_ActorMgr().add_toggle_to_actor("b", zId, "walk")
+        # sceneMgr.get_ActorMgr().add_effect_to_actor("b", zId, "actor_move_forward")
+        self.cam.setPos(-300, -300, 300)
 
         camCtrlr = CameraController()
         camCtrlr.bind_camera(self.cam)
         camCtrlr.bind_ToggleHost(self)
         camCtrlr.set_clock(globalClock)
-        camCtrlr.focus_on(actor, 100)
+        camCtrlr.focus_on(actor, 200)
 
         sceneMgr.bind_CameraController(camCtrlr)
         sceneMgr.get_ActorMgr().bind_CameraController(camCtrlr)
@@ -103,12 +161,12 @@ class GameWorld_Test(ShowBase):
         lightCtrlr = LightController()
         lightCtrlr.bind_SceneManager(sceneMgr)
 
-        # light1 = lightCtrlr.create_light(lightType = "AmbientLight",
-        #                                  lightColor = (0.2, 0.1, 0.2, 1),
-        #                                  parentId = self.render.getName()
-        #                                  )
-        # lightId1 = lightCtrlr.get_lightId(light1)
-        # lightCtrlr.set_light_to(lightId1, self.render.getName())
+        light1 = lightCtrlr.create_light(lightType = "AmbientLight",
+                                         lightColor = (0.2, 0.1, 0.2, 1),
+                                         parentId = self.render.getName()
+                                         )
+        lightId1 = lightCtrlr.get_lightId(light1)
+        lightCtrlr.set_light_to(lightId1, self.render.getName())
 
         light2 = lightCtrlr.create_light(lightType = "DirectionalLight",
                                          lightColor = (1.0, 1.0, 1.0, 1.0),
@@ -119,7 +177,7 @@ class GameWorld_Test(ShowBase):
 
         light3 = lightCtrlr.create_light(lightType = "PointLight",
                                          lightColor = (0.8, 0.9, 0.7, 1.0),
-                                         lightPos = (5, 5, 5),
+                                         lightPos = (5, 5, 50),
                                          parentId = "render")
         lightId3 = lightCtrlr.get_lightId(light3)
         lightCtrlr.set_light_to(lightId3, "render")
@@ -168,6 +226,10 @@ class GameWorld_Test(ShowBase):
                                            self.render)
         terra.getRoot().setPos(-50, -50, 0)
 
+        # model6.clearLight(light2)
+        # model6.clearLight(light3)
+        # model6.clearLight(light4)
+
         # print "terrain pos : ", terra.getRoot().getPos()
         # print "terrain hpr : ", terra.getRoot().getHpr()
         # print "terrain scale : ", terra.getRoot().getScale()
@@ -187,7 +249,7 @@ class GameWorld_Test(ShowBase):
         camCtrlr.add_toggle_to_opt("k", "rotate_around_ccw")
 
         #print camCtrlr.get_directionsVector()
-        arcPkgs = sceneMgr.export_sceneArcPkg()
+        # arcPkgs = sceneMgr.export_sceneArcPkg()
 
         roleMgr = RoleManager()
         sceneMgr.get_ActorMgr().bind_RoleManager(roleMgr)
@@ -204,33 +266,50 @@ class GameWorld_Test(ShowBase):
         npc1.print_all_attr()
 
 
-        roleArcPkg = roleMgr.export_arcPkg()
-        arcPkgs.append(roleArcPkg)
+        # roleArcPkg = roleMgr.export_arcPkg()
+        # arcPkgs.append(roleArcPkg)
 
-        f = open("ArcPkgs.txt", "w")
-        f.write("---------- Archive Package ----------\n")
-        for arcPkg in arcPkgs:
-            f.write("===========\n")
-            f.write(arcPkg.get_ArchivePackageName() + "\n")
-            f.write("itemsName : ")
-            for name in arcPkg.get_itemsName():
-                f.write(name+", ")
-            f.write("\n===========\n")
-            for data in arcPkg.get_itemsData():
-                f.write(str(data)+"\n")
-            f.write("==========\n")
-        f.write("------------------------------\n")
+        # f = open("ArcPkgs.txt", "w")
+        # f.write("---------- Archive Package ----------\n")
+        # for arcPkg in arcPkgs:
+        #     f.write("===========\n")
+        #     f.write(arcPkg.get_ArchivePackageName() + "\n")
+        #     f.write("itemsName : ")
+        #     for name in arcPkg.get_itemsName():
+        #         f.write(name+", ")
+        #     f.write("\n===========\n")
+        #     for data in arcPkg.get_itemsData():
+        #         f.write(str(data)+"\n")
+        #     f.write("==========\n")
+        # f.write("------------------------------\n")
 
-        for a, b in sceneMgr.get_ActorMgr().get_toggleEffert().iteritems():
-            print a
+        self.taskMgr.setupTaskChain("actorTaskChain", numThreads = 3)
+        self.taskMgr.setupTaskChain("terraTaskChain")
+        self.taskMgr.setupTaskChain("cameraTaskChain", numThreads = 3)
+
 
         self.taskMgr.add(sceneMgr.update_scene, "update_scene")
+
+        self.accept("l", self.__save_archive, [sceneMgr, roleMgr])
 
         self.accept("space", self.dialog_show)
         self.accept("find_npc", self.print_accept_event, ["find_npc"])
         self.accept("find_nothing", self.print_accept_event, ["find_nothing"])
 
         self.accept("w_effert", self.check_event, ["w_effert"])
+
+        self.render.analyze()
+
+    def __save_archive(self, sceneMgr, roleMgr):
+
+        print "Archiving.."
+
+        archive = Archives()
+        #archive.read_from_file()
+        archive.save_archive(sceneMgr.export_sceneArcPkg(),
+                             [roleMgr.export_arcPkg()],
+                             -1,
+                             "archive1")
 
     def check_event(self, event):
 
