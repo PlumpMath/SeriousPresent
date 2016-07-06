@@ -61,7 +61,13 @@ class MainMenu(ShowBase):
     def new_game(self):
         self.destroy()
         self.__rm.show_volume_sliderbar()
+
         self.__rm.show_dialog(1)
+        self.accept("a", self.__rm.show_dialog, [1])
+        self.accept("b", self.__rm.show_dialog, [2])
+        self.accept("c", self.__rm.dialog_next)
+        self.accept("d", self.__rm.play_sound,[2])
+        self.accept("e", self.__rm.stop_sound, [2])
         #调用对话
         # lp=LoadPlot()
         # lp.init_interface()

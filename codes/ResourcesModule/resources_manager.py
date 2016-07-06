@@ -10,6 +10,7 @@
 from load_plot import LoadPlot
 from media_player import MediaPlayer
 from sound import MySound
+from archives import Archives
 
 class ResourcesManager(object):
 
@@ -22,39 +23,26 @@ class ResourcesManager(object):
 
         self.__media=MediaPlayer()
 
+        self.__archive=Archives()
+
 
     """""""""""
     音乐播放函数
     """""""""""
+    #播放音乐
+    # id：音乐id
+    def play_sound(self,id):
+        self.__sound.play_music(id)
+
+    #停止音乐
+    #id：音乐id
+    def stop_sound(self, id):
+        self.__sound.stop_music(id)
 
     #开关背景音乐
     def play_background_music(self):
 
         self.__sound.toggleMusicBox()
-
-    #播放战斗音效
-    def play_battle_music(self):
-        self.__sound.play_battle_music()
-
-    #播放平时音效
-    def play_peace_music(self):
-        self.__sound.play_peace_music()
-
-    #播放对话音效
-    def play_dialogue_music(self):
-        self.__sound.play_dialogue_music()
-
-    #播放枪击音效
-    def play_shot_music(self):
-        self.__sound.play_shot_music()
-
-    #播放加载游戏音效
-    def play_load_music(self):
-        self.__sound.play_load_music()
-
-    #播放退出游戏音效
-    def play_exit_music(self):
-        self.__sound.play_exit_music()
 
     #加载声音控制滑动条控件
     def show_volume_sliderbar(self):
@@ -78,7 +66,7 @@ class ResourcesManager(object):
         self.__media.destroy()
 
     """""""""""
-    对话函数
+    对话,提示框函数
     """""""""""
 
     #加载对话框，选择对话id
@@ -86,26 +74,56 @@ class ResourcesManager(object):
     def show_dialog(self,part):
         self.__dialogueFile.init_interface(part)
 
+    # 加载提示框
+    def show_prompt_box(self):
+        self.__dialogueFile.init_prompt()
+
     #读取下一句对话
     def dialog_next(self):
         #判断能否继续读下一句话，不能则返回False，结束对话
         if self.__dialogueFile.dialogue_next():
             return True
         else:
+            self.__dialogueFile.destroy()
             return False
 
     #移除对话框等控件
     def destroy_dialog(self):
         self.__dialogueFile.destroy()
 
+    #移除提示框控件
+    def destroy_prompt(self):
+        self.__dialogueFile.destroy_prompt()
+
     """""""""""
     游戏存档读档函数
     """""""""""
 
-    def save_archives(self):
-        pass
+    # 存档界面展示存档
+    def show_archives(self):
+        self.__archive.show_archives()
 
-    def select_archives(self):
-        pass
+    #存档
+    #sceneArchive:场景存档
+    #roleArchive:角色存档
+    #id：档id，唯一标识，-1代表新的存档，0代表初始存档（开始新的游戏），>=1代表已经存在的存档
+    def save_archives(self,sceneArchive,roleArchive,id,archiveName):
+        if self.__archive.save_archive(sceneArchive,roleArchive,id,archiveName):
+            print "存档成功"
+        else:
+            print "存档失败"
+
+    #读档
+    #id：档id，唯一标识，-1代表新的存档，0代表初始存档（开始新的游戏），>=1代表已经存在的存档
+    def select_archives(self,id):
+        if self.__archive.select_archive(id)!=False:
+            print "读档成功"
+            return self.__archive.select_archive(id)
+        else:
+            print "读档失败"
+
+    #结束游戏,将存档内容写进文件
+    def write_to_file(self):
+        self.__archive.write_to_file()
 
 

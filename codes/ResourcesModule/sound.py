@@ -21,24 +21,26 @@ class MySound(DirectObject):
     def __init__(self):
 
         self.__music=dict()
-        self.__music["background"]=loader.loadMusic("../../resources/music/test.mp3")#背景音乐
-        self.__music["battle"] = loader.loadSfx('../../resources/music/openclose.ogg')#战斗音效
-        self.__music["peace"] = loader.loadSfx('../../resources/music/openclose.ogg')#平时音效
-        self.__music["dialogue"] = loader.loadSfx('../../resources/music/openclose.ogg')#对话音效
-        self.__music["shot"] = loader.loadSfx('../../resources/music/openclose.ogg')#枪击音效
-        self.__music["load"] = loader.loadSfx('../../resources/music/openclose.ogg')#载入游戏音效
-        self.__music["exit"] = loader.loadSfx('../../resources/music/openclose.ogg')#退出游戏音效
+        self.__music["1"]=loader.loadMusic("../../resources/music/test.mp3")#背景音乐
+        self.__music["2"] = loader.loadSfx('../../resources/music/openclose.ogg')#平时音效
+        self.__music["3"] = loader.loadSfx('../../resources/music/openclose.ogg')  # 战斗音效
+        self.__music["4"] = loader.loadSfx('../../resources/music/openclose.ogg')#对话音效
+        self.__music["5"] = loader.loadSfx('../../resources/music/openclose.ogg')#枪击音效
+        self.__music["6"] = loader.loadSfx('../../resources/music/openclose.ogg')#载入游戏音效
+        self.__music["7"] = loader.loadSfx('../../resources/music/openclose.ogg')#退出游戏音效
 
-        self.__music["background"].setVolume(0.5)
-        self.__music["background"].setLoop(True)
+        self.__music["1"].setVolume(0.5)
+        self.__music["1"].setLoop(True)
 
         self.__volume=0.5#滑动条值
 
         self.__musicTime = 0#背景音乐所处时间
 
+        self.__backgroundId=1
+
         self.__musicOpen = True
 
-        self.__music["background"].play()
+        self.__music["1"].play()
 
 
     #初始化声音滑动条，开关声音按钮
@@ -60,48 +62,57 @@ class MySound(DirectObject):
     #设置背景音乐声音大小
     def setMusicBoxVolume(self):
         newVolume=self.__slider.guiItem.getValue()
-        self.__music["background"].setVolume(newVolume)
+        self.__music["1"].setVolume(newVolume)
 
     #开关背景音乐
     def toggleMusicBox(self):
 
         #关闭音乐
         if (self.__musicOpen==True):
-            self.__musicTime=self.__music["background"].getTime()
-            self.__music["background"].stop()
+            for index in self.__music:
+                index.stop()
             self.__musicButton["text"]="Open"
         #开启音乐
         else:
-            self.__music["background"].setTime(self.__musicTime)
-            self.__music["background"].play()
+            self.__music[self.__backgroundId].play()
             self.__musicButton["text"]="Close"
 
         self.__musicButton.setText()
         self.__musicOpen=not self.__musicOpen
 
-    #播放战斗音效
-    def play_battle_music(self):
-        self.music["battle"].play()
+    def play_music(self,id):
+        if(id==1 or id==2 or id==3):
+            self.__backgroundId=id
+        id=str(id)
+        self.__music[id].play()
 
-    # 播放平时音效
-    def play_peace_music(self):
-        self.music["peace"].play()
+    def stop_music(self,id):
+        id=str(id)
+        self.__music[id].stop()
 
-    # 播放对话音效
-    def play_dialogue_music(self):
-        self.music["dialogue"].play()
-
-    # 播放枪击音效
-    def play_shot_music(self):
-        self.music["shot"].play()
-
-    # 播放载入游戏音效
-    def play_load_music(self):
-        self.music["load"].play()
-
-    # 播放退出游戏音效
-    def play_exit_music(self):
-        self.music["exit"].play()
+    # #播放战斗音效
+    # def play_battle_music(self):
+    #     self.music["battle"].play()
+    #
+    # # 播放平时音效
+    # def play_peace_music(self):
+    #     self.music["peace"].play()
+    #
+    # # 播放对话音效
+    # def play_dialogue_music(self):
+    #     self.music["dialogue"].play()
+    #
+    # # 播放枪击音效
+    # def play_shot_music(self):
+    #     self.music["shot"].play()
+    #
+    # # 播放载入游戏音效
+    # def play_load_music(self):
+    #     self.music["load"].play()
+    #
+    # # 播放退出游戏音效
+    # def play_exit_music(self):
+    #     self.music["exit"].play()
 
 
 
