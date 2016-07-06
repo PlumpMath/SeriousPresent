@@ -33,7 +33,9 @@ class Archives(object):
         # self.__scene=SceneManager()
         # self.save_archive(self.__scene.export_sceneArcPkg())
         self.read_from_file()
+        # self.init_archive()
 
+    #读初始存档
     def init_archive(self):
         with open(self.__initArchiveFilePath, 'r') as f:
             self.__initArchives = json.loads(f.read())
@@ -55,14 +57,17 @@ class Archives(object):
             id = len(self.__archives)+1
             self.new_archive(sceneArchive,roleArchive,id,archiveName)
             self.__archives.append(self.__archive)
+            return True
         #覆盖之前的存档
         else:
             for i in range(len(self.__archives)):
                 if (self.__archives[i]["id"] == id):
                     self.new_archive(sceneArchive,roleArchive,id,archiveName)
                     self.__archives[i]=self.__archive
+                    return True
+        return False
 
-        self.write_to_file()
+        # self.write_to_file()
 
     #新建存档
     def new_archive(self,sceneArchive,roleArchive,id,archiveName):
@@ -123,8 +128,9 @@ class Archives(object):
 
     #选择存档
     def select_archive(self,id):
-
+        flag=False
         if id == 0 :#开始新的游戏，读取初始档
+            flag = True
             self.init_archive()
             self.__loadSceneArchive = self.__initArchives["content"]["scene"]
             self.__loadRoleArchive = self.__initArchives["content"]["role"]
@@ -132,11 +138,16 @@ class Archives(object):
         else:
             for i in range(len(self.__archives)):
                 if(self.__archives[i]["id"]==id):
+                    flag=True
                     self.__loadSceneArchive=self.__archives[i]["content"]["scene"]
                     self.__loadRoleArchive = self.__archives[i]["content"]["role"]
+                    break
 
-        self.read_archive()
-        return [self.__selectedSceneArchive,self.__selectedRoleArchive]
+        if flag==False:
+            return False
+        else:
+            self.read_archive()
+            return [self.__selectedSceneArchive,self.__selectedRoleArchive]
 
     #读取档案，加载游戏
     def read_archive(self):
@@ -152,6 +163,7 @@ class Archives(object):
         # print self.__selectedSceneArchive[0].get_itemsName()
         # print len(self.__selectedSceneArchive[0].get_itemsData())
 
+    #将所有unicode转为string
     def byteify(self,input):
         if isinstance(input, dict):
             return {self.byteify(key): self.byteify(value) for key, value in input.iteritems()}
@@ -214,9 +226,12 @@ class Archives(object):
     def write_to_file(self):
         encodedjson = json.dumps(self.__archives, indent=4)
 
-        f = open("../../resources/files/archives.txt", "w")
-        f.write(encodedjson)
-        f.close()
+        with open(self.__archiveFilePath, 'w') as f:
+            f.write(encodedjson)
+
+        # f = open("../../resources/files/archives.txt", "w")
+        # f.write(encodedjson)
+        # f.close()
 
     #从文件中读取存档记录
     def read_from_file(self):
