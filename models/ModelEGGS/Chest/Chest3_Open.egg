@@ -1,0 +1,54 @@
+<CoordinateSystem> { Y-Up }
+
+<Comment> {
+  "maya2egg2015 -a chan -o /e/Material/Chest3_Open.egg /e/Material/Chest3_Open.mb"
+}
+<Table> {
+  <Bundle> Chest3_Open {
+    <Table> "<skeleton>" {
+      <Table> pCube2 {
+        <Xfm$Anim_S$> xform {
+          <Scalar> fps { 24 }
+          <Char*> order { srpht }
+          <S$Anim> i { <V> { 1.10289 } }
+          <S$Anim> j { <V> { 0.727098 } }
+          <S$Anim> k { <V> { 1.08401 } }
+          <S$Anim> h {
+            <V> {
+              0 -1.99032 -6.73638 -12.4008 -17.1466 -19.1368
+            }
+          }
+          <S$Anim> p {
+            <V> {
+              -0 -0.145589 -0.494113 -0.912552 -1.26514 -1.41352
+            }
+          }
+          <S$Anim> r {
+            <V> {
+              -0 0.00483136 0.0162498 0.0294221 0.0398074 0.0439277
+            }
+          }
+          <S$Anim> x {
+            <V> {
+              -0.0333802 -0.00676251 0.0567104 0.132468 0.195941
+              0.222559
+            }
+          }
+          <S$Anim> y {
+            <V> {
+              3.11756 3.12456 3.14126 3.16118 3.17787 3.18487
+            }
+          }
+          <S$Anim> z {
+            <V> {
+              -0.0100982 -0.117983 -0.375246 -0.682303 -0.939566
+              -1.04745
+            }
+          }
+        }
+      }
+    }
+    <Table> morph {
+    }
+  }
+}
