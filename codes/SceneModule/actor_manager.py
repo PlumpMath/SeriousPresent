@@ -49,8 +49,8 @@ class ActorManager(ResManager):
 
         self.__itvlMap = dict()
 
-        self.__actorMoveSpeed = 10
-        self.__actorRotateSpeed = 10
+        self.__actorMoveSpeed = 0
+        self.__actorRotateSpeed = 0
 
         self.__roleMgr = None
 
@@ -60,7 +60,7 @@ class ActorManager(ResManager):
 
         self.__attackLock = False
 
-        self.__effectSwitch = {
+        self.__effertSwitch = {
             ACTOR_MOVE_FORWARD  : False,
             ACTOR_MOVE_BACKWARD : False,
             ACTOR_MOVE_LEFT     : False,
@@ -73,15 +73,15 @@ class ActorManager(ResManager):
         }
 
         self.__toggleEffert = {
-            ACTOR_MOVE_FORWARD  : [self.__actor_move_forward, []],
-            ACTOR_MOVE_BACKWARD : [self.__actor_move_backward, []],
-            ACTOR_MOVE_LEFT     : [self.__actor_move_left, []],
-            ACTOR_MOVE_RIGHT    : [self.__actor_move_right, []],
-            ACTOR_ROTATE_CW     : [self.__actor_rotate_cw, []],
-            ACTOR_ROTATE_CCW    : [self.__actor_rotate_ccw, []],
-            ACTOR_ATTACK        : [self.__actor_attack, []],
-            ACTOR_BE_ATTACKED   : [self.__actor_be_attacked, []],
-            ACTOR_TALK          : [self.__actor_talk, []],
+            ACTOR_MOVE_FORWARD  : self.__actor_move_forward,
+            ACTOR_MOVE_BACKWARD : self.__actor_move_backward,
+            ACTOR_MOVE_LEFT     : self.__actor_move_left,
+            ACTOR_MOVE_RIGHT    : self.__actor_move_right,
+            ACTOR_ROTATE_CW     : self.__actor_rotate_cw,
+            ACTOR_ROTATE_CCW    : self.__actor_rotate_ccw,
+            ACTOR_ATTACK        : self.__actor_attack,
+            ACTOR_BE_ATTACKED   : self.__actor_be_attacked,
+            ACTOR_TALK          : self.__actor_talk,
         }
 
         self.__eventActionRecord = dict() # actorId : [ toggleEvent, actionName ]
@@ -125,10 +125,21 @@ class ActorManager(ResManager):
                  extraResPath,
                  _resId = None):
 
+        #print "In load_res : ", resPath, extraResPath
+
         res = Actor(resPath, extraResPath)
+        print "in load_res :", res
+        resId = None
 
         self._resCount += 1
-        resId = self._gen_resId()
+
+        if _resId == None:
+
+            resId = self._gen_resId()
+
+        else:
+
+            resId = _resId
 
         self._resMap[resId] = res
         self._resPath[resId] = [resPath, extraResPath]
@@ -164,7 +175,7 @@ class ActorManager(ResManager):
 
                     actor.accept(event=toggleEvent,
                                  method=self.__move_interval_loop,
-                                 extraArgs=[toggleEvent, itvl])
+                                 extraArgs=[actor, toggleEvent, itvl])
 
                     # actor.accept(event=toggleEvent + "-repeat",
                     #             method=self.__interval_loop,
@@ -172,13 +183,13 @@ class ActorManager(ResManager):
 
                     actor.accept(event=toggleEvent + "-up",
                                 method=self.__move_interval_stop,
-                                extraArgs=[toggleEvent, itvl, actor.getNumFrames(actionName)])
+                                extraArgs=[actor, toggleEvent, itvl])
 
                     if self.__eventActionRecord.has_key(actorId) is False:
 
-                        self.__eventActionRecord[actorId] = list()
+                        self.__eventActionRecord[actorId] = dict()
 
-                    self.__eventActionRecord[actorId].append([toggleEvent, actionName])
+                    self.__eventActionRecord[actorId][toggleEvent] = actionName
 
         elif isinstance(actorOrId, Actor):
 
@@ -194,7 +205,7 @@ class ActorManager(ResManager):
 
                     actor.accept(event=toggleEvent,
                                  method=self.__move_interval_loop,
-                                 extraArgs=[toggleEvent, itvl])
+                                 extraArgs=[actor, toggleEvent, itvl])
 
                     # actor.accept(event=toggleEvent + "-repeat",
                     #               method=self.__interval_loop,
@@ -202,26 +213,26 @@ class ActorManager(ResManager):
 
                     actor.accept(event=toggleEvent + "-up",
                                  method=self.__move_interval_stop,
-                                 extraArgs=[toggleEvent, itvl, actor.getNumFrames(actionName)])
+                                 extraArgs=[actor, toggleEvent, itvl])
 
                     if self.__eventActionRecord.has_key(actorId) is False:
 
-                        self.__eventActionRecord[actorId] = list()
+                        self.__eventActionRecord[actorId] = dict()
 
-                    self.__eventActionRecord[actorId].append([toggleEvent, actionName])
+                    self.__eventActionRecord[actorId][toggleEvent] = actionName
 
     #########################################
 
     isPlayerMoving = dict()
 
     # 循环Interval
-    def __move_interval_loop(self, toggleEvent, itvl):
+    def __move_interval_loop(self, actor, toggleEvent, itvl):
 
         self.__playerMovingState[toggleEvent] = True
 
         #print toggleEvent, " : ", self.__playerMovingState
         #print self.__directionsVector
-        if not itvl.isPlaying():
+        if len(actor.getAnimControls()) == 0:
 
             itvl.loop()
 
@@ -236,21 +247,28 @@ class ActorManager(ResManager):
     #########################################
 
     # 停止Interval
-    def __move_interval_stop(self, toggleEvent, itvl, endFrame):
-
-        self.__playerMovingState[toggleEvent] = False
+    def __move_interval_stop(self, actor, toggleEvent, itvl):
 
         currFrame = itvl.getCurrentFrame()
+        endFrame = actor.getNumFrames(itvl.animName)
 
-        #print toggleEvent, "-up : ", self.__playerMovingState
-        # print "currFrame", currFrame
-        # print "endFrame", endFrame
+        if currFrame is not None:
 
-        if True not in self.__playerMovingState.values():
+            itvl.start(currFrame / endFrame)
 
-            if currFrame is not None:
-
-                itvl.start(startT = currFrame / endFrame)
+        # self.__playerMovingState[toggleEvent] = False
+        #
+        # currFrame = itvl.getCurrentFrame()
+        #
+        # #print toggleEvent, "-up : ", self.__playerMovingState
+        # # print "currFrame", currFrame
+        # # print "endFrame", endFrame
+        #
+        # if True not in self.__playerMovingState.values():
+        #
+        #     if currFrame is not None:
+        #
+        #         itvl.start(startT = currFrame / endFrame)
 
         #print toggleEvent + "-up happen"
 
@@ -277,6 +295,8 @@ class ActorManager(ResManager):
 
         for actionName in actor.getAnimNames():
 
+            actor.actorInterval(animName=actionName)
+
             tmpItvl = ActorInterval(actor = actor,
                                     animName = actionName)
 
@@ -299,41 +319,55 @@ class ActorManager(ResManager):
 
     #########################################
 
-    def add_effect_to_actor(self,
+    def add_effert_to_actor(self,
                             toggleEvent,
                             actorId,
-                            effect,
+                            effert,
                             extraArgs = None):
 
         actor = self.get_actor(actorId)
+        #print "in add_effert_to_actor : ", actor
 
-        print "In Method add_effect_to_actor : ", actor
+        if actor is not None and effert in ACTOR_EFFERT:
 
-        if actor is not None and effect in ACTOR_EFFERT:
+            print "Ok, add_effert execute"
 
             self.__effertMsgDiptcr.accept_msg(toggleEvent)
             #self.__effertMsgDiptcr.accept_msg(toggleEvent+"up")
 
-            actor.accept(toggleEvent + "_effert", self.__turn_effect_switch, [effect, True])
-            actor.accept(toggleEvent + "_effert_end", self.__turn_effect_switch, [effect, False])
+            actor.accept(toggleEvent + "_effert",
+                         self.__turn_effert_switch,
+                         [actorId, toggleEvent, effert, True])
+            actor.accept(toggleEvent + "_effert_end",
+                         self.__turn_effert_switch,
+                         [actorId, toggleEvent, effert, False])
 
-            self.__toggleEffert[effect][1].append(actorId)
-
-            #print self.__toggleEffert[effect]
+            #print self.__toggleEffert[effert]
 
             if self.__eventEffertRecord.has_key(actorId) is False:
 
-                self.__eventEffertRecord[actorId] = list()
+                self.__eventEffertRecord[actorId] = dict()
 
-            self.__eventEffertRecord[actorId].append([toggleEvent, effect])
+            if self.__eventEffertRecord[actorId].has_key(toggleEvent) is False:
+
+                self.__eventEffertRecord[actorId][toggleEvent] = list()
+
+            if self.__eventEffertRecord[actorId][toggleEvent].count([effert, False]) == 0 and \
+                self.__eventEffertRecord[actorId][toggleEvent].count([effert, True]) == 0:
+
+                self.__eventEffertRecord[actorId][toggleEvent].append([effert, False])
 
     #########################################
 
-    def __turn_effect_switch(self, effect, onOrOff):
+    def __turn_effert_switch(self, actorId, toggleEvent, effert, onOrOff):
 
-        print "turn '", effect, "' ", onOrOff
+        #print "turn '", effert, "' ", onOrOff
 
-        self.__effectSwitch[effect] = onOrOff
+        for i in range(len(self.__eventEffertRecord[actorId][toggleEvent])):
+
+            if effert == self.__eventEffertRecord[actorId][toggleEvent][i][0]:
+
+                self.__eventEffertRecord[actorId][toggleEvent][i][1] = onOrOff
 
     #########################################
 
@@ -346,6 +380,8 @@ class ActorManager(ResManager):
 
     def update_actors(self, task):
 
+        task.setTaskChain("actorTaskChain")
+
         self.__directionsVector = self.__camCtrlr.get_directionsVector()
         self.__update_actor_direction()
 
@@ -354,19 +390,32 @@ class ActorManager(ResManager):
         self.__actorMoveSpeed = player.get_attr_value("runSpeed")
         self.__actorRotateSpeed = player.get_attr_value("rotateSpeed")
 
-        for effect, switch in self.__effectSwitch.iteritems():
+        for actorId, records in self.__eventEffertRecord.iteritems():
 
-            if switch:
+            actor = self.get_actor(actorId)
 
-                print effect, " : ", switch
+            for toggleEvent, effertList in records.iteritems():
 
-                for arg in self.__toggleEffert[effect][1]:
+                for effert in effertList:
 
-                    execTask = self.__toggleEffert[effect][0]
+                    if effert[1] == True:
+                        print actorId, ", ", toggleEvent, ", ", effert[0], ", ", effert[1]
+                        execTask = self.__toggleEffert[effert[0]]
+                        execTask(actor, task)
 
-                    arg = self.get_actor(arg)
-
-                    execTask(arg, task)
+        # for effert, switch in self.__effertSwitch.iteritems():
+        #
+        #     if switch:
+        #
+        #         #print effert, " : ", switch
+        #
+        #         for arg in self.__toggleEffert[effert][1]:
+        #
+        #             execTask = self.__toggleEffert[effert][0]
+        #
+        #             arg = self.get_actor(arg)
+        #
+        #             execTask(arg, task)
 
         self.__check_player_touch_area(task)
 
@@ -417,7 +466,7 @@ class ActorManager(ResManager):
 
         #messenger.send("update_camera")
 
-        # if self.check_effectSwitch(ACTOR_MOVE_LEFT) is True:
+        # if self.check_effertSwitch(ACTOR_MOVE_LEFT) is True:
         #
         #     dVector = self.__directionsVector["ES"]
         #
@@ -425,7 +474,7 @@ class ActorManager(ResManager):
         #
         #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
         #
-        # elif self.check_effectSwitch(ACTOR_MOVE_RIGHT) is True:
+        # elif self.check_effertSwitch(ACTOR_MOVE_RIGHT) is True:
         #
         #     dVector = self.__directionsVector["SW"]
         #
@@ -441,15 +490,15 @@ class ActorManager(ResManager):
         #
         #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt)
 
-        if self.__effectSwitch["actor_move_forward"] is True:
+        #if self.__effertSwitch["actor_move_forward"] is True:
 
-            dt = self.__clock.getDt()
+        dt = self.__clock.getDt()
 
-            c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
-            s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
+        c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
+        s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
 
-            actor.setX(actor.getX() + c * dt * self.__actorMoveSpeed)
-            actor.setY(actor.getY() + s * dt * self.__actorMoveSpeed)
+        actor.setX(actor.getX() + c * dt * self.__actorMoveSpeed)
+        actor.setY(actor.getY() + s * dt * self.__actorMoveSpeed)
 
         #actor.setH(actorH)
 
@@ -469,7 +518,7 @@ class ActorManager(ResManager):
         # dVector = None
         # actorH = None
         #
-        # if self.check_effectSwitch(ACTOR_MOVE_FORWARD) is True:
+        # if self.check_effertSwitch(ACTOR_MOVE_FORWARD) is True:
         #
         #     dVector = self.__directionsVector["ES"] #NE
         #
@@ -477,7 +526,7 @@ class ActorManager(ResManager):
         #
         #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
         #
-        # elif self.check_effectSwitch(ACTOR_MOVE_BACKWARD) is True:
+        # elif self.check_effertSwitch(ACTOR_MOVE_BACKWARD) is True:
         #
         #     dVector = self.__directionsVector["NE"]#ES
         #
@@ -499,7 +548,7 @@ class ActorManager(ResManager):
 
         # print actor, "currX : ", actor.getX()
 
-        # if self.__effectSwitch["actor_move_backward"] is True:
+        # if self.__effertSwitch["actor_move_backward"] is True:
         #
         #     dt = self.__clock.getDt()
         #
@@ -523,7 +572,7 @@ class ActorManager(ResManager):
         # actorH = None
         # #actor.setY(actor.getY() + dt * self.__actorMoveSpeed)
         #
-        # if self.check_effectSwitch(ACTOR_MOVE_LEFT) is True:
+        # if self.check_effertSwitch(ACTOR_MOVE_LEFT) is True:
         #
         #     dVector = self.__directionsVector["NE"]
         #
@@ -531,7 +580,7 @@ class ActorManager(ResManager):
         #
         #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
         #
-        # elif self.check_effectSwitch(ACTOR_MOVE_RIGHT) is True:
+        # elif self.check_effertSwitch(ACTOR_MOVE_RIGHT) is True:
         #
         #     dVector = self.__directionsVector["WN"]
         #
@@ -553,14 +602,14 @@ class ActorManager(ResManager):
 
         #print actor, "currY : ", actor.getY()
 
-        if self.__effectSwitch["actor_move_backward"] is True:
-            dt = self.__clock.getDt()
+        #if self.__effertSwitch["actor_move_backward"] is True:
+        dt = self.__clock.getDt()
 
-            c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
-            s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
+        c = math.cos(actor.getH() * math.pi / 180 - math.pi / 2)
+        s = math.sin(actor.getH() * math.pi / 180 - math.pi / 2)
 
-            actor.setX(actor.getX() - c * dt * self.__actorMoveSpeed)
-            actor.setY(actor.getY() - s * dt * self.__actorMoveSpeed)
+        actor.setX(actor.getX() - c * dt * self.__actorMoveSpeed)
+        actor.setY(actor.getY() - s * dt * self.__actorMoveSpeed)
 
         return task.cont
 
@@ -574,7 +623,7 @@ class ActorManager(ResManager):
         #
         # actorH = None
         #
-        # if self.check_effectSwitch(ACTOR_MOVE_FORWARD) is True:
+        # if self.check_effertSwitch(ACTOR_MOVE_FORWARD) is True:
         #
         #     dVector = self.__directionsVector["SW"] #
         #
@@ -582,7 +631,7 @@ class ActorManager(ResManager):
         #
         #     actor.setPos(actor.getPos() + dVector * self.__actorMoveSpeed * dt * 0.5)
         #
-        # elif self.check_effectSwitch(ACTOR_MOVE_BACKWARD) is True:
+        # elif self.check_effertSwitch(ACTOR_MOVE_BACKWARD) is True:
         #
         #     dVector = self.__directionsVector["WN"] #SW
         #
@@ -726,9 +775,9 @@ class ActorManager(ResManager):
 
     #########################################
 
-    def check_effectSwitch(self, key):
+    def check_effertSwitch(self, key):
 
-        return SeriousTools.find_value_in_dict(key, self.__effectSwitch)
+        return SeriousTools.find_value_in_dict(key, self.__effertSwitch)
 
     def set_clock(self, clock):
 
@@ -774,6 +823,20 @@ class ActorManager(ResManager):
 
         return self.__eventActionRecord
 
+    def print_eventActionRecord(self):
+
+        print "----- eventActionRecord -----"
+
+        for actorId, record in self.__eventActionRecord.iteritems():
+
+            print actorId
+
+            for toggleEvent, actionName in record.iteritems():
+
+                print "    toggleEvent = %s;  actionName = %s" % (toggleEvent, actionName)
+
+        print "------------------------------"
+
     def set_eventEffertRecord(self, eventEffertRecord):
 
         self.__eventEffertRecord = eventEffertRecord
@@ -781,3 +844,21 @@ class ActorManager(ResManager):
     def get_eventEffertRecord(self):
 
         return self.__eventEffertRecord
+
+    def print_eventEffertRecord(self):
+
+        print "----- eventEffertRecord -----"
+
+        for actorId, record in self.__eventEffertRecord.iteritems():
+
+            print actorId
+
+            for toggleEvent, effertList in record.iteritems():
+
+                print "    ", toggleEvent
+
+                for effert in effertList:
+
+                    print "        ", effert
+
+        print "-------------------------"

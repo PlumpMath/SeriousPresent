@@ -70,11 +70,11 @@ class TerrainManager(ResManager):
 
             if id == self.__currTerraId:
 
-                self._resMap[id].show()
+                self._resMap[id].getRoot().show()
 
             else:
 
-                self._resMap[id].hide()
+                self._resMap[id].getRoot().hide()
 
     #########################################
 
@@ -84,6 +84,8 @@ class TerrainManager(ResManager):
 
     # 更新地形
     def update_terrain(self, task):
+
+        task.setTaskChain("terraTaskChain")
 
         self._resMap[self.__currTerraId].update()
 

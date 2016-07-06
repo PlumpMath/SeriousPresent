@@ -38,7 +38,7 @@ class CameraController(object):
         self.__camToCtrl = None    # 所要进行控制的相机
         self.__clock = None        # 全局时钟，偏移量的计算依赖于时钟
         self.__moveSpeed = 10      # 相机移动速度
-        self.__rotateSpeed = 5    # 相机旋转速度
+        self.__rotateSpeed = 1    # 相机旋转速度
 
         self.__camCurrX = None
         self.__camCurrY = None
@@ -181,6 +181,8 @@ class CameraController(object):
 
     # 相机总控制
     def update_camera(self, task):
+
+        task.setTaskChain("cameraTaskChain")
 
         self.__dt = self.__clock.getDt()
 

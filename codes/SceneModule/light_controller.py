@@ -70,7 +70,7 @@ class LightController(object):
         lightId = ""
 
         # Ambient Light
-        if lightType is self.__lightType[0]:
+        if lightType == self.__lightType[0]:
 
             self.__ambientCount += 1
 
@@ -85,7 +85,7 @@ class LightController(object):
             lightNP = self.__create_ambient_light(lightId, lightColor)
 
         # Directional Light
-        elif lightType is self.__lightType[1]:
+        elif lightType == self.__lightType[1]:
 
             self.__directionalCount += 1
 
@@ -100,7 +100,7 @@ class LightController(object):
             lightNP = self.__create_directional_light(lightId, lightColor, lightHpr, shadow)
 
         # Point Light
-        elif lightType is self.__lightType[2]:
+        elif lightType == self.__lightType[2]:
 
             self.__pointCount += 1
 
@@ -115,7 +115,7 @@ class LightController(object):
             lightNP = self.__create_point_light(lightId, lightColor, lightPos, shadow)
 
         # Spot Light
-        elif lightType is self.__lightType[3]:
+        elif lightType == self.__lightType[3]:
 
             self.__spotCount += 1
 
@@ -212,7 +212,11 @@ class LightController(object):
         spotLightNP = NodePath(spotLight)
 
         spotLightNP.setPos(lightPos)
-        spotLightNP.lookAt(self.__sceneMgr.get_res(targetId))
+
+        if isinstance(targetId, list) is True:
+            spotLightNP.lookAt(self.__sceneMgr.get_res(targetId[0]))
+        else:
+            spotLightNP.lookAt(self.__sceneMgr.get_res(targetId))
 
         if self.__targetMap.has_key(lightId) is False:
 
@@ -228,9 +232,10 @@ class LightController(object):
     def set_light_to(self, lightId, setorId):
 
         light = self.get_light(lightId)
-
-        if setorId is "render":
-
+        #print "in set_light_to : lightId ", lightId
+        if setorId == "render":
+            #print "in set_light_to : render ", self.__sceneMgr.get_render()
+            #print "in set_light_to : light ", light
             self.__sceneMgr.get_render().setLight(light)
 
         else:
@@ -268,6 +273,9 @@ class LightController(object):
         return self.__setorMap
 
     def get_light(self, lightId):
+        #print "in get_light", len(self.__lightMap.keys())
+        # for lightId in self.__lightMap.keys():
+        #     print lightId
 
         if lightId not in self.__lightMap.keys():
 
