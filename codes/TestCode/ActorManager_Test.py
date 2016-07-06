@@ -37,10 +37,10 @@ class Test(ShowBase):
         #actor.accept("y-up", print_b)
 
         actorMgr.add_toggle_to_actor("y", actorId, "walk")
-        actorMgr.add_effect_to_actor("y", actorId, "actor_move_forward")
+        actorMgr.add_effert_to_actor("y", actorId, "actor_move_forward")
 
         actorMgr.add_toggle_to_actor("s", actorId, "walk")
-        actorMgr.add_effect_to_actor("s", actorId, "actor_move_backward")
+        actorMgr.add_effert_to_actor("s", actorId, "actor_move_backward")
 
         actorMgr.set_actorMoveSpeed(0.01)
 
