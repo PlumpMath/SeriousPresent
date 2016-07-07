@@ -136,6 +136,14 @@ class MySound(DirectObject):
         for index in self.__music:
             self.__music[index].setVolume(newVolume)
 
+    def set_volume(self,volume):
+        self.__volume=volume
+        for index in self.__music:
+            self.__music[index].setVolume(volume)
+
+    def get_volume(self):
+        return self.__volume
+
     #开关背景音乐
     def toggleMusicBox(self,base):
 

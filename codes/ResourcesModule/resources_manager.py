@@ -39,6 +39,12 @@ class ResourcesManager(object):
     def stop_sound(self, id):
         self.__sound.stop_music(id)
 
+    def set_volume(self,volume):
+        self.__sound.set_volume(volume)
+
+    def get_volume(self):
+        return self.__sound.get_volume()
+
     #初始化暂停设置界面控件
     def show_volume_sliderbar(self,base):
         self.__sound.init_setting(base)
