@@ -38,7 +38,7 @@ class CameraController(object):
         self.__camToCtrl = None    # 所要进行控制的相机
         self.__clock = None        # 全局时钟，偏移量的计算依赖于时钟
         self.__moveSpeed = 10      # 相机移动速度
-        self.__rotateSpeed = 5    # 相机旋转速度
+        self.__rotateSpeed = 0.1    # 相机旋转速度
 
         self.__camCurrX = None
         self.__camCurrY = None
@@ -182,94 +182,77 @@ class CameraController(object):
     # 相机总控制
     def update_camera(self, task):
 
+        #task.setTaskChain("cameraTaskChain")
+
         self.__dt = self.__clock.getDt()
 
         self.__camMoveOffset = self.__dt * self.__moveSpeed
         self.__camRotateOffset = self.__dt * self.__rotateSpeed
 
-        # 移动相机位置
-        if self.__optsSwitch[CAM_MOVE_FORWARD][0] and \
-                self.__optsSwitch[CAM_MOVE_FORWARD][1]:
-
-            self.__move_forward()
-
-            #print self.__optsSwitch[CAM_MOVE_FORWARD]
-
-        if self.__optsSwitch[CAM_MOVE_BACKWARD][0] and \
-                self.__optsSwitch[CAM_MOVE_BACKWARD][1]:
-
-            self.__move_backward()
-
-        if self.__optsSwitch[CAM_MOVE_LEFT][0] and \
-                self.__optsSwitch[CAM_MOVE_LEFT][1]:
-
-            self.__move_left()
-
-        if self.__optsSwitch[CAM_MOVE_RIGHT][0] and \
-                self.__optsSwitch[CAM_MOVE_RIGHT][1]:
-
-            self.__move_right()
-
-        if self.__optsSwitch[CAM_MOVE_UP][0] and \
-                self.__optsSwitch[CAM_MOVE_UP][1]:
-
-            self.__move_up()
-
-        if self.__optsSwitch[CAM_MOVE_DOWN][0] and \
-                self.__optsSwitch[CAM_MOVE_DOWN][1]:
-
-            self.__move_down()
-
-        # 移动相机镜头方向
-        if self.__optsSwitch[CAM_ROTATE_H_CW][0] and \
-                self.__optsSwitch[CAM_ROTATE_H_CW][1]:
-
-            self.__rotate_h_cw()
-
-        if self.__optsSwitch[CAM_ROTATE_H_CCW][0] and \
-                self.__optsSwitch[CAM_ROTATE_H_CCW][1]:
-
-            self.__rotate_h_ccw()
-
-        if self.__optsSwitch[CAM_ROTATE_P_CW][0] and \
-                self.__optsSwitch[CAM_ROTATE_P_CW][1]:
-
-            self.__rotate_p_cw()
-
-        if self.__optsSwitch[CAM_ROTATE_P_CCW][0] and \
-                self.__optsSwitch[CAM_ROTATE_P_CCW][1]:
-
-            self.__rotate_p_ccw()
-
-        if self.__optsSwitch[CAM_ROTATE_R_CW][0] and \
-                self.__optsSwitch[CAM_ROTATE_R_CW][1]:
-
-            self.__rotate_r_cw()
-
-        if self.__optsSwitch[CAM_ROTATE_R_CCW][0] and \
-                self.__optsSwitch[CAM_ROTATE_R_CCW][1]:
-
-            self.__rotate_r_ccw()
-
-        # if self.__optsSwitch[CAM_ROTATE_AROUND_UP][0] and \
-        #         self.__optsSwitch[CAM_ROTATE_AROUND_UP][1]:
+        # # 移动相机位置
+        # if self.__optsSwitch[CAM_MOVE_FORWARD][0] and \
+        #         self.__optsSwitch[CAM_MOVE_FORWARD][1]:
         #
-        #     self.__rotate_around_up()
+        #     self.__move_forward()
         #
-        # if self.__optsSwitch[CAM_ROTATE_AROUND_DOWN][0] and \
-        #         self.__optsSwitch[CAM_ROTATE_AROUND_DOWN][1]:
+        #     #print self.__optsSwitch[CAM_MOVE_FORWARD]
         #
-        #     self.__rotate_around_down()
+        # if self.__optsSwitch[CAM_MOVE_BACKWARD][0] and \
+        #         self.__optsSwitch[CAM_MOVE_BACKWARD][1]:
         #
-        # if self.__optsSwitch[CAM_ROTATE_AROUND_CW][0] and \
-        #         self.__optsSwitch[CAM_ROTATE_AROUND_CW][1]:
+        #     self.__move_backward()
         #
-        #     self.__rotate_around_cw()
+        # if self.__optsSwitch[CAM_MOVE_LEFT][0] and \
+        #         self.__optsSwitch[CAM_MOVE_LEFT][1]:
         #
-        # if self.__optsSwitch[CAM_ROTATE_AROUND_CCW][0] and \
-        #         self.__optsSwitch[CAM_ROTATE_AROUND_CCW][1]:
+        #     self.__move_left()
         #
-        #     self.__rotate_around_ccw()
+        # if self.__optsSwitch[CAM_MOVE_RIGHT][0] and \
+        #         self.__optsSwitch[CAM_MOVE_RIGHT][1]:
+        #
+        #     self.__move_right()
+        #
+        # if self.__optsSwitch[CAM_MOVE_UP][0] and \
+        #         self.__optsSwitch[CAM_MOVE_UP][1]:
+        #
+        #     self.__move_up()
+        #
+        # if self.__optsSwitch[CAM_MOVE_DOWN][0] and \
+        #         self.__optsSwitch[CAM_MOVE_DOWN][1]:
+        #
+        #     self.__move_down()
+        #
+        # # 移动相机镜头方向
+        # if self.__optsSwitch[CAM_ROTATE_H_CW][0] and \
+        #         self.__optsSwitch[CAM_ROTATE_H_CW][1]:
+        #
+        #     self.__rotate_h_cw()
+        #
+        # if self.__optsSwitch[CAM_ROTATE_H_CCW][0] and \
+        #         self.__optsSwitch[CAM_ROTATE_H_CCW][1]:
+        #
+        #     self.__rotate_h_ccw()
+        #
+        # if self.__optsSwitch[CAM_ROTATE_P_CW][0] and \
+        #         self.__optsSwitch[CAM_ROTATE_P_CW][1]:
+        #
+        #     self.__rotate_p_cw()
+        #
+        # if self.__optsSwitch[CAM_ROTATE_P_CCW][0] and \
+        #         self.__optsSwitch[CAM_ROTATE_P_CCW][1]:
+        #
+        #     self.__rotate_p_ccw()
+        #
+        # if self.__optsSwitch[CAM_ROTATE_R_CW][0] and \
+        #         self.__optsSwitch[CAM_ROTATE_R_CW][1]:
+        #
+        #     self.__rotate_r_cw()
+        #
+        # if self.__optsSwitch[CAM_ROTATE_R_CCW][0] and \
+        #         self.__optsSwitch[CAM_ROTATE_R_CCW][1]:
+        #
+        #     self.__rotate_r_ccw()
+
 
         self.__update_camera()
 
@@ -529,13 +512,13 @@ class CameraController(object):
 
         if c > (math.pi / 2):
 
-            c = math.pi - c
+            c = math.pi / 2
 
         a = math.pi / 2 - c
 
-        if c + deltaAngle > math.pi / 2:
+        if c >= math.pi / 2:
 
-            deltaAngle = math.pi / 2 - c
+            deltaAngle = 0#math.pi / 2 - c
 
         b = a + deltaAngle / 2
 
@@ -711,10 +694,21 @@ class CameraController(object):
                 self.__update_directionsVector()
 
             objCurrPos = self.__objectToFocus.getPos()
-
-            self.__camToCtrl.setPos(self.__camToCtrl.getPos() + objCurrPos - self.__objectPrevPos)
-
-            self.focus_on(self.__objectToFocus, self.__radius)
+            camCurrPos = self.__camToCtrl.getPos()
+            dVector = objCurrPos - camCurrPos
+            dVector.setZ(0)
+            dist = dVector.length()
+            dVector.normalize()
+            if dist > 120:
+                self.__camToCtrl.setPos(camCurrPos + dVector * (dist - 120))
+                dist = 120
+            if dist < 80:
+                self.__camToCtrl.setPos(camCurrPos - dVector * (80 - dist))
+                dist = 80
+            self.__camToCtrl.lookAt(self.__objectToFocus)
+            # self.__camToCtrl.setPos(self.__camToCtrl.getPos() + objCurrPos - self.__objectPrevPos)
+            #
+            # self.focus_on(self.__objectToFocus, self.__radius)
 
     def __update_cam_pos(self):
 

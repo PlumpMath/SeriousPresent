@@ -15,7 +15,7 @@ class Application(ShowBase):
         #self.terrain.getRoot().setSz(100)
         self.terrain.getRoot().reparentTo(self.render)
         self.terrain.getRoot().setPos(0, 0, 0)
-
+        self.terrain.hide()
         #z = self.terrain.getElevation(256, 256) * 40
         #self.cam.setPos(0, 10, 50)
         #self.cam.lookAt(5, 5, 0)

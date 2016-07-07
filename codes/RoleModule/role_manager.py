@@ -230,6 +230,8 @@ class RoleManager(object):
     # 导入角色属性，用于读档
     def import_arcPkg(self, roleArcPkg):
 
+        roleArcPkg = roleArcPkg[0]
+
         # 重置某些内部变量
         self.reset()
 
