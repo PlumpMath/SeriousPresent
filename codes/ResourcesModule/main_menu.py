@@ -17,7 +17,7 @@ from direct.task import Task
 from resources_manager import ResourcesManager
 
 # loadPrcFileData('', 'fullscreen 1')
-loadPrcFileData('','win-size 1000 750')#设置窗口大小
+loadPrcFileData('','win-size 1324 725')#设置窗口大小
 
 
 class MainMenu(ShowBase):
@@ -51,7 +51,7 @@ class MainMenu(ShowBase):
         self.__rm=ResourcesManager()
 
     # 移除界面上的按钮与图片
-    def destroy(self):
+    def destroy_all(self):
         self.__newGameButton.destroy()
         self.__selectArchiveButton.destroy()
         self.__exitGameButton.destroy()
@@ -59,15 +59,20 @@ class MainMenu(ShowBase):
         self.taskMgr.remove('exampleTask')
 
     def new_game(self):
-        self.destroy()
-        self.__rm.show_volume_sliderbar()
+        self.destroy_all()
+        self.__rm.show_volume_sliderbar(self)
 
         self.__rm.show_dialog(1)
         self.accept("a", self.__rm.show_dialog, [1])
         self.accept("b", self.__rm.show_dialog, [2])
         self.accept("c", self.__rm.dialog_next)
         self.accept("d", self.__rm.play_sound,[2])
-        self.accept("e", self.__rm.stop_sound, [2])
+        self.accept("e", self.__rm.stop_sound,[2])
+        self.accept("f", self.__rm.play_sound,[4])
+        self.accept("g", self.__rm.stop_sound,[4])
+        self.accept("h", self.__rm.show_volume_sliderbar, [self])
+        self.accept("i", self.__rm.destroy_volume_sliderbar)
+
         #调用对话
         # lp=LoadPlot()
         # lp.init_interface()
@@ -79,10 +84,10 @@ class MainMenu(ShowBase):
         # mm.playMedia(self.render2d)
 
     def select_archives(self):
-        self.destroy()
+        self.destroy__all()
 
     def exit_game(self):
-        self.destroy()
+        self.destroy__all()
 
     def example_task(self,task):
         self.__image.setSx(self.getAspectRatio())

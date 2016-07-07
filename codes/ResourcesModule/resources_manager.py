@@ -39,18 +39,24 @@ class ResourcesManager(object):
     def stop_sound(self, id):
         self.__sound.stop_music(id)
 
-    #开关背景音乐
-    def play_background_music(self):
+    def set_volume(self,volume):
+        self.__sound.set_volume(volume)
 
-        self.__sound.toggleMusicBox()
+    def get_volume(self):
+        return self.__sound.get_volume()
 
-    #加载声音控制滑动条控件
-    def show_volume_sliderbar(self):
-        self.__sound.volume_slider()
+    #初始化暂停设置界面控件
+    def show_volume_sliderbar(self,base):
+        self.__sound.init_setting(base)
 
     #移除滑动条等有关声音的控件
     def destroy_volume_sliderbar(self):
         self.__sound.destroy()
+
+    # #开关背景音乐
+    # def play_background_music(self):
+    #
+    #     self.__sound.toggleMusicBox()
 
     """""""""""
     视频函数
