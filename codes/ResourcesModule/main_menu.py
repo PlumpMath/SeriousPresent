@@ -17,7 +17,7 @@ from direct.task import Task
 from resources_manager import ResourcesManager
 
 # loadPrcFileData('', 'fullscreen 1')
-loadPrcFileData('','win-size 1000 750')#设置窗口大小
+loadPrcFileData('','win-size 1324 725')#设置窗口大小
 
 
 class MainMenu(ShowBase):
@@ -60,14 +60,19 @@ class MainMenu(ShowBase):
 
     def new_game(self):
         self.destroy()
-        self.__rm.show_volume_sliderbar()
+        self.__rm.show_volume_sliderbar(self)
 
         self.__rm.show_dialog(1)
         self.accept("a", self.__rm.show_dialog, [1])
         self.accept("b", self.__rm.show_dialog, [2])
         self.accept("c", self.__rm.dialog_next)
         self.accept("d", self.__rm.play_sound,[2])
-        self.accept("e", self.__rm.stop_sound, [2])
+        self.accept("e", self.__rm.stop_sound,[2])
+        self.accept("f", self.__rm.play_sound,[4])
+        self.accept("g", self.__rm.stop_sound,[4])
+        self.accept("h", self.__rm.show_volume_sliderbar, [self])
+        self.accept("i", self.__rm.destroy_volume_sliderbar)
+
         #调用对话
         # lp=LoadPlot()
         # lp.init_interface()
