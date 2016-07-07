@@ -18,7 +18,7 @@ class PlayerRole(Role):
         self.append_role_attr(key = "money", value = 0)
         self.append_role_attr(key = "attackForce", value = 10)
         self.append_role_attr(key = "walkSpeed", value = 5)
-        self.append_role_attr(key = "runSpeed", value = 10)
+        self.append_role_attr(key = "runSpeed", value = 20)
         self.append_role_attr(key = "rotateSpeed", value = 100)
         self.append_role_attr(key = "touchRadius", value = 3)
         self.append_role_attr(key = "actions", value = dict())
