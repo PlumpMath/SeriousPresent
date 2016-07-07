@@ -1,7 +1,7 @@
 <CoordinateSystem> { Y-Up }
 
 <Comment> {
-  "maya2egg2015 -a chan -o /e/Material/hunter_RunBackWithGun3.egg /e/Material/hunter_RunBackWithGun3.mb"
+  "maya2egg2015 -a chan -o /e/Material/Hunter/hunter_RunBackWithGun3.egg /e/Material/Hunter/hunter_RunBackWithGun3.mb"
 }
 <Table> {
   <Bundle> hunter_RunBackWithGun3 {
