@@ -18,26 +18,30 @@ import codecs
 class LoadPlot(DirectObject):
     def __init__(self):
 
-        #打开对话文件
-        self.__file = open("../../resources/files/dialogue.txt", 'r')
+        self.__plotFilePath="../../resources/files/dialogue.txt"
 
-        #对话内容
-        self.__content = self.__file.readlines()
+        #打开对话文件
+        # self.__file = open("../../resources/files/dialogue.txt", 'r')
+        with open(self.__plotFilePath, 'r') as f:
+            # 对话内容
+            self.__content = f.readlines()
+
+        # #对话内容
+        # self.__content = self.__file.readlines()
+
         # 对话数组,id唯一标识
         self.__dialogueList = []
 
         #对话part
-        self.__part = 0
+        self.__part = 1
         #对话第几句
         self.__index = 0
 
+        #当前选择对话id
+        self.__id=1
+
         #读取对话文件，存成数组
         self.dialogue_list()
-
-        #设置对话part,默认为1
-        self.selectPart(1)
-
-        # self.accept("a",self.dialogue_next)
 
         #初始化剧情树
         self.init_tree()
@@ -45,9 +49,20 @@ class LoadPlot(DirectObject):
         #能否移除控件
         self.__destroy=False
 
+        #能否移除提示框
+        self.__destroyPrompt=False
+
+        #剧情路径
+        self.__path=""
+
+        # 设置对话part,默认为1
+        # self.selectPart(1)
+
+
     #初始化对话与人物头像
     def init_interface(self,part):
         if self.__destroy == False :
+            self.__id=part
             self.init_dialogue(part)
             self.init_head_portrait()
             self.__destroy=True
@@ -58,7 +73,10 @@ class LoadPlot(DirectObject):
         if self.__destroy == False:
             self.__dialogue = OnscreenText("", pos=(0, -0.9), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
                                            mayChange=True)
-            self.selectPart(part)
+            if self.selectPart():
+                print "第",part,"成功"
+            else:
+                print "第",part,"失败"
             self.__destroy = True
 
     # 初始化人物头像
@@ -68,6 +86,12 @@ class LoadPlot(DirectObject):
             self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(0, 0, 0), scale=0.5)
             self.__image.setTransparency(TransparencyAttrib.MAlpha)
             self.__destroy = True
+
+    #初始化提示框
+    def init_prompt(self):
+        if self.__destroyPrompt==False:
+            self.__prompt = OnscreenText("提示", pos=(0, -0.5), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
+                                           mayChange=True)
 
     #移除控件
     def destroy(self):
@@ -87,6 +111,12 @@ class LoadPlot(DirectObject):
         if self.__destroy == True:
             self.__image.destroy()
             self.__destroy = False
+
+    #移除提示框
+    def destroy_prompt(self):
+        if self.__destroyPrompt== True:
+            self.__prompt.destroy()
+
 
     #读取对话文件，存成数组，按part形成结构如下的数组
     # [{id:,dialogue:[]},{},{}]
@@ -114,17 +144,23 @@ class LoadPlot(DirectObject):
             index=index+1
 
     #选择第几部分对话
-    def selectPart(self,id):
-        self.__part=id
-        self.__index=1
+    def selectPart(self):
+        self.__path = self.__path+str(self.__id)
+        if self.__dialogueTree.search(self.__path,self.__id)[0] ==True:
+            self.__part = self.__id
+            self.__index = 1
+            return True
+        else:
+            self.__path=self.__path[:-1]
+            return False
 
     #读取下一句对话
     def dialogue_next(self):
         length=len(self.__dialogueList[self.__part-1]["dialogue"])
         #判断是否读到part最后一句对话
         if self.__index-1>=length:#将对应part标记，增加剧情树路径
-            self.__path=self.__path+str(self.__part)
-            self.__dialogueTree.search(self.__path).set_flag(True)
+            self.__dialogueTree.search(self.__path,self.__id)[1].set_flag(True)
+            # self.__destroy()
             return False
 
         else:#继续显示对话与对应头像
@@ -178,7 +214,7 @@ class LoadPlot(DirectObject):
         for part in self.__dialogueList:
             dialoguePart.append(Node(part["id"],False))
 
-        print dialoguePart[1].get_data()
+        # print dialoguePart[1].get_data()
 
         index = 0
         for node in dialoguePart:
@@ -235,10 +271,13 @@ class Node(object):
         else:
             self.__children.append(node)
 
-    def go(self,data):
+    def go(self,data,id):
         for child in self.__children:
-            if child.get_data()==int(data):
-                return child
+            if child.get_data()==int(data) :
+                if child.get_data()!=id and child.get_flag()==True:
+                    return child
+                if child.get_data()==id :
+                    return child
         return None
 
 #树类
@@ -259,14 +298,15 @@ class Tree:
         cur.add(Node(data))
         return True
 
-    def search(self,path):
+    def search(self,path,id):
         cur = self.__head
         for step in path:
-            if cur.go(step) == None:
-                return None
+            if cur.go(step,id) == None:
+                return [False , None]
             else:
-                cur = cur.go(step)
-        return cur
+                cur = cur.go(step,id)
+        return [True , cur]
+            #cur
 
 
 
