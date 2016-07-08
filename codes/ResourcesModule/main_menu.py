@@ -15,6 +15,7 @@ from pandac.PandaModules import TransparencyAttrib
 from panda3d.core import loadPrcFileData
 from direct.task import Task
 from resources_manager import ResourcesManager
+from blood import Blood
 
 # loadPrcFileData('', 'fullscreen 1')
 loadPrcFileData('','win-size 1324 725')#设置窗口大小
@@ -50,6 +51,7 @@ class MainMenu(ShowBase):
 
         self.__rm=ResourcesManager()
 
+
     # 移除界面上的按钮与图片
     def destroy_all(self):
         self.__newGameButton.destroy()
@@ -61,6 +63,7 @@ class MainMenu(ShowBase):
     def new_game(self):
         self.destroy_all()
 
+        self.__blood = Blood()
         # self.__rm.show_dialog(1)
         self.accept("a", self.__rm.show_dialog, [1])
         self.accept("b", self.__rm.show_dialog, [2])
@@ -74,6 +77,10 @@ class MainMenu(ShowBase):
         self.accept("z",self.__rm.set_path,["123"])
         self.accept("y", self.__rm.show_dialog, [4])
         self.accept("k", self.__rm.show_dialog, [9])
+
+        self.accept("0", self.__blood.init_blood)
+        self.accept("1",self.__blood.bloodAdd)
+        self.accept("2", self.__blood.bloodMinu)
 
         #调用对话
         # lp=LoadPlot()
@@ -95,7 +102,6 @@ class MainMenu(ShowBase):
     def example_task(self,task):
         self.__image.setSx(self.getAspectRatio())
         return Task.cont
-
 
 mm=MainMenu()
 mm.run()
