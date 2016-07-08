@@ -101,6 +101,7 @@ class LoadPlot(DirectObject):
         if self.__destroyPrompt==False:
             self.__prompt = OnscreenText("提示", pos=(0, -0.5), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
                                            mayChange=True)
+            self.__destroyPrompt=True
 
     #移除控件
     def destroy(self):
@@ -125,6 +126,7 @@ class LoadPlot(DirectObject):
     def destroy_prompt(self):
         if self.__destroyPrompt== True:
             self.__prompt.destroy()
+            self.__destroyPrompt = False
 
 
     #读取对话文件，存成数组，按part形成结构如下的数组
