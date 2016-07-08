@@ -22,7 +22,6 @@ class MainMenu(ShowBase):
         ShowBase.__init__(self)
         self.accept("Exit",self.__exit)
         self.__rm = ResourcesManager()
-        self.__destroySetting = False
 
     # 菜单界面
     def start(self):
@@ -101,75 +100,71 @@ class MainMenu(ShowBase):
 
     #设置界面
     def setting_menu(self):
-        if self.__destroySetting==False:
-            # 设置界面背景图
-            self.__background = OnscreenImage(image='../../resources/images/settings/setting_frame.png', pos=(0, 0, 0),
-                                              scale=(1.0, 0, 0.7))
-            self.__background.setTransparency(TransparencyAttrib.MAlpha)
+        # 设置界面背景图
+        self.__background = OnscreenImage(image='../../resources/images/settings/setting_frame.png', pos=(0, 0, 0),
+                                          scale=(1.0, 0, 0.7))
+        self.__background.setTransparency(TransparencyAttrib.MAlpha)
 
-            ##滑动条
-            self.__slider = DirectSlider(pos=(0.16, 0, 0.26), scale=0.5, value=0.5, command=self.__setMusicSliderVolume,
-                                         frameSize=(-1.0, 0.9, -0.06, 0.06),
-                                         image='../../resources/images/settings/slide_bar.png',
-                                         image_pos=(-0.05, 0, 0.0), image_scale=(1.0, 0, 0.05),
-                                         thumb_image='../../resources/images/settings/slide_btn.png',
-                                         thumb_image_pos=(-0.0, 0, 0.0), thumb_image_scale=0.1,
-                                         thumb_frameSize=(0.0, 0.0, 0.0, 0.0))
-            self.__slider.setTransparency(TransparencyAttrib.MAlpha)
+        ##滑动条
+        self.__slider = DirectSlider(pos=(0.16, 0, 0.26), scale=0.5, value=0.5, command=self.__setMusicSliderVolume,
+                                     frameSize=(-1.0, 0.9, -0.06, 0.06),
+                                     image='../../resources/images/settings/slide_bar.png',
+                                     image_pos=(-0.05, 0, 0.0), image_scale=(1.0, 0, 0.05),
+                                     thumb_image='../../resources/images/settings/slide_btn.png',
+                                     thumb_image_pos=(-0.0, 0, 0.0), thumb_image_scale=0.1,
+                                     thumb_frameSize=(0.0, 0.0, 0.0, 0.0))
+        self.__slider.setTransparency(TransparencyAttrib.MAlpha)
 
-            # self.__musicButton = DirectButton(pos=(0.9, 0, 0.75), text="Close", scale=0.1, pad=(0.2, 0.2), rolloverSound=None,
-            #                                   clickSound=None, command=self.toggleMusicBox,extraArgs=[base])
+        # self.__musicButton = DirectButton(pos=(0.9, 0, 0.75), text="Close", scale=0.1, pad=(0.2, 0.2), rolloverSound=None,
+        #                                   clickSound=None, command=self.toggleMusicBox,extraArgs=[base])
 
-            # 继续按钮
-            self.__continueButton = DirectButton(pos=(-0.25, 0, 0.0), text="", scale=(0.2, 0, 0.1),
-                                                 command=self.__continue_game,
-                                                 image=("../../resources/images/settings/btn_continue_0.png",
-                                                        "../../resources/images/settings/btn_continue_0.png"
-                                                        , "../../resources/images/settings/btn_continue_1.png"),
-                                                 frameColor=(0, 0, 0, 0))
-            self.__continueButton.setTransparency(TransparencyAttrib.MAlpha)
-
-            # 存档按钮
-            self.__saveButton = DirectButton(pos=(0.33, 0, 0.0), text="", scale=(0.2, 0, 0.1), command=self.__save_game,
-                                             image=("../../resources/images/settings/btn_save_0.png",
-                                                    "../../resources/images/settings/btn_save_0.png"
-                                                    , "../../resources/images/settings/btn_save_1.png"),
+        # 继续按钮
+        self.__continueButton = DirectButton(pos=(-0.25, 0, 0.0), text="", scale=(0.2, 0, 0.1),
+                                             command=self.__continue_game,
+                                             image=("../../resources/images/settings/btn_continue_0.png",
+                                                    "../../resources/images/settings/btn_continue_0.png"
+                                                    , "../../resources/images/settings/btn_continue_1.png"),
                                              frameColor=(0, 0, 0, 0))
-            self.__saveButton.setTransparency(TransparencyAttrib.MAlpha)
+        self.__continueButton.setTransparency(TransparencyAttrib.MAlpha)
 
-            # 帮助按钮
-            self.__helpButton = DirectButton(pos=(-0.25, 0, -0.25), text="", scale=(0.2, 0, 0.1), command=self.__help,
-                                             image=("../../resources/images/settings/btn_help_0.png",
-                                                    "../../resources/images/settings/btn_help_0.png"
-                                                    , "../../resources/images/settings/btn_help_1.png"),
-                                             frameColor=(0, 0, 0, 0))
-            self.__helpButton.setTransparency(TransparencyAttrib.MAlpha)
+        # 存档按钮
+        self.__saveButton = DirectButton(pos=(0.33, 0, 0.0), text="", scale=(0.2, 0, 0.1), command=self.__save_game,
+                                         image=("../../resources/images/settings/btn_save_0.png",
+                                                "../../resources/images/settings/btn_save_0.png"
+                                                , "../../resources/images/settings/btn_save_1.png"),
+                                         frameColor=(0, 0, 0, 0))
+        self.__saveButton.setTransparency(TransparencyAttrib.MAlpha)
 
-            # 回到主界面按钮
-            self.__homeButton = DirectButton(pos=(0.33, 0, -0.25), text="", scale=(0.2, 0, 0.1), command=self.__return_home,
-                                             image=("../../resources/images/settings/btn_home_0.png",
-                                                    "../../resources/images/settings/btn_home_0.png"
-                                                    , "../../resources/images/settings/btn_home_1.png"),
-                                             frameColor=(0, 0, 0, 0))
-            self.__homeButton.setTransparency(TransparencyAttrib.MAlpha)
+        # 帮助按钮
+        self.__helpButton = DirectButton(pos=(-0.25, 0, -0.25), text="", scale=(0.2, 0, 0.1), command=self.__help,
+                                         image=("../../resources/images/settings/btn_help_0.png",
+                                                "../../resources/images/settings/btn_help_0.png"
+                                                , "../../resources/images/settings/btn_help_1.png"),
+                                         frameColor=(0, 0, 0, 0))
+        self.__helpButton.setTransparency(TransparencyAttrib.MAlpha)
 
-            # 设置滑动条value
-            self.__slider['value'] = self.__rm.get_volume()
+        # 回到主界面按钮
+        self.__homeButton = DirectButton(pos=(0.33, 0, -0.25), text="", scale=(0.2, 0, 0.1), command=self.__return_home,
+                                         image=("../../resources/images/settings/btn_home_0.png",
+                                                "../../resources/images/settings/btn_home_0.png"
+                                                , "../../resources/images/settings/btn_home_1.png"),
+                                         frameColor=(0, 0, 0, 0))
+        self.__homeButton.setTransparency(TransparencyAttrib.MAlpha)
 
-            self.__destroySetting = True
+        # 设置滑动条value
+        self.__slider['value'] = self.__rm.get_volume()
 
     #移除设置界面所有控件
     def setting_destroy(self):
-        if self.__destroySetting==True:
-            self.__background.destroy()
-            self.__rm.set_volume(self.__slider['value'])
-            self.__slider.destroy()
-            # self.__musicButton.destroy()
-            self.__continueButton.destroy()
-            self.__saveButton.destroy()
-            self.__helpButton.destroy()
-            self.__homeButton.destroy()
-            self.__destroySetting = False
+        self.__background.destroy()
+        self.__rm.set_volume(self.__slider['value'])
+        self.__slider.destroy()
+        # self.__musicButton.destroy()
+        self.__continueButton.destroy()
+        self.__saveButton.destroy()
+        self.__helpButton.destroy()
+        self.__homeButton.destroy()
+        self.__destroy = False
 
     # 设置音乐声音大小
     def __setMusicSliderVolume(self):

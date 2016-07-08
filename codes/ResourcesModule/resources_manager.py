@@ -25,8 +25,6 @@ class ResourcesManager(object):
 
         self.__archive=Archives()
 
-        self.__id=1
-
 
     """""""""""
     音乐播放函数
@@ -34,7 +32,6 @@ class ResourcesManager(object):
     #播放音乐
     # id：音乐id
     def play_sound(self,id):
-        self.__id=id
         self.__sound.play_music(id)
 
     #停止音乐
@@ -48,13 +45,13 @@ class ResourcesManager(object):
     def get_volume(self):
         return self.__sound.get_volume()
 
-    # #初始化暂停设置界面控件
-    # def show_volume_sliderbar(self,base):
-    #     self.__sound.init_setting(base)
-    #
-    # #移除滑动条等有关声音的控件
-    # def destroy_volume_sliderbar(self):
-    #     self.__sound.destroy()
+    #初始化暂停设置界面控件
+    def show_volume_sliderbar(self,base):
+        self.__sound.init_setting(base)
+
+    #移除滑动条等有关声音的控件
+    def destroy_volume_sliderbar(self):
+        self.__sound.destroy()
 
     # #开关背景音乐
     # def play_background_music(self):
@@ -67,15 +64,12 @@ class ResourcesManager(object):
 
     #播放视频文件
     #fileName:视频文件路径
-    def play_media(self,render,id):
-        self.__media.playMedia(render,id)
-        self.stop_sound(self.__id)
-
+    def play_media(self,fileName):
+        self.__media.playMedia(fileName)
 
     #移除视频控件
     def destroy_media(self):
         self.__media.destroy()
-        self.play_sound(self.__id)
 
     """""""""""
     对话,提示框函数
@@ -106,12 +100,6 @@ class ResourcesManager(object):
     #移除提示框控件
     def destroy_prompt(self):
         self.__dialogueFile.destroy_prompt()
-
-    def set_path(self,path):
-        self.__dialogueFile.set_path(path)
-
-    def get_path(self):
-        return self.get_path()
 
     """""""""""
     游戏存档读档函数
