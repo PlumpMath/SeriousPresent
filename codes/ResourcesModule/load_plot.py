@@ -55,6 +55,8 @@ class LoadPlot(DirectObject):
         #剧情路径
         self.__path=""
 
+        self.__pathTrade="18"
+
         # 设置对话part,默认为1
         # self.selectPart(1)
 
@@ -63,9 +65,12 @@ class LoadPlot(DirectObject):
     def init_interface(self,part):
         if self.__destroy == False :
             self.__id=part
-            self.init_dialogue(part)
-            self.init_head_portrait()
-            self.__destroy=True
+            if self.init_dialogue(part):
+                self.init_head_portrait()
+                self.__destroy = True
+            else:
+                self.__destroy=False
+
 
     # 初始化对话框
     def init_dialogue(self,part):
@@ -75,23 +80,28 @@ class LoadPlot(DirectObject):
                                            mayChange=True)
             if self.selectPart():
                 print "第",part,"成功"
+                # self.__destroy = True
+                return True
             else:
                 print "第",part,"失败"
-            self.__destroy = True
+                # self.__destroy = False
+                return False
+
 
     # 初始化人物头像
     def init_head_portrait(self):
         # 人物头像
         if self.__destroy == False:
-            self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(0, 0, 0), scale=0.5)
+            self.__image = OnscreenImage(image='../../resources/images/1.jpg', pos=(-0.9, 0, -0.2), scale=0.2)
             self.__image.setTransparency(TransparencyAttrib.MAlpha)
-            self.__destroy = True
+            # self.__destroy = True
 
     #初始化提示框
     def init_prompt(self):
         if self.__destroyPrompt==False:
             self.__prompt = OnscreenText("提示", pos=(0, -0.5), scale=0.07, fg=(1, 1, 1, 1), shadow=(0, 0, 0, 1),
                                            mayChange=True)
+            self.__destroyPrompt=True
 
     #移除控件
     def destroy(self):
@@ -104,18 +114,19 @@ class LoadPlot(DirectObject):
     def destroy_dialogue(self):
         if self.__destroy == True:
             self.__dialogue.destroy()
-            self.__destroy = False
+            # self.__destroy = False
 
     #移除头像
     def destroy_image(self):
         if self.__destroy == True:
             self.__image.destroy()
-            self.__destroy = False
+            # self.__destroy = False
 
     #移除提示框
     def destroy_prompt(self):
         if self.__destroyPrompt== True:
             self.__prompt.destroy()
+            self.__destroyPrompt = False
 
 
     #读取对话文件，存成数组，按part形成结构如下的数组
@@ -145,14 +156,19 @@ class LoadPlot(DirectObject):
 
     #选择第几部分对话
     def selectPart(self):
-        self.__path = self.__path+str(self.__id)
-        if self.__dialogueTree.search(self.__path,self.__id)[0] ==True:
+        if self.__id==9:
             self.__part = self.__id
             self.__index = 1
             return True
         else:
-            self.__path=self.__path[:-1]
-            return False
+            self.__path = self.__path+str(self.__id)
+            if self.__dialogueTree.search(self.__path,self.__id)[0] ==True:
+                self.__part = self.__id
+                self.__index = 1
+                return True
+            else:
+                self.__path=self.__path[:-1]
+                return False
 
     #读取下一句对话
     def dialogue_next(self):
@@ -184,8 +200,8 @@ class LoadPlot(DirectObject):
             # else:
             #     self.__image.setImage("../../resources/images/3.jpg")
 
-            #显示人物头像
-            # self.showRole(role)
+            # 显示人物头像
+            self.showRole(role)
 
             self.__dialogue.setText(dia.decode('gb2312'))
 
@@ -240,6 +256,16 @@ class LoadPlot(DirectObject):
     #返回剧情树路径
     def get_path(self):
         return self.__path
+
+    def set_path(self,path):
+        self.__path=path
+        for i in range(len(self.__path)):
+            self.__id=int(self.__path[i])
+            # self.__path=self.__path[:i+1]
+            # self.selectPart()
+            self.__dialogueTree.search(self.__path[:i+1], self.__id)[1].set_flag(True)
+        if self.__destroy==True:
+            self.__destroy=False
 
 #节点类
 class Node(object):
@@ -306,7 +332,6 @@ class Tree:
             else:
                 cur = cur.go(step,id)
         return [True , cur]
-            #cur
 
 
 

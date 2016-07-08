@@ -15,6 +15,7 @@ from pandac.PandaModules import TransparencyAttrib
 from panda3d.core import loadPrcFileData
 from direct.task import Task
 from resources_manager import ResourcesManager
+from blood import Blood
 
 # loadPrcFileData('', 'fullscreen 1')
 loadPrcFileData('','win-size 1324 725')#设置窗口大小
@@ -50,6 +51,7 @@ class MainMenu(ShowBase):
 
         self.__rm=ResourcesManager()
 
+
     # 移除界面上的按钮与图片
     def destroy_all(self):
         self.__newGameButton.destroy()
@@ -60,18 +62,25 @@ class MainMenu(ShowBase):
 
     def new_game(self):
         self.destroy_all()
-        self.__rm.show_volume_sliderbar(self)
 
-        self.__rm.show_dialog(1)
+        self.__blood = Blood()
+        # self.__rm.show_dialog(1)
         self.accept("a", self.__rm.show_dialog, [1])
         self.accept("b", self.__rm.show_dialog, [2])
+        self.accept("x", self.__rm.show_dialog, [3])
         self.accept("c", self.__rm.dialog_next)
-        self.accept("d", self.__rm.play_sound,[2])
-        self.accept("e", self.__rm.stop_sound,[2])
-        self.accept("f", self.__rm.play_sound,[4])
-        self.accept("g", self.__rm.stop_sound,[4])
-        self.accept("h", self.__rm.show_volume_sliderbar, [self])
-        self.accept("i", self.__rm.destroy_volume_sliderbar)
+        # self.accept("d", self.__rm.play_sound,[2])
+        # self.accept("e", self.__rm.stop_sound,[2])
+        # self.accept("f", self.__rm.play_sound,[4])
+        # self.accept("g", self.__rm.stop_sound,[4])
+
+        self.accept("z",self.__rm.set_path,["123"])
+        self.accept("y", self.__rm.show_dialog, [4])
+        self.accept("k", self.__rm.show_dialog, [9])
+
+        self.accept("0", self.__blood.init_blood)
+        self.accept("1",self.__blood.bloodAdd)
+        self.accept("2", self.__blood.bloodMinu)
 
         #调用对话
         # lp=LoadPlot()
@@ -79,9 +88,10 @@ class MainMenu(ShowBase):
         #调用声音
         # ms=MySound()
         # ms.volume_slider()
-        # 调用视频
-        # mm=MediaPlayer('../../resources/media/PandaSneezes.ogv')
-        # mm.playMedia(self.render2d)
+        #调用视频
+        self.accept("h", self.__rm.play_media, [self.render2d,1])
+        self.accept("i", self.__rm.play_media, [self.render2d,2])
+        self.accept("i", self.__rm.destroy_media)
 
     def select_archives(self):
         self.destroy__all()
@@ -92,7 +102,6 @@ class MainMenu(ShowBase):
     def example_task(self,task):
         self.__image.setSx(self.getAspectRatio())
         return Task.cont
-
 
 mm=MainMenu()
 mm.run()
