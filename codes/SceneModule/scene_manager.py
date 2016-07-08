@@ -76,7 +76,7 @@ class SceneManager(object):
     def update_scene(self, task):
 
         # 更新地形
-        self.__terraMgr.update_terrain(task)
+        #self.__terraMgr.update_terrain(task)
 
         self.__actorMgr.update_actors(task)
 

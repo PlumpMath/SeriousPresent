@@ -10,18 +10,24 @@ class Application(ShowBase):
 
         ShowBase.__init__(self)
 
-        self.smiley = self.loader.loadModel("/e/models/smiley")
-        self.smiley.reparentTo(self.render)
+        modelPath = "/e/Material/v11.egg"
+        # modelPath4 = "/e/Material/house4.egg"
+        # modelPath9 = "/e/Material/house9.egg"
 
-        self.mopath = Mopath()
-        self.mopath.loadFile("/e/models/path")
+        model = self.loader.loadModel(modelPath)
+        model.reparentTo(self.render)
+        model.setPos(0, 0, 0)
+        model.setTwoSided(True)
+        # model4 = self.loader.loadModel(modelPath4)
+        # model4.reparentTo(self.render)
+        # model4.setPos(30, 30, 0)
+        #
+        # model9 = self.loader.loadModel(modelPath9)
+        # model9.reparentTo(self.render)
+        # model9.setPos(-30, -30, 0)
 
-        self.ival = MopathInterval(self.mopath,
-                                   self.smiley,
-                                   duration = 10)
-        self.ival.loop()
-
-        self.cam.setPos(0, -20, 0)
+        self.cam.lookAt(0, 0, 0)
+        self.cam.setPos(0, -100, 100)
 
 app = Application()
 app.run()

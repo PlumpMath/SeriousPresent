@@ -150,6 +150,8 @@ class RoleManager(object):
                 self.__roleMap[roleId] = enemyRole
                 self.__roleModelMap[roleId] = modelId
 
+                self.__sceneMgr.get_ActorMgr().set_enemyCanAttack(roleId, False)
+
         elif roleType is self.__roleType[2]:
 
             npcRole = NPCRole(modelId=modelId)
@@ -229,6 +231,8 @@ class RoleManager(object):
 
     # 导入角色属性，用于读档
     def import_arcPkg(self, roleArcPkg):
+
+        roleArcPkg = roleArcPkg[0]
 
         # 重置某些内部变量
         self.reset()
@@ -509,9 +513,19 @@ class RoleManager(object):
     成员变量的set和get函数
     """""""""""""""""""""
 
-    def get_role_model(self, sceneMgr, modelId):
+    def get_role_by_model(self, modelId):
 
-        return sceneMgr.get_res(modelId)
+        for roleId, _modelId in self.__roleModelMap.iteritems():
+
+            if _modelId == modelId:
+
+                return self.get_role(roleId)
+
+        return None
+
+    def get_role_model(self, roleId):
+
+        return self.get_role(roleId).get_attr_value("modelId")
 
     def get_role(self, roleId):
 

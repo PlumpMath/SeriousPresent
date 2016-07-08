@@ -85,9 +85,9 @@ class TerrainManager(ResManager):
     # 更新地形
     def update_terrain(self, task):
 
-        task.setTaskChain("terraTaskChain")
-
-        self._resMap[self.__currTerraId].update()
+        # task.setTaskChain("terraTaskChain")
+        #
+        # self._resMap[self.__currTerraId].update()
 
         return task.cont
 

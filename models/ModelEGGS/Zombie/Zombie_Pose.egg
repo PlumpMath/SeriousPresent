@@ -1,7 +1,7 @@
 <CoordinateSystem> { Y-Up }
 
 <Comment> {
-  "maya2egg2015 -a model -o /e/Material/Zombie_Pose.egg /e/Material/Zombie_Pose.mb"
+  "maya2egg2015 -a model -o /e/Material/Zombie_Pose_1.egg /e/Material/Zombie_Pose_1.mb"
 }
 <Texture> phong1SG {
   "Zombie/MaleZombie.BMP"
@@ -12,7 +12,7 @@
   <Scalar> magfilter { linear }
   <Scalar> uv-name { UVChannel_1 }
 }
-<Group> Zombie_Pose {
+<Group> Zombie_Pose_1 {
   <Dart> { 1 }
   <Group> groundPlane_transform {
   }

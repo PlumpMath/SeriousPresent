@@ -62,7 +62,7 @@ class LightController(object):
                      _lightId = None,
                      lightPos = None,
                      lightHpr = None,
-                     shadow = True,
+                     shadow = False,
                      targetId = None
                      ):
 

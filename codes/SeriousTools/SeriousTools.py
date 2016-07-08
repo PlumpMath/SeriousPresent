@@ -74,7 +74,7 @@ def cos(p1, p2):
 
 def extract_name_from_Id(Id):
 
-    if isinstance(Id, str):
+    if isinstance(Id, str): #or isinstance(Id, unicode):
 
         name = ""
 
