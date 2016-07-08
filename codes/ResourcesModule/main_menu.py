@@ -51,7 +51,7 @@ class MainMenu(ShowBase):
         self.__rm=ResourcesManager()
 
     # 移除界面上的按钮与图片
-    def destroy(self):
+    def destroy_all(self):
         self.__newGameButton.destroy()
         self.__selectArchiveButton.destroy()
         self.__exitGameButton.destroy()
@@ -59,7 +59,7 @@ class MainMenu(ShowBase):
         self.taskMgr.remove('exampleTask')
 
     def new_game(self):
-        self.destroy()
+        self.destroy_all()
         self.__rm.show_volume_sliderbar(self)
 
         self.__rm.show_dialog(1)
@@ -84,10 +84,10 @@ class MainMenu(ShowBase):
         # mm.playMedia(self.render2d)
 
     def select_archives(self):
-        self.destroy()
+        self.destroy__all()
 
     def exit_game(self):
-        self.destroy()
+        self.destroy__all()
 
     def example_task(self,task):
         self.__image.setSx(self.getAspectRatio())

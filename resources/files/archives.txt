@@ -33,13 +33,1635 @@
                                 "attackForce": 10
                             }, 
                             {
-                                "walkSpeed": 5
+                                "walkSpeed": 30
                             }, 
                             {
-                                "runSpeed": 10
+                                "runSpeed": 5
                             }, 
                             {
-                                "rotateSpeed": 100
+                                "rotateSpeed": 50
+                            }, 
+                            {
+                                "touchRadius": 3
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": {
+                                    "medicine": null, 
+                                    "weapon2": null, 
+                                    "weapon1": null, 
+                                    "weapon3": null
+                                }
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ], 
+                        [
+                            {
+                                "roleId": "NPCRole1"
+                            }, 
+                            {
+                                "modelId": "actor4"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": false
+                            }, 
+                            {
+                                "ableToAtck": false
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": null
+                            }, 
+                            {
+                                "money": null
+                            }, 
+                            {
+                                "attackForce": null
+                            }, 
+                            {
+                                "walkSpeed": null
+                            }, 
+                            {
+                                "runSpeed": null
+                            }, 
+                            {
+                                "rotateSpeed": null
+                            }, 
+                            {
+                                "touchRadius": null
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": null
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "role"
+                    }
+                }
+            }, 
+            "scene": {
+                "light": {
+                    "items": [
+                        [
+                            {
+                                "lightId": "AmbientLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.2, 
+                                    0.1, 
+                                    0.2, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "DirectionalLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "PointLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.8, 
+                                    0.9, 
+                                    0.7, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    5.0, 
+                                    5.0, 
+                                    50.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "SpotLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    10.0, 
+                                    10.0, 
+                                    10.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    153.435, 
+                                    -41.8103, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": [
+                                    "actor1"
+                                ]
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        [
+                            {
+                                "modelId": "model3"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/building1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    -10.0, 
+                                    -30.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    15.0, 
+                                    15.0, 
+                                    15.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model2"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/HunterEgg/finalHunter.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    0.22, 
+                                    0.22, 
+                                    0.22
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model1"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/v10.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model4"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/building1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        [
+                            {
+                                "pos": [
+                                    -14.8029, 
+                                    94.7181, 
+                                    19.803
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    -174.289, 
+                                    -5.68244, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "moveSpeed": 10
+                            }, 
+                            {
+                                "rotateSpeed": 1
+                            }, 
+                            {
+                                "focusObjId": "actor1"
+                            }, 
+                            {
+                                "radius": 200
+                            }, 
+                            {
+                                "optsSwitch": {
+                                    "rotate_r_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_left": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_backward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_r_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_down": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_h_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_down": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_cw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_right": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_ccw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_around_up": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_up": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_forward": [
+                                        false, 
+                                        false
+                                    ]
+                                }
+                            }, 
+                            {
+                                "toggleEventToOpts": {
+                                    "h": "rotate_around_cw", 
+                                    "k": "rotate_around_ccw", 
+                                    "j": "rotate_around_down", 
+                                    "u": "rotate_around_up"
+                                }
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        [
+                            {
+                                "terrainId": "terrain1"
+                            }, 
+                            {
+                                "heightfieldPath": "/e/models/ground.jpg"
+                            }, 
+                            {
+                                "colormapPath": "/e/models/ground.jpg"
+                            }, 
+                            {
+                                "pos": [
+                                    -50.0, 
+                                    -50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        [
+                            {
+                                "actorId": "actor4"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/outter_child.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "run": "/e/Material/outter_run.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    20.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    0.1, 
+                                    0.1, 
+                                    0.1
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor3"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/WifeZombieEgg/WifeZombie_Stand.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "/e/Material/WifeZombieEgg/WifeZombie_Walk.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    20.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor2"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/HookZombie_Pose2.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "/e/Material/HookZombie_Walk_v4.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    10.0, 
+                                    10.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor1"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/HunterEgg/finalHunter.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "bda": "/e/Material/HunterEgg/backDefenceActionUpdate1.egg", 
+                                    "lda": "/e/Material/HunterEgg/leftDefenceActionUpdate.egg", 
+                                    "rda": "/e/Material/HunterEgg/rightDefenceActionUpdate.egg", 
+                                    "run": "/e/Material/HunterEgg/hunter_WALK123.egg", 
+                                    "run_back": "/e/Material/HunterEgg/hunter_WALK666.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    5.0, 
+                                    -103.311, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.2, 
+                                    1.2, 
+                                    1.2
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "eventActionRecord": {
+                            "actor2": {
+                                "o": "walk"
+                            }, 
+                            "actor1": {
+                                "x": "lda", 
+                                "s": "run_back", 
+                                "z": "rda", 
+                                "c": "bda", 
+                                "w": "run"
+                            }
+                        }, 
+                        "ArchivePackageName": "actor", 
+                        "eventEffertRecord": {
+                            "actor2": {
+                                "o": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }, 
+                            "actor1": {
+                                "a": [
+                                    [
+                                        "actor_rotate_cw", 
+                                        false
+                                    ]
+                                ], 
+                                "s": [
+                                    [
+                                        "actor_move_backward", 
+                                        false
+                                    ]
+                                ], 
+                                "d": [
+                                    [
+                                        "actor_rotate_ccw", 
+                                        false
+                                    ]
+                                ], 
+                                "w": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }
+                        }, 
+                        "toggleEvent": null
+                    }
+                }
+            }
+        }, 
+        "time": "2016/07/05 16:12", 
+        "id": 1, 
+        "name": "archive1"
+    }, 
+    {
+        "content": {
+            "role": {
+                "role": {
+                    "items": [
+                        [
+                            {
+                                "roleId": "PlayerRole"
+                            }, 
+                            {
+                                "modelId": "actor1"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": true
+                            }, 
+                            {
+                                "ableToAtck": true
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": 100
+                            }, 
+                            {
+                                "money": 0
+                            }, 
+                            {
+                                "attackForce": 10
+                            }, 
+                            {
+                                "walkSpeed": 30
+                            }, 
+                            {
+                                "runSpeed": 5
+                            }, 
+                            {
+                                "rotateSpeed": 50
+                            }, 
+                            {
+                                "touchRadius": 3
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": {
+                                    "medicine": null, 
+                                    "weapon2": null, 
+                                    "weapon1": null, 
+                                    "weapon3": null
+                                }
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ], 
+                        [
+                            {
+                                "roleId": "NPCRole1"
+                            }, 
+                            {
+                                "modelId": "actor4"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": false
+                            }, 
+                            {
+                                "ableToAtck": false
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": null
+                            }, 
+                            {
+                                "money": null
+                            }, 
+                            {
+                                "attackForce": null
+                            }, 
+                            {
+                                "walkSpeed": null
+                            }, 
+                            {
+                                "runSpeed": null
+                            }, 
+                            {
+                                "rotateSpeed": null
+                            }, 
+                            {
+                                "touchRadius": null
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": null
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "role"
+                    }
+                }
+            }, 
+            "scene": {
+                "light": {
+                    "items": [
+                        [
+                            {
+                                "lightId": "AmbientLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.2, 
+                                    0.1, 
+                                    0.2, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "DirectionalLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "PointLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.8, 
+                                    0.9, 
+                                    0.7, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    5.0, 
+                                    5.0, 
+                                    50.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "SpotLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    10.0, 
+                                    10.0, 
+                                    10.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    -45.0, 
+                                    -10.025, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": [
+                                    "actor1"
+                                ]
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        [
+                            {
+                                "modelId": "model3"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/building1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    -10.0, 
+                                    -30.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    15.0, 
+                                    15.0, 
+                                    15.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model2"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/HunterEgg/finalHunter.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    0.22, 
+                                    0.22, 
+                                    0.22
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model1"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/v10.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model4"
+                            }, 
+                            {
+                                "modelPath": "/e/Material/building1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        [
+                            {
+                                "pos": [
+                                    -149.007, 
+                                    50.0, 
+                                    19.9007
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    -90.0, 
+                                    -5.71059, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "moveSpeed": 10
+                            }, 
+                            {
+                                "rotateSpeed": 1
+                            }, 
+                            {
+                                "focusObjId": "actor1"
+                            }, 
+                            {
+                                "radius": 200
+                            }, 
+                            {
+                                "optsSwitch": {
+                                    "rotate_r_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_left": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_down": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_r_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_backward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_down": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_cw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_right": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_ccw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_forward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_up": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_up": [
+                                        false, 
+                                        true
+                                    ]
+                                }
+                            }, 
+                            {
+                                "toggleEventToOpts": {
+                                    "h": "rotate_around_cw", 
+                                    "k": "rotate_around_ccw", 
+                                    "j": "rotate_around_down", 
+                                    "u": "rotate_around_up"
+                                }
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        [
+                            {
+                                "terrainId": "terrain1"
+                            }, 
+                            {
+                                "heightfieldPath": "/e/models/ground.jpg"
+                            }, 
+                            {
+                                "colormapPath": "/e/models/ground.jpg"
+                            }, 
+                            {
+                                "pos": [
+                                    -50.0, 
+                                    -50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        [
+                            {
+                                "actorId": "actor4"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/outter_child.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "run": "/e/Material/outter_run.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    20.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    0.1, 
+                                    0.1, 
+                                    0.1
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor3"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/WifeZombieEgg/WifeZombie_Stand.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "/e/Material/WifeZombieEgg/WifeZombie_Walk.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    20.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor2"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/HookZombie_Pose2.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "/e/Material/HookZombie_Walk_v4.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    10.0, 
+                                    10.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor1"
+                            }, 
+                            {
+                                "actorPath": "/e/Material/HunterEgg/finalHunter.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "rda": "/e/Material/HunterEgg/rightDefenceActionUpdate.egg", 
+                                    "lda": "/e/Material/HunterEgg/leftDefenceActionUpdate.egg", 
+                                    "bda": "/e/Material/HunterEgg/backDefenceActionUpdate1.egg", 
+                                    "run": "/e/Material/HunterEgg/hunter_WALK123.egg", 
+                                    "run_back": "/e/Material/HunterEgg/hunter_WALK666.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    50.0, 
+                                    50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.2, 
+                                    1.2, 
+                                    1.2
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "eventActionRecord": {
+                            "actor2": {
+                                "o": "walk"
+                            }, 
+                            "actor1": {
+                                "x": "lda", 
+                                "s": "run_back", 
+                                "z": "rda", 
+                                "c": "bda", 
+                                "w": "run"
+                            }
+                        }, 
+                        "ArchivePackageName": "actor", 
+                        "eventEffertRecord": {
+                            "actor2": {
+                                "o": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }, 
+                            "actor1": {
+                                "a": [
+                                    [
+                                        "actor_rotate_cw", 
+                                        false
+                                    ]
+                                ], 
+                                "s": [
+                                    [
+                                        "actor_move_backward", 
+                                        false
+                                    ]
+                                ], 
+                                "d": [
+                                    [
+                                        "actor_rotate_ccw", 
+                                        false
+                                    ]
+                                ], 
+                                "w": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }
+                        }, 
+                        "toggleEvent": null
+                    }
+                }
+            }
+        }, 
+        "id": 2, 
+        "name": "archive1", 
+        "time": "2016/07/05 16:28"
+    }, 
+    {
+        "content": {
+            "role": {
+                "role": {
+                    "items": [
+                        [
+                            {
+                                "roleId": "PlayerRole"
+                            }, 
+                            {
+                                "modelId": "actor1"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": true
+                            }, 
+                            {
+                                "ableToAtck": true
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": 100
+                            }, 
+                            {
+                                "money": 0
+                            }, 
+                            {
+                                "attackForce": 10
+                            }, 
+                            {
+                                "walkSpeed": 30
+                            }, 
+                            {
+                                "runSpeed": 5
+                            }, 
+                            {
+                                "rotateSpeed": 50
                             }, 
                             {
                                 "touchRadius": 3
@@ -240,7 +1862,7 @@
                                 "Pos": [
                                     5.0, 
                                     5.0, 
-                                    5.0
+                                    50.0
                                 ]
                             }, 
                             {
@@ -283,8 +1905,8 @@
                             }, 
                             {
                                 "Hpr": [
-                                    153.435, 
-                                    -41.8103, 
+                                    -45.0, 
+                                    -10.025, 
                                     0.0
                                 ]
                             }, 
@@ -311,15 +1933,200 @@
                     "items": [
                         [
                             {
+                                "modelId": "model2"
+                            }, 
+                            {
+                                "modelPath": "../../Material/ModelEGGS/Village/house1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    200.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
                                 "modelId": "model1"
                             }, 
                             {
-                                "modelPath": "/d/YCJ/test/models/panda.egg"
+                                "modelPath": "../../Material/ModelEGGS/Village/v5.egg"
                             }, 
                             {
                                 "pos": [
                                     0.0, 
                                     0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        [
+                            {
+                                "pos": [
+                                    74.5106, 
+                                    3.98742, 
+                                    9.95035
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    -90.0, 
+                                    -5.71058, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "moveSpeed": 10
+                            }, 
+                            {
+                                "rotateSpeed": 1
+                            }, 
+                            {
+                                "focusObjId": "actor1"
+                            }, 
+                            {
+                                "radius": 100
+                            }, 
+                            {
+                                "optsSwitch": {
+                                    "rotate_r_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_left": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_backward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_r_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_down": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_h_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_down": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_cw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_right": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_ccw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_around_up": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_up": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_forward": [
+                                        false, 
+                                        false
+                                    ]
+                                }
+                            }, 
+                            {
+                                "toggleEventToOpts": {
+                                    "h": "rotate_around_cw", 
+                                    "k": "rotate_around_ccw", 
+                                    "j": "rotate_around_down", 
+                                    "u": "rotate_around_up"
+                                }
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        [
+                            {
+                                "terrainId": "terrain1"
+                            }, 
+                            {
+                                "heightfieldPath": "../../Material/Terrain/ground.jpg"
+                            }, 
+                            {
+                                "colormapPath": "../../Material/Terrain/ground.jpg"
+                            }, 
+                            {
+                                "pos": [
+                                    -50.0, 
+                                    -50.0, 
                                     0.0
                                 ]
                             }, 
@@ -343,6 +2150,526 @@
                         ]
                     ], 
                     "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        [
+                            {
+                                "actorId": "actor2"
+                            }, 
+                            {
+                                "actorPath": "../../Material/ModelEGGS/WifeZombie/WifeZombie_Stand.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "../../Material/ModelEGGS/WifeZombie/WifeZombie_Walk.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor1"
+                            }, 
+                            {
+                                "actorPath": "../../Material/ModelEGGS/Hunter/hunter_Alarm1.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "bda": "../../Material/ModelEGGS/Hunter/backDefenceActionUpdate.egg", 
+                                    "lda": "../../Material/ModelEGGS/Hunter/leftDefenceActionUpdate", 
+                                    "rda": "../../Material/ModelEGGS/Hunter/rightDefenceActionUpdate.egg", 
+                                    "run": "../../Material/ModelEGGS/Hunter/Run.egg", 
+                                    "run_back": "../../Material/ModelEGGS/Hunter/RunBack.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    174.014, 
+                                    3.98742, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    174.189, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.2, 
+                                    1.2, 
+                                    1.2
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "eventActionRecord": {
+                            "actor2": {
+                                "b": "walk"
+                            }, 
+                            "actor1": {
+                                "x": "lda", 
+                                "s": "run_back", 
+                                "z": "rda", 
+                                "c": "bda", 
+                                "w": "run"
+                            }
+                        }, 
+                        "ArchivePackageName": "actor", 
+                        "eventEffertRecord": {
+                            "actor2": {
+                                "b": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }, 
+                            "actor1": {
+                                "a": [
+                                    [
+                                        "actor_rotate_cw", 
+                                        false
+                                    ]
+                                ], 
+                                "s": [
+                                    [
+                                        "actor_move_backward", 
+                                        false
+                                    ]
+                                ], 
+                                "d": [
+                                    [
+                                        "actor_rotate_ccw", 
+                                        false
+                                    ]
+                                ], 
+                                "w": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }
+                        }, 
+                        "toggleEvent": null
+                    }
+                }
+            }
+        }, 
+        "time": "2016/07/06 13:06", 
+        "id": 3, 
+        "name": "archive1"
+    }, 
+    {
+        "content": {
+            "role": {
+                "role": {
+                    "items": [
+                        [
+                            {
+                                "roleId": "PlayerRole"
+                            }, 
+                            {
+                                "modelId": "actor1"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": true
+                            }, 
+                            {
+                                "ableToAtck": true
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": 100
+                            }, 
+                            {
+                                "money": 0
+                            }, 
+                            {
+                                "attackForce": 10
+                            }, 
+                            {
+                                "walkSpeed": 30
+                            }, 
+                            {
+                                "runSpeed": 5
+                            }, 
+                            {
+                                "rotateSpeed": 50
+                            }, 
+                            {
+                                "touchRadius": 3
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": {
+                                    "medicine": null, 
+                                    "weapon2": null, 
+                                    "weapon1": null, 
+                                    "weapon3": null
+                                }
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ], 
+                        [
+                            {
+                                "roleId": "NPCRole1"
+                            }, 
+                            {
+                                "modelId": "actor2"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": false
+                            }, 
+                            {
+                                "ableToAtck": false
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": null
+                            }, 
+                            {
+                                "money": null
+                            }, 
+                            {
+                                "attackForce": null
+                            }, 
+                            {
+                                "walkSpeed": null
+                            }, 
+                            {
+                                "runSpeed": null
+                            }, 
+                            {
+                                "rotateSpeed": null
+                            }, 
+                            {
+                                "touchRadius": null
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": null
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "role"
+                    }
+                }
+            }, 
+            "scene": {
+                "light": {
+                    "items": [
+                        [
+                            {
+                                "lightId": "AmbientLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.2, 
+                                    0.1, 
+                                    0.2, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "DirectionalLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "PointLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.8, 
+                                    0.9, 
+                                    0.7, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    5.0, 
+                                    5.0, 
+                                    50.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "SpotLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    10.0, 
+                                    10.0, 
+                                    10.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    -45.0, 
+                                    -10.025, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": [
+                                    "actor1"
+                                ]
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        [
+                            {
+                                "modelId": "model2"
+                            }, 
+                            {
+                                "modelPath": "../../Material/ModelEGGS/Village/house1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    200.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model1"
+                            }, 
+                            {
+                                "modelPath": "../../Material/ModelEGGS/Village/v4.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
                         "ArchivePackageName": "model"
                     }
                 }, 
@@ -351,15 +2678,15 @@
                         [
                             {
                                 "pos": [
-                                    0.0, 
-                                    50.0, 
-                                    5.0
+                                    110.433, 
+                                    13.5031, 
+                                    19.9007
                                 ]
                             }, 
                             {
                                 "hpr": [
-                                    180.0, 
-                                    -5.71059, 
+                                    -90.0, 
+                                    -5.71058, 
                                     0.0
                                 ]
                             }, 
@@ -367,7 +2694,1353 @@
                                 "moveSpeed": 10
                             }, 
                             {
+                                "rotateSpeed": 1
+                            }, 
+                            {
+                                "focusObjId": "actor1"
+                            }, 
+                            {
+                                "radius": 200
+                            }, 
+                            {
+                                "optsSwitch": {
+                                    "rotate_r_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_left": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_down": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_r_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_backward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_down": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_cw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_right": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_ccw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_forward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_up": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_up": [
+                                        false, 
+                                        true
+                                    ]
+                                }
+                            }, 
+                            {
+                                "toggleEventToOpts": {
+                                    "h": "rotate_around_cw", 
+                                    "k": "rotate_around_ccw", 
+                                    "j": "rotate_around_down", 
+                                    "u": "rotate_around_up"
+                                }
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        [
+                            {
+                                "terrainId": "terrain1"
+                            }, 
+                            {
+                                "heightfieldPath": "../../Material/Terrain/ground.jpg"
+                            }, 
+                            {
+                                "colormapPath": "../../Material/Terrain/ground.jpg"
+                            }, 
+                            {
+                                "pos": [
+                                    -50.0, 
+                                    -50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        [
+                            {
+                                "actorId": "actor2"
+                            }, 
+                            {
+                                "actorPath": "../../Material/ModelEGGS/WifeZombie/WifeZombie_Stand.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "../../Material/ModelEGGS/WifeZombie/WifeZombie_Walk.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor1"
+                            }, 
+                            {
+                                "actorPath": "../../Material/ModelEGGS/Hunter/hunter_Alarm1.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "rda": "../../Material/ModelEGGS/Hunter/rightDefenceActionUpdate.egg", 
+                                    "lda": "../../Material/ModelEGGS/Hunter/leftDefenceActionUpdate", 
+                                    "bda": "../../Material/ModelEGGS/Hunter/backDefenceActionUpdate.egg", 
+                                    "run": "../../Material/ModelEGGS/Hunter/Run.egg", 
+                                    "run_back": "../../Material/ModelEGGS/Hunter/RunBack.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    309.44, 
+                                    13.5031, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    482.832, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.2, 
+                                    1.2, 
+                                    1.2
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "eventActionRecord": {
+                            "actor2": {
+                                "b": "walk"
+                            }, 
+                            "actor1": {
+                                "x": "lda", 
+                                "s": "run_back", 
+                                "z": "rda", 
+                                "c": "bda", 
+                                "w": "run"
+                            }
+                        }, 
+                        "ArchivePackageName": "actor", 
+                        "eventEffertRecord": {
+                            "actor2": {
+                                "b": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }, 
+                            "actor1": {
+                                "a": [
+                                    [
+                                        "actor_rotate_cw", 
+                                        false
+                                    ]
+                                ], 
+                                "s": [
+                                    [
+                                        "actor_move_backward", 
+                                        false
+                                    ]
+                                ], 
+                                "d": [
+                                    [
+                                        "actor_rotate_ccw", 
+                                        false
+                                    ]
+                                ], 
+                                "w": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }
+                        }, 
+                        "toggleEvent": null
+                    }
+                }
+            }
+        }, 
+        "id": 4, 
+        "name": "archive1", 
+        "time": "2016/07/06 16:52"
+    }, 
+    {
+        "content": {
+            "role": {
+                "role": {
+                    "items": [
+                        [
+                            {
+                                "roleId": "PlayerRole"
+                            }, 
+                            {
+                                "modelId": "actor1"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": true
+                            }, 
+                            {
+                                "ableToAtck": true
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": 100
+                            }, 
+                            {
+                                "money": 0
+                            }, 
+                            {
+                                "attackForce": 10
+                            }, 
+                            {
+                                "walkSpeed": 0.1
+                            }, 
+                            {
+                                "runSpeed": 0.1
+                            }, 
+                            {
                                 "rotateSpeed": 5
+                            }, 
+                            {
+                                "touchRadius": 3
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": {
+                                    "medicine": null, 
+                                    "weapon2": null, 
+                                    "weapon1": null, 
+                                    "weapon3": null
+                                }
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ], 
+                        [
+                            {
+                                "roleId": "NPCRole1"
+                            }, 
+                            {
+                                "modelId": "actor2"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": false
+                            }, 
+                            {
+                                "ableToAtck": false
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": null
+                            }, 
+                            {
+                                "money": null
+                            }, 
+                            {
+                                "attackForce": null
+                            }, 
+                            {
+                                "walkSpeed": null
+                            }, 
+                            {
+                                "runSpeed": null
+                            }, 
+                            {
+                                "rotateSpeed": null
+                            }, 
+                            {
+                                "touchRadius": null
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": null
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "role"
+                    }
+                }
+            }, 
+            "scene": {
+                "light": {
+                    "items": [
+                        [
+                            {
+                                "lightId": "AmbientLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.2, 
+                                    0.1, 
+                                    0.2, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "DirectionalLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "PointLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.8, 
+                                    0.9, 
+                                    0.7, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    5.0, 
+                                    5.0, 
+                                    50.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "SpotLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    10.0, 
+                                    10.0, 
+                                    10.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    -45.0, 
+                                    -10.025, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": [
+                                    "actor1"
+                                ]
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        [
+                            {
+                                "modelId": "model2"
+                            }, 
+                            {
+                                "modelPath": "../../Material/ModelEGGS/Village/house1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    200.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model1"
+                            }, 
+                            {
+                                "modelPath": "../../Material/ModelEGGS/Village/v6.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        [
+                            {
+                                "pos": [
+                                    122.052, 
+                                    -83.5891, 
+                                    9.95067
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    38.404, 
+                                    -5.71076, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "moveSpeed": 10
+                            }, 
+                            {
+                                "rotateSpeed": 1
+                            }, 
+                            {
+                                "focusObjId": "actor1"
+                            }, 
+                            {
+                                "radius": 100
+                            }, 
+                            {
+                                "optsSwitch": {
+                                    "rotate_r_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_left": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_backward": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_r_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_down": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_h_cw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_p_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_h_ccw": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_down": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_cw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_right": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "rotate_around_ccw": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "rotate_around_up": [
+                                        false, 
+                                        true
+                                    ], 
+                                    "move_up": [
+                                        false, 
+                                        false
+                                    ], 
+                                    "move_forward": [
+                                        false, 
+                                        false
+                                    ]
+                                }
+                            }, 
+                            {
+                                "toggleEventToOpts": {
+                                    "h": "rotate_around_cw", 
+                                    "k": "rotate_around_ccw", 
+                                    "j": "rotate_around_down", 
+                                    "u": "rotate_around_up"
+                                }
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        [
+                            {
+                                "terrainId": "terrain1"
+                            }, 
+                            {
+                                "heightfieldPath": "../../Material/Terrain/ground.jpg"
+                            }, 
+                            {
+                                "colormapPath": "../../Material/Terrain/ground.jpg"
+                            }, 
+                            {
+                                "pos": [
+                                    -50.0, 
+                                    -50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        [
+                            {
+                                "actorId": "actor2"
+                            }, 
+                            {
+                                "actorPath": "../../Material/ModelEGGS/WifeZombie/WifeZombie_Stand.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "walk": "../../Material/ModelEGGS/WifeZombie/WifeZombie_Walk.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    20.0, 
+                                    50.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor1"
+                            }, 
+                            {
+                                "actorPath": "../../Material/ModelEGGS/Hunter/hunter_Alarm1.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "bda": "../../Material/ModelEGGS/Hunter/backDefenceActionUpdate.egg", 
+                                    "lda": "../../Material/ModelEGGS/Hunter/leftDefenceActionUpdate", 
+                                    "rda": "../../Material/ModelEGGS/Hunter/rightDefenceActionUpdate.egg", 
+                                    "run": "../../Material/ModelEGGS/Hunter/Run.egg", 
+                                    "run_back": "../../Material/ModelEGGS/Hunter/RunBack.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    60.2403, 
+                                    -5.61304, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    -141.607, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.2, 
+                                    1.2, 
+                                    1.2
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "eventActionRecord": {
+                            "actor2": {
+                                "b": "walk"
+                            }, 
+                            "actor1": {
+                                "x": "lda", 
+                                "s": "run_back", 
+                                "z": "rda", 
+                                "c": "bda", 
+                                "w": "run"
+                            }
+                        }, 
+                        "ArchivePackageName": "actor", 
+                        "eventEffertRecord": {
+                            "actor2": {
+                                "b": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }, 
+                            "actor1": {
+                                "a": [
+                                    [
+                                        "actor_rotate_cw", 
+                                        false
+                                    ]
+                                ], 
+                                "s": [
+                                    [
+                                        "actor_move_backward", 
+                                        false
+                                    ]
+                                ], 
+                                "d": [
+                                    [
+                                        "actor_rotate_ccw", 
+                                        false
+                                    ]
+                                ], 
+                                "w": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }
+                        }, 
+                        "toggleEvent": null
+                    }
+                }
+            }
+        }, 
+        "time": "2016/07/06 17:18", 
+        "id": 5, 
+        "name": "archive1"
+    }, 
+    {
+        "content": {
+            "role": {
+                "role": {
+                    "items": [
+                        [
+                            {
+                                "roleId": "PlayerRole"
+                            }, 
+                            {
+                                "modelId": "actor1"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": true
+                            }, 
+                            {
+                                "ableToAtck": true
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": 100
+                            }, 
+                            {
+                                "money": 0
+                            }, 
+                            {
+                                "attackForce": 10
+                            }, 
+                            {
+                                "walkSpeed": 0.1
+                            }, 
+                            {
+                                "runSpeed": 0.5
+                            }, 
+                            {
+                                "rotateSpeed": 5
+                            }, 
+                            {
+                                "touchRadius": 3
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": {
+                                    "medicine": null, 
+                                    "weapon2": null, 
+                                    "weapon1": null, 
+                                    "weapon3": null
+                                }
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ], 
+                        [
+                            {
+                                "roleId": "NPCRole1"
+                            }, 
+                            {
+                                "modelId": "actor2"
+                            }, 
+                            {
+                                "ableToTalk": true
+                            }, 
+                            {
+                                "ableToCtrl": false
+                            }, 
+                            {
+                                "ableToAtck": false
+                            }, 
+                            {
+                                "states": []
+                            }, 
+                            {
+                                "hp": null
+                            }, 
+                            {
+                                "money": null
+                            }, 
+                            {
+                                "attackForce": null
+                            }, 
+                            {
+                                "walkSpeed": null
+                            }, 
+                            {
+                                "runSpeed": null
+                            }, 
+                            {
+                                "rotateSpeed": null
+                            }, 
+                            {
+                                "touchRadius": null
+                            }, 
+                            {
+                                "actions": {}
+                            }, 
+                            {
+                                "currWeapon": null
+                            }, 
+                            {
+                                "attachments": null
+                            }, 
+                            {
+                                "attachmentType": null
+                            }, 
+                            {
+                                "num": null
+                            }, 
+                            {
+                                "price": null
+                            }, 
+                            {
+                                "soild": null
+                            }, 
+                            {
+                                "effert": null
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "role"
+                    }
+                }
+            }, 
+            "scene": {
+                "light": {
+                    "items": [
+                        [
+                            {
+                                "lightId": "AmbientLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.2, 
+                                    0.1, 
+                                    0.2, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "DirectionalLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "PointLight1"
+                            }, 
+                            {
+                                "color": [
+                                    0.8, 
+                                    0.9, 
+                                    0.7, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    5.0, 
+                                    5.0, 
+                                    50.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": null
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "lightId": "SpotLight1"
+                            }, 
+                            {
+                                "color": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "Pos": [
+                                    10.0, 
+                                    10.0, 
+                                    10.0
+                                ]
+                            }, 
+                            {
+                                "Hpr": [
+                                    -45.0, 
+                                    -10.025, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "targetId": [
+                                    "actor1"
+                                ]
+                            }, 
+                            {
+                                "setorId": [
+                                    "render"
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        [
+                            {
+                                "modelId": "model2"
+                            }, 
+                            {
+                                "modelPath": "/e/Serious2/Material/ModelEGGS/Village/house1.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    200.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "modelId": "model1"
+                            }, 
+                            {
+                                "modelPath": "/e/Serious2/Material/ModelEGGS/Village/v6.egg"
+                            }, 
+                            {
+                                "pos": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    0.0, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    5.0, 
+                                    5.0, 
+                                    5.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ]
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        [
+                            {
+                                "pos": [
+                                    376.173, 
+                                    -2.03243, 
+                                    9.94974
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    -150.744, 
+                                    -5.53915, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "moveSpeed": 10
+                            }, 
+                            {
+                                "rotateSpeed": 0.1
                             }, 
                             {
                                 "focusObjId": "actor1"
@@ -464,10 +4137,10 @@
                                 "terrainId": "terrain1"
                             }, 
                             {
-                                "heightfieldPath": "/d/YCJ/test/1.jpg"
+                                "heightfieldPath": "/e/Serious2/Material/Terrain/ground.jpg"
                             }, 
                             {
-                                "colormapPath": "/d/YCJ/test/1.jpg"
+                                "colormapPath": "/e/Serious2/Material/Terrain/ground.jpg"
                             }, 
                             {
                                 "pos": [
@@ -504,20 +4177,20 @@
                     "items": [
                         [
                             {
-                                "actorId": "actor1"
+                                "actorId": "actor2"
                             }, 
                             {
-                                "actorPath": "/d/YCJ/test/models/panda.egg"
+                                "actorPath": "/e/Serious2/Material/ModelEGGS/WifeZombie/WifeZombie_Stand.egg"
                             }, 
                             {
                                 "actionsPath": {
-                                    "run": "/d/YCJ/test/models/panda-walk.egg"
+                                    "walk": "/e/Serious2/Material/ModelEGGS/WifeZombie/WifeZombie_Walk.egg"
                                 }
                             }, 
                             {
                                 "pos": [
-                                    5.0, 
-                                    0.0, 
+                                    20.0, 
+                                    50.0, 
                                     0.0
                                 ]
                             }, 
@@ -530,9 +4203,50 @@
                             }, 
                             {
                                 "scale": [
-                                    0.1, 
-                                    0.1, 
-                                    0.1
+                                    1.0, 
+                                    1.0, 
+                                    1.0
+                                ]
+                            }, 
+                            {
+                                "parentId": "render"
+                            }
+                        ], 
+                        [
+                            {
+                                "actorId": "actor1"
+                            }, 
+                            {
+                                "actorPath": "/e/Serious2/Material/ModelEGGS/Hunter/hunter_Alarm1.egg"
+                            }, 
+                            {
+                                "actionsPath": {
+                                    "rda": "/e/Serious2/Material/ModelEGGS/Hunter/rightDefenceActionUpdate.egg", 
+                                    "lda": "/e/Serious2/Material/ModelEGGS/Hunter/leftDefenceActionUpdate", 
+                                    "bda": "/e/Serious2/Material/ModelEGGS/Hunter/backDefenceActionUpdate.egg", 
+                                    "run": "/e/Serious2/Material/ModelEGGS/Hunter/Run.egg", 
+                                    "run_back": "/e/Serious2/Material/ModelEGGS/Hunter/RunBack.egg"
+                                }
+                            }, 
+                            {
+                                "pos": [
+                                    424.802, 
+                                    -88.8441, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "hpr": [
+                                    -3599.03, 
+                                    0.0, 
+                                    0.0
+                                ]
+                            }, 
+                            {
+                                "scale": [
+                                    1.2, 
+                                    1.2, 
+                                    1.2
                                 ]
                             }, 
                             {
@@ -542,53 +4256,61 @@
                     ], 
                     "metaData": {
                         "eventActionRecord": {
-                            "actor1": [
-                                [
-                                    "w", 
-                                    "run"
-                                ], 
-                                [
-                                    "s", 
-                                    "run"
-                                ], 
-                                [
-                                    "a", 
-                                    "run"
-                                ], 
-                                [
-                                    "d", 
-                                    "run"
-                                ]
-                            ]
+                            "actor2": {
+                                "b": "walk"
+                            }, 
+                            "actor1": {
+                                "x": "lda", 
+                                "s": "run_back", 
+                                "z": "rda", 
+                                "c": "bda", 
+                                "w": "run"
+                            }
                         }, 
                         "ArchivePackageName": "actor", 
                         "eventEffertRecord": {
-                            "actor1": [
-                                [
-                                    "w", 
-                                    "actor_move_forward"
-                                ], 
-                                [
-                                    "s", 
-                                    "actor_move_backward"
-                                ], 
-                                [
-                                    "a", 
-                                    "actor_move_left"
-                                ], 
-                                [
-                                    "d", 
-                                    "actor_move_right"
+                            "actor2": {
+                                "b": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
                                 ]
-                            ]
+                            }, 
+                            "actor1": {
+                                "a": [
+                                    [
+                                        "actor_rotate_cw", 
+                                        false
+                                    ]
+                                ], 
+                                "s": [
+                                    [
+                                        "actor_move_backward", 
+                                        false
+                                    ]
+                                ], 
+                                "d": [
+                                    [
+                                        "actor_rotate_ccw", 
+                                        false
+                                    ]
+                                ], 
+                                "w": [
+                                    [
+                                        "actor_move_forward", 
+                                        false
+                                    ]
+                                ]
+                            }
                         }, 
                         "toggleEvent": null
                     }
                 }
             }
         }, 
-        "id": 1, 
-        "name": "lala", 
-        "time": "2016/07/05 09:49"
+        "id": 6, 
+        "name": "archive1", 
+        "time": "2016/07/06 20:04"
     }
 ]

@@ -3,10 +3,18 @@
 # Last Updated: 2016-06-29
 # menu菜单
 # 游戏的开始界面
+import sys
+sys.path.append('../')
+
 from direct.showbase.ShowBase import ShowBase
 from direct.gui.OnscreenImage import OnscreenImage
 from ResourcesModule.resources_manager import ResourcesManager
 from keyboard_mouse_handler import *
+from direct.gui.OnscreenImage import OnscreenImage
+from direct.showbase.DirectObject import DirectObject
+from direct.gui.DirectSlider import DirectSlider
+from direct.gui.DirectButton import DirectButton
+from panda3d.core import *
 from serious_state_manager import SeriousFSM
 
 class MainMenu(ShowBase):
@@ -31,6 +39,9 @@ class MainMenu(ShowBase):
         self.accept("LoadGame",self.__load_game)
         self.accept("Description",self.__description)
         self.accept("ChangeMenu",self.__change_menu)
+
+        self.accept("a",self.setting_menu)
+        self.accept("b",self.setting_destroy)
 
     # 设置全屏
     def setFullScreen(self,full):
@@ -86,3 +97,92 @@ class MainMenu(ShowBase):
                         2:'../../resources/images/menu/home3.png',
                         3:'../../resources/images/menu/home4.png',}
         self.__change_mode(switch_count[self.__keyInput.get_count()])
+
+    #设置界面
+    def setting_menu(self):
+        # 设置界面背景图
+        self.__background = OnscreenImage(image='../../resources/images/settings/setting_frame.png', pos=(0, 0, 0),
+                                          scale=(1.0, 0, 0.7))
+        self.__background.setTransparency(TransparencyAttrib.MAlpha)
+
+        ##滑动条
+        self.__slider = DirectSlider(pos=(0.16, 0, 0.26), scale=0.5, value=0.5, command=self.__setMusicSliderVolume,
+                                     frameSize=(-1.0, 0.9, -0.06, 0.06),
+                                     image='../../resources/images/settings/slide_bar.png',
+                                     image_pos=(-0.05, 0, 0.0), image_scale=(1.0, 0, 0.05),
+                                     thumb_image='../../resources/images/settings/slide_btn.png',
+                                     thumb_image_pos=(-0.0, 0, 0.0), thumb_image_scale=0.1,
+                                     thumb_frameSize=(0.0, 0.0, 0.0, 0.0))
+        self.__slider.setTransparency(TransparencyAttrib.MAlpha)
+
+        # self.__musicButton = DirectButton(pos=(0.9, 0, 0.75), text="Close", scale=0.1, pad=(0.2, 0.2), rolloverSound=None,
+        #                                   clickSound=None, command=self.toggleMusicBox,extraArgs=[base])
+
+        # 继续按钮
+        self.__continueButton = DirectButton(pos=(-0.25, 0, 0.0), text="", scale=(0.2, 0, 0.1),
+                                             command=self.__continue_game,
+                                             image=("../../resources/images/settings/btn_continue_0.png",
+                                                    "../../resources/images/settings/btn_continue_0.png"
+                                                    , "../../resources/images/settings/btn_continue_1.png"),
+                                             frameColor=(0, 0, 0, 0))
+        self.__continueButton.setTransparency(TransparencyAttrib.MAlpha)
+
+        # 存档按钮
+        self.__saveButton = DirectButton(pos=(0.33, 0, 0.0), text="", scale=(0.2, 0, 0.1), command=self.__save_game,
+                                         image=("../../resources/images/settings/btn_save_0.png",
+                                                "../../resources/images/settings/btn_save_0.png"
+                                                , "../../resources/images/settings/btn_save_1.png"),
+                                         frameColor=(0, 0, 0, 0))
+        self.__saveButton.setTransparency(TransparencyAttrib.MAlpha)
+
+        # 帮助按钮
+        self.__helpButton = DirectButton(pos=(-0.25, 0, -0.25), text="", scale=(0.2, 0, 0.1), command=self.__help,
+                                         image=("../../resources/images/settings/btn_help_0.png",
+                                                "../../resources/images/settings/btn_help_0.png"
+                                                , "../../resources/images/settings/btn_help_1.png"),
+                                         frameColor=(0, 0, 0, 0))
+        self.__helpButton.setTransparency(TransparencyAttrib.MAlpha)
+
+        # 回到主界面按钮
+        self.__homeButton = DirectButton(pos=(0.33, 0, -0.25), text="", scale=(0.2, 0, 0.1), command=self.__return_home,
+                                         image=("../../resources/images/settings/btn_home_0.png",
+                                                "../../resources/images/settings/btn_home_0.png"
+                                                , "../../resources/images/settings/btn_home_1.png"),
+                                         frameColor=(0, 0, 0, 0))
+        self.__homeButton.setTransparency(TransparencyAttrib.MAlpha)
+
+        # 设置滑动条value
+        self.__slider['value'] = self.__rm.get_volume()
+
+    #移除设置界面所有控件
+    def setting_destroy(self):
+        self.__background.destroy()
+        self.__rm.set_volume(self.__slider['value'])
+        self.__slider.destroy()
+        # self.__musicButton.destroy()
+        self.__continueButton.destroy()
+        self.__saveButton.destroy()
+        self.__helpButton.destroy()
+        self.__homeButton.destroy()
+        self.__destroy = False
+
+    # 设置音乐声音大小
+    def __setMusicSliderVolume(self):
+        newVolume = self.__slider.guiItem.getValue()
+        self.__rm.set_volume(newVolume)
+
+    # 设置界面，私有函数,继续游戏
+    def __continue_game(self):
+        self.setting_destroy()
+
+    # 设置界面，私有函数,存档
+    def __save_game(self):
+        self.setting_destroy()
+
+    # 设置界面，私有函数,游戏帮助
+    def __help(self):
+        self.setting_destroy()
+
+    # 设置界面，私有函数,回到主界面
+    def __return_home(self):
+        self.setting_destroy()
