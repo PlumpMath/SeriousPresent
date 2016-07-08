@@ -49,6 +49,7 @@ class ResManager(object):
     """""""""""
     # 根据资源ID获取资源
     def get_resId(self, res):
+
         return SeriousTools.find_key_in_dict(res, self._resMap)
 
     # 根据资源获取资源ID
