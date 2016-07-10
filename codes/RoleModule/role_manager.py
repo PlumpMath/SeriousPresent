@@ -561,6 +561,16 @@ class RoleManager(object):
 
         return roles
 
+    def get_role_face_hpr(self, roleId):
+
+        role = self.__sceneMgr.get_res(self.__roleModelMap[roleId])
+
+        roleHpr = role.getHpr()
+
+        h = (roleHpr.getH() - 90) * math.pi / 180
+
+        return LVecBase3f(math.cos(h), 0, 0)
+
     """""""""""
     角色信息打印
     """""""""""
