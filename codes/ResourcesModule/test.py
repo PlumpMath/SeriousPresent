@@ -39,10 +39,47 @@ class MainMenu(ShowBase):
 
         self.__main=Main()
 
-        self.accept("a",self.__main.show)
-
         self.__trade=Trade()
-        self.accept("b",self.__trade.show)
+
+        self.__yn=False
+
+        self.__blood=100
+
+        self.accept("a",self.show_main)
+        self.accept("b", self.destroy_main)
+
+        self.accept("c", self.__trade.show)
+
+        self.taskMgr.add(self.example_task, 'exampleTask')
+
+        self.accept("d",self.__main.addBlood)
+        self.accept("e",self.__main.minusBlood)
+
+    def show_main(self):
+        if self.__yn==False:
+            self.__main.show()
+            self.__yn = True
+
+    def destroy_main(self):
+        if self.__yn == True:
+            self.__main.destroy_main()
+            self.__yn = False
+
+    def example_task(self, task):
+        # if self.__yn == True:
+        #     self.__blood-=1
+        #     self.__main.set_blood(self.__blood)
+
+        if self.__trade.get_destroy_trade()==False and self.__yn==True:
+            money=int(self.__main.get_money())
+            medicineNumber=int(self.__main.get_medicine_number())
+            spendMoney=int(self.__trade.get_purchase()[0])
+            purchaseMedicine=int(self.__trade.get_purchase()[1])
+            self.__main.set_money(str(money-spendMoney))
+            self.__main.set_medicine_number((str(medicineNumber+purchaseMedicine)))
+            self.__trade.set_purchase_medicine_number()
+            self.__trade.set_purchase_money()
+        return Task.cont
 
 
 mm=MainMenu()
