@@ -1,0 +1,1062 @@
+[
+    {
+        "content": {
+            "role": {
+                "role": {
+                    "items": [
+                        {
+                            "effert": null, 
+                            "ableToTalk": true, 
+                            "attachments": {
+                                "medicine": null, 
+                                "weapon2": null, 
+                                "weapon1": null, 
+                                "weapon3": null
+                            }, 
+                            "currWeapon": null, 
+                            "runSpeed": 10, 
+                            "roleId": "PlayerRole", 
+                            "ableToCtrl": true, 
+                            "touchRadius": 3, 
+                            "walkSpeed": 5, 
+                            "actions": {}, 
+                            "states": [], 
+                            "soild": null, 
+                            "num": null, 
+                            "rotateSpeed": 100, 
+                            "money": 0, 
+                            "price": null, 
+                            "attachmentType": null, 
+                            "ableToAtck": true, 
+                            "hp": 100, 
+                            "attackForce": 10, 
+                            "modelId": "actor1"
+                        }, 
+                        {
+                            "effert": null, 
+                            "ableToTalk": true, 
+                            "attachments": null, 
+                            "currWeapon": null, 
+                            "runSpeed": null, 
+                            "roleId": "NPCRole1", 
+                            "ableToCtrl": false, 
+                            "touchRadius": null, 
+                            "walkSpeed": null, 
+                            "actions": {}, 
+                            "states": [], 
+                            "soild": null, 
+                            "num": null, 
+                            "rotateSpeed": null, 
+                            "money": null, 
+                            "price": null, 
+                            "attachmentType": null, 
+                            "ableToAtck": false, 
+                            "hp": null, 
+                            "attackForce": null, 
+                            "modelId": "actor2"
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "role"
+                    }
+                }
+            }, 
+            "scene": {
+                "light": {
+                    "items": [
+                        {
+                            "lightId": "AmbientLight1", 
+                            "color": [
+                                0.2, 
+                                0.1, 
+                                0.2, 
+                                1.0
+                            ], 
+                            "Hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "Pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "DirectionalLight1", 
+                            "color": [
+                                1.0, 
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "Hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "Pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "PointLight1", 
+                            "color": [
+                                0.8, 
+                                0.9, 
+                                0.7, 
+                                1.0
+                            ], 
+                            "Hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "Pos": [
+                                5.0, 
+                                5.0, 
+                                5.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "SpotLight1", 
+                            "color": [
+                                1.0, 
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "Hpr": [
+                                153.435, 
+                                -41.8103, 
+                                0.0
+                            ], 
+                            "targetId": [
+                                "actor1"
+                            ], 
+                            "Pos": [
+                                10.0, 
+                                10.0, 
+                                10.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        {
+                            "scale": [
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "modelPath": "/d/YCJ/test/models/panda.egg", 
+                            "parentId": "render", 
+                            "modelId": "model1"
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        {
+                            "toggleEventToOpts": {
+                                "h": "rotate_around_cw", 
+                                "k": "rotate_around_ccw", 
+                                "j": "rotate_around_down", 
+                                "u": "rotate_around_up"
+                            }, 
+                            "optsSwitch": {
+                                "rotate_r_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_p_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_left": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_down": [
+                                    false, 
+                                    true
+                                ], 
+                                "rotate_r_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_backward": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_h_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_right": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_p_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_h_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_down": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_cw": [
+                                    false, 
+                                    true
+                                ], 
+                                "move_forward": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_ccw": [
+                                    false, 
+                                    true
+                                ], 
+                                "move_up": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_up": [
+                                    false, 
+                                    true
+                                ]
+                            }, 
+                            "hpr": [
+                                180.0, 
+                                -5.71059, 
+                                0.0
+                            ], 
+                            "pos": [
+                                0.0, 
+                                50.0, 
+                                5.0
+                            ], 
+                            "moveSpeed": 10, 
+                            "focusObjId": "actor1", 
+                            "radius": 100, 
+                            "rotateSpeed": 5
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        {
+                            "scale": [
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "colormapPath": "/d/YCJ/test/1.jpg", 
+                            "pos": [
+                                -50.0, 
+                                -50.0, 
+                                0.0
+                            ], 
+                            "heightfieldPath": "/d/YCJ/test/1.jpg", 
+                            "terrainId": "terrain1", 
+                            "parentId": "render"
+                        }
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        {
+                            "scale": [
+                                0.1, 
+                                0.1, 
+                                0.1
+                            ], 
+                            "actorPath": "/d/YCJ/test/models/panda.egg", 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "pos": [
+                                5.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "actorId": "actor1", 
+                            "actionsPath": {
+                                "run": "/d/YCJ/test/models/panda-walk.egg"
+                            }
+                        }
+                    ], 
+                    "metaData": {
+                        "eventActionRecord": {
+                            "actor1": [
+                                [
+                                    "w", 
+                                    "run"
+                                ], 
+                                [
+                                    "s", 
+                                    "run"
+                                ], 
+                                [
+                                    "a", 
+                                    "run"
+                                ], 
+                                [
+                                    "d", 
+                                    "run"
+                                ]
+                            ]
+                        }, 
+                        "ArchivePackageName": "actor", 
+                        "eventEffertRecord": {
+                            "actor1": [
+                                [
+                                    "w", 
+                                    "actor_move_forward"
+                                ], 
+                                [
+                                    "s", 
+                                    "actor_move_backward"
+                                ], 
+                                [
+                                    "a", 
+                                    "actor_move_left"
+                                ], 
+                                [
+                                    "d", 
+                                    "actor_move_right"
+                                ]
+                            ]
+                        }, 
+                        "toggleEvent": null
+                    }
+                }
+            }
+        }, 
+        "id": 1, 
+        "name": "lala", 
+        "time": "2016/07/04 16:24"
+    }, 
+    {
+        "content": {
+            "scene": {
+                "light": {
+                    "items": [
+                        {
+                            "lightId": "AmbientLight1", 
+                            "color": [
+                                0.2, 
+                                0.1, 
+                                0.2, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "DirectionalLight1", 
+                            "color": [
+                                1.0, 
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "PointLight1", 
+                            "color": [
+                                0.8, 
+                                0.9, 
+                                0.7, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "pos": [
+                                5.0, 
+                                5.0, 
+                                5.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "SpotLight1", 
+                            "color": [
+                                1.0, 
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                153.435, 
+                                -41.8103, 
+                                0.0
+                            ], 
+                            "targetId": [
+                                "actor1"
+                            ], 
+                            "pos": [
+                                10.0, 
+                                10.0, 
+                                10.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        {
+                            "scale": [
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "modelPath": "/d/YCJ/test/models/panda.egg", 
+                            "parentId": "render", 
+                            "modelId": "model1"
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        {
+                            "toggleEventToOpts": {
+                                "h": "rotate_around_cw", 
+                                "k": "rotate_around_ccw", 
+                                "j": "rotate_around_down", 
+                                "u": "rotate_around_up"
+                            }, 
+                            "optsSwitch": {
+                                "rotate_r_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_p_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_left": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_backward": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_r_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_down": [
+                                    false, 
+                                    true
+                                ], 
+                                "rotate_h_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_p_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_h_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_down": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_cw": [
+                                    false, 
+                                    true
+                                ], 
+                                "move_right": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_ccw": [
+                                    false, 
+                                    true
+                                ], 
+                                "rotate_around_up": [
+                                    false, 
+                                    true
+                                ], 
+                                "move_up": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_forward": [
+                                    false, 
+                                    false
+                                ]
+                            }, 
+                            "hpr": [
+                                180.0, 
+                                -5.71059, 
+                                0.0
+                            ], 
+                            "pos": [
+                                0.0, 
+                                50.0, 
+                                5.0
+                            ], 
+                            "moveSpeed": 10, 
+                            "focusObjId": "actor1", 
+                            "radius": 30, 
+                            "rotateSpeed": 5, 
+                            "parentId": null
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        {
+                            "scale": [
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "colormapPath": "/d/YCJ/test/1.jpg", 
+                            "pos": [
+                                -50.0, 
+                                -50.0, 
+                                0.0
+                            ], 
+                            "heightfieldPath": "/d/YCJ/test/1.jpg", 
+                            "terrainId": "terrain1", 
+                            "parentId": "render"
+                        }
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        {
+                            "scale": [
+                                0.5, 
+                                0.5, 
+                                0.5
+                            ], 
+                            "actorPath": "/d/YCJ/test/models/panda.egg", 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "eventActionRecord": [
+                                [
+                                    "w", 
+                                    "run"
+                                ], 
+                                [
+                                    "s", 
+                                    "run"
+                                ], 
+                                [
+                                    "a", 
+                                    "run"
+                                ], 
+                                [
+                                    "d", 
+                                    "run"
+                                ]
+                            ], 
+                            "pos": [
+                                5.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "eventEffertRecord": [
+                                [
+                                    "w", 
+                                    "actor_move_forward"
+                                ], 
+                                [
+                                    "s", 
+                                    "actor_move_backward"
+                                ], 
+                                [
+                                    "a", 
+                                    "actor_move_left"
+                                ], 
+                                [
+                                    "d", 
+                                    "actor_move_right"
+                                ]
+                            ], 
+                            "parentId": "render", 
+                            "actorId": "actor1", 
+                            "actionsPath": {
+                                "run": "/d/YCJ/test/models/panda-walk.egg"
+                            }
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "actor"
+                    }
+                }
+            }
+        }, 
+        "time": "2016/07/02 10:42", 
+        "id": 2, 
+        "name": "light"
+    }, 
+    {
+        "content": {
+            "scene": {
+                "light": {
+                    "items": [
+                        {
+                            "lightId": "AmbientLight1", 
+                            "color": [
+                                0.2, 
+                                0.1, 
+                                0.2, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "DirectionalLight1", 
+                            "color": [
+                                1.0, 
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "PointLight1", 
+                            "color": [
+                                0.8, 
+                                0.9, 
+                                0.7, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "targetId": null, 
+                            "pos": [
+                                5.0, 
+                                5.0, 
+                                5.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }, 
+                        {
+                            "lightId": "SpotLight1", 
+                            "color": [
+                                1.0, 
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                153.435, 
+                                -41.8103, 
+                                0.0
+                            ], 
+                            "targetId": [
+                                "actor1"
+                            ], 
+                            "pos": [
+                                10.0, 
+                                10.0, 
+                                10.0
+                            ], 
+                            "parentId": "render", 
+                            "setorId": [
+                                "render"
+                            ]
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "light"
+                    }
+                }, 
+                "model": {
+                    "items": [
+                        {
+                            "scale": [
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "pos": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "modelPath": "/d/YCJ/test/models/panda.egg", 
+                            "parentId": "render", 
+                            "modelId": "model1"
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "model"
+                    }
+                }, 
+                "camera": {
+                    "items": [
+                        {
+                            "toggleEventToOpts": {
+                                "h": "rotate_around_cw", 
+                                "k": "rotate_around_ccw", 
+                                "j": "rotate_around_down", 
+                                "u": "rotate_around_up"
+                            }, 
+                            "optsSwitch": {
+                                "rotate_r_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_p_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_left": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_down": [
+                                    false, 
+                                    true
+                                ], 
+                                "rotate_r_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_backward": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_h_cw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_p_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_h_ccw": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_down": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_cw": [
+                                    false, 
+                                    true
+                                ], 
+                                "move_right": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_ccw": [
+                                    false, 
+                                    true
+                                ], 
+                                "move_forward": [
+                                    false, 
+                                    false
+                                ], 
+                                "move_up": [
+                                    false, 
+                                    false
+                                ], 
+                                "rotate_around_up": [
+                                    false, 
+                                    true
+                                ]
+                            }, 
+                            "hpr": [
+                                180.0, 
+                                -5.71059, 
+                                0.0
+                            ], 
+                            "pos": [
+                                0.0, 
+                                50.0, 
+                                5.0
+                            ], 
+                            "moveSpeed": 10, 
+                            "focusObjId": "actor1", 
+                            "radius": 30, 
+                            "rotateSpeed": 5, 
+                            "parentId": null
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "camera"
+                    }
+                }, 
+                "terrain": {
+                    "items": [
+                        {
+                            "scale": [
+                                1.0, 
+                                1.0, 
+                                1.0
+                            ], 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "colormapPath": "/d/YCJ/test/1.jpg", 
+                            "pos": [
+                                -50.0, 
+                                -50.0, 
+                                0.0
+                            ], 
+                            "heightfieldPath": "/d/YCJ/test/1.jpg", 
+                            "terrainId": "terrain1", 
+                            "parentId": "render"
+                        }
+                    ], 
+                    "metaData": {
+                        "currTerraId": "terrain1", 
+                        "ArchivePackageName": "terrain"
+                    }
+                }, 
+                "actor": {
+                    "items": [
+                        {
+                            "scale": [
+                                0.5, 
+                                0.5, 
+                                0.5
+                            ], 
+                            "actorPath": "/d/YCJ/test/models/panda.egg", 
+                            "hpr": [
+                                0.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "eventActionRecord": [
+                                [
+                                    "w", 
+                                    "run"
+                                ], 
+                                [
+                                    "s", 
+                                    "run"
+                                ], 
+                                [
+                                    "a", 
+                                    "run"
+                                ], 
+                                [
+                                    "d", 
+                                    "run"
+                                ]
+                            ], 
+                            "pos": [
+                                5.0, 
+                                0.0, 
+                                0.0
+                            ], 
+                            "eventEffertRecord": [
+                                [
+                                    "w", 
+                                    "actor_move_forward"
+                                ], 
+                                [
+                                    "s", 
+                                    "actor_move_backward"
+                                ], 
+                                [
+                                    "a", 
+                                    "actor_move_left"
+                                ], 
+                                [
+                                    "d", 
+                                    "actor_move_right"
+                                ]
+                            ], 
+                            "parentId": "render", 
+                            "actorId": "actor1", 
+                            "actionsPath": {
+                                "run": "/d/YCJ/test/models/panda-walk.egg"
+                            }
+                        }
+                    ], 
+                    "metaData": {
+                        "ArchivePackageName": "actor"
+                    }
+                }
+            }
+        }, 
+        "id": 3, 
+        "name": "lala", 
+        "time": "2016/07/02 10:43"
+    }
+]
